@@ -42,7 +42,7 @@ const catelogData: IDropMenu[] = [
 
 function Header() {
   return (
-    <header className="bg-black/75 fixed left-0 right-0 z-50">
+    <header className="bg-black/75 fixed left-0 right-0 z-20">
       <div className="container">
         <div className="flex">
           <Link href={"/"}>
