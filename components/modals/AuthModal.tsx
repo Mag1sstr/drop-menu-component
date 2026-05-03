@@ -1,6 +1,10 @@
 import { createPortal } from "react-dom";
+import { useAuth } from "../providers/AuthContext";
 
 function AuthModal() {
+  const { token } = useAuth();
+  console.log(token);
+
   return createPortal(
     <div className="fixed z-50 inset-0 bg-black/70 flex items-center justify-center">
       <div className="w-[500px] border-t-4 border-(--prime)">

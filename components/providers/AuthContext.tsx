@@ -1,12 +1,12 @@
 import { getLocalStorageValue } from "@/helpers/getLocalStorageValue";
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 interface IAuthContext {
   token: string | null;
   setToken: (s: string | null) => void;
 }
 
-export const AuthContext = createContext({});
+export const AuthContext = createContext({} as IAuthContext);
 
 export default function AuthContextProvider({
   children,
@@ -23,3 +23,5 @@ export default function AuthContextProvider({
     </AuthContext.Provider>
   );
 }
+
+export const useAuth = () => useContext(AuthContext);
