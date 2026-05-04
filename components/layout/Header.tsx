@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import NavLink from "../ui/NavLink";
-import { useGetProductsQuery } from "@/store/api";
 import DropdownMenu from "../ui/DropdownMenu";
+import Profile from "../ui/Profile";
 
 const catelogData: IDropMenu[] = [
   {
@@ -76,9 +76,7 @@ function Header() {
               </li>
             </ul>
           </nav>
-          <button className="uppercase border-4 border-(--prime) px-5 py-3 text-[12px] text-white self-center font-bold">
-            ВОЙТИ
-          </button>
+          <Profile />
         </div>
       </div>
     </header>
