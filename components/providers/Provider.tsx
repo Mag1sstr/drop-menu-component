@@ -9,7 +9,7 @@ function Providers({ children }: { children: React.ReactNode }) {
   return (
     <AuthContextProvider>
       <Provider store={store}>
-        <AuthModal />
+        {/* <AuthModal /> */}
         {children}
       </Provider>
     </AuthContextProvider>

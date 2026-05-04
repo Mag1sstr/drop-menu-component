@@ -77,7 +77,7 @@ function Header() {
             </ul>
           </nav>
           <button className="uppercase border-4 border-(--prime) px-5 py-3 text-[12px] text-white self-center font-bold">
-            ЗАКАЗАТЬ ЗВОНОК
+            ВОЙТИ
           </button>
         </div>
       </div>
