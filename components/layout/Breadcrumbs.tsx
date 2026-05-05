@@ -7,8 +7,9 @@ function Breadcrumbs() {
 
   const fullPath = ["Главная", ...location];
 
-  console.log(fullPath);
-
+  const breadcrumbsNames: Record<string, string> = {
+    catalog: "каталог",
+  };
   return (
     <div className="bg-white">
       <div className="container">
@@ -27,7 +28,7 @@ function Breadcrumbs() {
               }}
               className={`flex items-center gap-4  font-medium text-[12px] uppercase leading-none ${el === fullPath.at(-1) ? "text-[#1D1D1D]" : "text-[#C53720] cursor-pointer"}`}
             >
-              {el}
+              {breadcrumbsNames[el] || el}
               {el !== fullPath.at(-1) && (
                 <svg
                   width="20"
