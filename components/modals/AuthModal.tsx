@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useRef } from "react";
 import { useLoginUserMutation } from "@/store/api";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setToken } from "@/store/authSlice";
+import InputField from "../ui/InputField";
 interface IProps {
   setOpen: (b: boolean) => void;
 }
@@ -64,10 +65,17 @@ function AuthModal({ setOpen }: IProps) {
             </svg>
           </button>
         </div>
-        <form onSubmit={submit} className="bg-white p-5">
+        <form onSubmit={submit} className="bg-white p-5 flex flex-col">
           <input ref={email} type="email" placeholder="email" />
           <input ref={password} type="password" placeholder="pass" />\
           <button className="bg-blue-600">Login</button>
+          <div className="flex flex-col gap-4">
+            <InputField label="Почта" />
+            <InputField label="Пароль " type="password" />
+          </div>
+          <button className="uppercase text-[12px] font-bold text-[#C53720] py-3 px-5 border-4 transition-all cursor-pointer border-[#C53720] leading-2 ml-auto mt-4 hover:bg-[#C53720] hover:text-white">
+            Login
+          </button>
         </form>
       </div>
     </div>,
