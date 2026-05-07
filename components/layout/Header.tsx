@@ -3,6 +3,7 @@ import Link from "next/link";
 import NavLink from "../ui/NavLink";
 import DropdownMenu from "../ui/DropdownMenu";
 import Profile from "../ui/Profile";
+import { IDropMenu } from "@/app/types";
 
 const catelogData: IDropMenu[] = [
   {
@@ -58,9 +59,12 @@ function Header() {
               >
                 КОМПАНИЯ
               </NavLink>
-              <li className="relative pb-6.5 px-2 cursor-pointer after:transition-all after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-(--prime) after:opacity-0 transition-all hover:after:opacity-100">
+              <li className="relative group pb-6.5 px-2 cursor-pointer after:transition-all after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-(--prime) after:opacity-0 transition-all hover:after:opacity-100">
                 КАТАЛОГ
-                <DropdownMenu data={catelogData} />
+                <DropdownMenu
+                  data={catelogData}
+                  className="opacity-0 invisible group-hover:opacity-100 group-hover:visible"
+                />
               </li>
               <li className="relative pb-6.5 px-2 cursor-pointer after:transition-all after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-(--prime) after:opacity-0 transition-all hover:after:opacity-100">
                 КАТАЛОГ
