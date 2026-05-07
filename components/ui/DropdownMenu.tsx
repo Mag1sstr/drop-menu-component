@@ -1,3 +1,4 @@
+import { IDropMenu } from "@/app/types";
 import DropItem from "./DropItem";
 
 interface IProps {
