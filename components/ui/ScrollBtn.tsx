@@ -7,19 +7,21 @@ function ScrollBtn() {
   const handleScrollToTop = () =>
     window.scrollTo({ top: 0, behavior: "smooth" });
   const handleScrollToBottom = () =>
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-
-  console.log(document.body.scrollHeight);
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
 
   useEffect(() => {
     const hadnleScroll = () => {
       setIsTop(window.scrollY <= 0);
       setIsBottom(
         window.innerHeight + window.scrollY >=
-          document.documentElement.scrollHeight,
+          document.documentElement.scrollHeight - 5,
       );
     };
     document.addEventListener("scroll", hadnleScroll);
+    hadnleScroll();
 
     return () => document.removeEventListener("scroll", hadnleScroll);
   }, []);
