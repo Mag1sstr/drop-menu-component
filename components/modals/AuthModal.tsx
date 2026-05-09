@@ -1,6 +1,5 @@
 import { createPortal } from "react-dom";
-import { useAuth } from "../providers/AuthContext";
-import { FormEvent, useEffect, useRef } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useLoginUserMutation } from "@/store/api";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setToken } from "@/store/authSlice";
@@ -9,20 +8,24 @@ interface IProps {
   setOpen: (b: boolean) => void;
 }
 function AuthModal({ setOpen }: IProps) {
-  const email = useRef<HTMLInputElement | null>(null);
-  const password = useRef<HTMLInputElement | null>(null);
+  const [form, setForm] = useState({
+    email: "john@mail.com",
+    password: "",
+  });
+
+  const { email, password } = form;
+
   const dispatch = useAppDispatch();
   const { token } = useAppSelector((state) => state.auth);
   const [loginUser, { isSuccess, data }] = useLoginUserMutation();
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    if (!email.current?.value || !password.current?.value) return;
+    if (!email || !password) return;
     loginUser({
-      password: password.current.value,
-      email: email.current.value,
+      password,
+      email,
     });
-    console.log("1");
   };
 
   useEffect(() => {
@@ -66,12 +69,22 @@ function AuthModal({ setOpen }: IProps) {
           </button>
         </div>
         <form onSubmit={submit} className="bg-white p-5 flex flex-col">
-          <input ref={email} type="email" placeholder="email" />
-          <input ref={password} type="password" placeholder="pass" />\
-          <button className="bg-blue-600">Login</button>
           <div className="flex flex-col gap-4">
-            <InputField label="Почта" />
-            <InputField label="Пароль " type="password" />
+            <InputField
+              value={form.email}
+              onChange={(value) =>
+                setForm((prev) => ({ ...prev, email: value as string }))
+              }
+              label="Почта"
+            />
+            <InputField
+              value={form.password}
+              onChange={(value) =>
+                setForm((prev) => ({ ...prev, password: value as string }))
+              }
+              label="Пароль "
+              type="password"
+            />
           </div>
           <button className="uppercase text-[12px] font-bold text-[#C53720] py-3 px-5 border-4 transition-all cursor-pointer border-[#C53720] leading-2 ml-auto mt-4 hover:bg-[#C53720] hover:text-white">
             Login
