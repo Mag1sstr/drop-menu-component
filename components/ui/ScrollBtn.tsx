@@ -14,7 +14,10 @@ function ScrollBtn() {
   useEffect(() => {
     const hadnleScroll = () => {
       setIsTop(window.scrollY <= 0);
-      setIsBottom(window.scrollY >= document.body.scrollHeight);
+      setIsBottom(
+        window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight,
+      );
     };
     document.addEventListener("scroll", hadnleScroll);
 
