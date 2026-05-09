@@ -1,6 +1,6 @@
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
-function Page() {
+function CatalogPage() {
   return (
     <>
       <Breadcrumbs />
@@ -8,4 +8,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default CatalogPage;
