@@ -19,7 +19,7 @@ function Catalog() {
       <div className="container">
         <h1 className="text-[36px] font-bold mb-9 uppercase">Каталог</h1>
         <div className="flex gap-6">
-          <aside className="w-[264px] py-3 bg-black">
+          <aside className="w-66 py-3 bg-black">
             <>
               <div
                 onClick={() => setOpen(!open)}
