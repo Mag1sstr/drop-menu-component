@@ -16,7 +16,7 @@ function AuthModal({ setOpen }: IProps) {
   const { email, password } = form;
 
   const dispatch = useAppDispatch();
-  const { token } = useAppSelector((state) => state.auth);
+  // const { token } = useAppSelector((state) => state.auth);
   const [loginUser, { isSuccess, data }] = useLoginUserMutation();
 
   const submit = (e: FormEvent) => {

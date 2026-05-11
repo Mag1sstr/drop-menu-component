@@ -59,13 +59,18 @@ function Header() {
               >
                 КОМПАНИЯ
               </NavLink>
-              <li className="relative group pb-6.5 px-2 cursor-pointer after:transition-all after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-(--prime) after:opacity-0 transition-all hover:after:opacity-100">
+              <NavLink
+                href="/catalog"
+                className={(isActive) =>
+                  `relative group pb-6.5 px-2 cursor-pointer after:transition-all after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-(--prime) after:opacity-0 transition-all hover:after:opacity-100 ${isActive && "after:opacity-100"}`
+                }
+              >
                 КАТАЛОГ
                 <DropdownMenu
                   data={catelogData}
                   className="opacity-0 invisible group-hover:opacity-100 group-hover:visible"
                 />
-              </li>
+              </NavLink>
               <li className="relative pb-6.5 px-2 cursor-pointer after:transition-all after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-(--prime) after:opacity-0 transition-all hover:after:opacity-100">
                 КАТАЛОГ
               </li>
