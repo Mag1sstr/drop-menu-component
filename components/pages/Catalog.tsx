@@ -32,6 +32,7 @@ function Catalog() {
                   viewBox="0 0 20 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  className={`${open && "rotate-180"}`}
                 >
                   <path d="M16 8L10 12L4 8" stroke="white" strokeWidth="4" />
                 </svg>
