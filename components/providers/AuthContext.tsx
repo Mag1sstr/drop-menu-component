@@ -21,8 +21,6 @@ export default function AuthContextProvider({
     refetchOnMountOrArgChange: true,
   });
 
-  console.log(data);
-
   useEffect(() => {
     if (isSuccess && data && token) {
       dispatch(setUser(data));
