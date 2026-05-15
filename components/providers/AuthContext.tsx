@@ -16,10 +16,10 @@ export default function AuthContextProvider({
 }) {
   const { token } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const { data, isSuccess } = useGetUserQuery(
-    {},
-    { skip: !token, refetchOnMountOrArgChange: true },
-  );
+  const { data, isSuccess } = useGetUserQuery(undefined, {
+    skip: !token,
+    refetchOnMountOrArgChange: true,
+  });
 
   console.log(data);
 
