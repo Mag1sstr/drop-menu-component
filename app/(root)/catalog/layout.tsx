@@ -21,7 +21,7 @@ function CatalogLayout({ children }: { children: React.ReactNode }) {
       <section className="bg-white text-[#1D1D1D]">
         <div className="container">
           <h1 className="text-[36px] font-bold mb-9 uppercase">Каталог</h1>
-          <div className="flex gap-6">
+          <div className="flex items-start gap-6">
             <aside className="w-66 py-3 bg-black">
               <>
                 <div
