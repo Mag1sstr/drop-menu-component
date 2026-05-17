@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Search() {
   const [open, setOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (open && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [open]);
   return (
     <>
       <button
@@ -25,9 +31,11 @@ function Search() {
           />
         </svg>
       </button>
-      <div className="absolute left-0 right-0 top-25 py-4 bg-[#1D1D1D]/75">
+      <div
+        className={`absolute left-0 right-0 top-25 py-4 bg-[#1D1D1D]/75 transition-all ${open ? "visible opacity-100" : "invisible opacity-0"}`}
+      >
         <div className="container">
-          <div className="flex">
+          <div className="flex gap-3">
             <div className="flex-1 flex gap-2 bg-white px-3 py-2">
               <svg
                 width="26"
@@ -45,8 +53,50 @@ function Search() {
                   />
                 </g>
               </svg>
-              <input className="w-full outline-none" type="text" />
+              <input
+                ref={inputRef}
+                className="w-full outline-none"
+                type="text"
+              />
             </div>
+            <button className="py-3 px-5 border-4 border-(--prime) uppercase font-bold text-[12px] leading-1 text-white cursor-pointer">
+              НАЙТИ
+            </button>
+            <button className="cursor-pointer" onClick={() => setOpen(false)}>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M4 4L16 16" stroke="#A5A5A5" strokeWidth="4" />
+                <path d="M16 4L4 16" stroke="#A5A5A5" strokeWidth="4" />
+              </svg>
+            </button>
+          </div>
+
+          <div className="max-h-45 overflow-y-auto  text-white">
+            <ul className="pt-4">
+              <li className="px-4 py-3 transition-all hover:bg-(--prime)">
+                Гелиевые Аккумуляторы OPTIMA
+              </li>
+              <li className="px-4 py-3 transition-all hover:bg-(--prime)">
+                Гелиевые Аккумуляторы OPTIMA
+              </li>
+              <li className="px-4 py-3 transition-all hover:bg-(--prime)">
+                Гелиевые Аккумуляторы OPTIMA
+              </li>
+              <li className="px-4 py-3 transition-all hover:bg-(--prime)">
+                Гелиевые Аккумуляторы OPTIMA
+              </li>
+              <li className="px-4 py-3 transition-all hover:bg-(--prime)">
+                Гелиевые Аккумуляторы OPTIMA
+              </li>
+              <li className="px-4 py-3 transition-all hover:bg-(--prime)">
+                Гелиевые Аккумуляторы OPTIMA
+              </li>
+            </ul>
           </div>
         </div>
       </div>
