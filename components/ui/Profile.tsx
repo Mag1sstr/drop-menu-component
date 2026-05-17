@@ -19,7 +19,7 @@ function Profile() {
             dispatch(logout());
           }
         }}
-        className="uppercase border-4 border-(--prime) px-5 py-3 text-[12px] text-white self-center font-bold"
+        className="uppercase border-4 border-(--prime) px-5 py-3 text-[12px] text-white self-center font-bold mr-5.75"
       >
         {user ? user.name : "Войти"}
       </button>

@@ -4,6 +4,7 @@ import NavLink from "../ui/NavLink";
 import DropdownMenu from "../ui/DropdownMenu";
 import Profile from "../ui/Profile";
 import { IDropMenu } from "@/app/types";
+import Search from "../ui/Search";
 
 const catelogData: IDropMenu[] = [
   {
@@ -85,7 +86,9 @@ function Header() {
               </li>
             </ul>
           </nav>
+
           <Profile />
+          <Search />
         </div>
       </div>
     </header>
