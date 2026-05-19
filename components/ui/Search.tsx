@@ -1,10 +1,16 @@
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 function Search() {
-  const [data, setData] = useState<{ title: string; id: number }[]>([]);
+  const [data, setData] = useState<
+    { title: string; id: number; slug: string }[]
+  >([]);
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
+  const location = usePathname();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -17,6 +23,9 @@ function Search() {
       .then((res) => res.json())
       .then((data) => setData(data));
   }, []);
+
+  console.log(location.split("/").at(-1));
+
   return (
     <>
       <button
@@ -95,13 +104,14 @@ function Search() {
                     .trim()
                     .includes(search.toLowerCase().trim()),
                 )
-                .map(({ title, id }) => (
-                  <li
+                .map(({ title, id, slug }) => (
+                  <Link
+                    href={`/catalog/${slug}`}
                     key={id}
-                    className="px-4 py-3 transition-all hover:bg-(--prime)"
+                    className={`block px-4 py-3 transition-all hover:bg-(--prime) ${location.split("/").at(-1) === slug ? "bg-(--prime)" : ""}`}
                   >
                     {title}
-                  </li>
+                  </Link>
                 ))}
               {!data.filter(({ title }) =>
                 title
