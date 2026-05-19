@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 function Search() {
+  const [data, setData] = useState<{ title: string }[]>([]);
   const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -9,6 +10,11 @@ function Search() {
       inputRef.current.focus();
     }
   }, [open]);
+  useEffect(() => {
+    fetch("https://api.escuelajs.co/api/v1/products")
+      .then((res) => res.json())
+      .then((data) => setData(data));
+  }, []);
   return (
     <>
       <button
