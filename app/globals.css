@@ -26,3 +26,11 @@ body {
   background: #222;
   font-family: "Geometria";
 }
+
+.no-srl {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

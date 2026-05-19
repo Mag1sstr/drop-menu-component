@@ -76,7 +76,7 @@ function Search() {
             </button>
           </div>
 
-          <div className="max-h-45 overflow-y-auto  text-white">
+          <div className="max-h-45 overflow-y-auto no-srl  text-white">
             <ul className="pt-4">
               <li className="px-4 py-3 transition-all hover:bg-(--prime)">
                 Гелиевые Аккумуляторы OPTIMA
