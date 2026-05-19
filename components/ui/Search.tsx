@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
 function Search() {
-  const [data, setData] = useState<{ title: string }[]>([]);
+  const [data, setData] = useState<{ title: string; id: number }[]>([]);
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -63,6 +65,8 @@ function Search() {
                 ref={inputRef}
                 className="w-full outline-none"
                 type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
             </div>
             <button className="py-3 px-5 border-4 border-(--prime) uppercase font-bold text-[12px] leading-1 text-white cursor-pointer">
@@ -84,24 +88,31 @@ function Search() {
 
           <div className="max-h-45 overflow-y-auto no-srl  text-white">
             <ul className="pt-4">
-              <li className="px-4 py-3 transition-all hover:bg-(--prime)">
-                Гелиевые Аккумуляторы OPTIMA
-              </li>
-              <li className="px-4 py-3 transition-all hover:bg-(--prime)">
-                Гелиевые Аккумуляторы OPTIMA
-              </li>
-              <li className="px-4 py-3 transition-all hover:bg-(--prime)">
-                Гелиевые Аккумуляторы OPTIMA
-              </li>
-              <li className="px-4 py-3 transition-all hover:bg-(--prime)">
-                Гелиевые Аккумуляторы OPTIMA
-              </li>
-              <li className="px-4 py-3 transition-all hover:bg-(--prime)">
-                Гелиевые Аккумуляторы OPTIMA
-              </li>
-              <li className="px-4 py-3 transition-all hover:bg-(--prime)">
-                Гелиевые Аккумуляторы OPTIMA
-              </li>
+              {data
+                .filter(({ title }) =>
+                  title
+                    .toLowerCase()
+                    .trim()
+                    .includes(search.toLowerCase().trim()),
+                )
+                .map(({ title, id }) => (
+                  <li
+                    key={id}
+                    className="px-4 py-3 transition-all hover:bg-(--prime)"
+                  >
+                    {title}
+                  </li>
+                ))}
+              {!data.filter(({ title }) =>
+                title
+                  .toLowerCase()
+                  .trim()
+                  .includes(search.toLowerCase().trim()),
+              ).length && (
+                <li className="px-4 py-3 transition-all hover:bg-(--prime)">
+                  Не найдено
+                </li>
+              )}
             </ul>
           </div>
         </div>
