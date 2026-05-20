@@ -38,7 +38,7 @@ function AuthModal({ setOpen, open }: IProps) {
   return createPortal(
     <div
       onMouseDown={() => setOpen(false)}
-      className={`fixed z-50 inset-0 bg-black/70 flex items-center justify-center transition-all ${open ? "visible opacity-100" : "invisible opacity-0"}`}
+      className={`fixed z-50 inset-0 bg-black/70 flex items-center justify-center transition-all ${open ? "visible opacity-100 mt-0" : "invisible opacity-0 mt-5"}`}
     >
       <div
         onMouseDown={(e) => e.stopPropagation()}
