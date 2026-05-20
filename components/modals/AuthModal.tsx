@@ -1,13 +1,14 @@
 import { createPortal } from "react-dom";
 import { FormEvent, useEffect, useState } from "react";
 import { useLoginUserMutation } from "@/store/api";
-import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useAppDispatch } from "@/store/store";
 import { setToken } from "@/store/authSlice";
 import InputField from "../ui/InputField";
 interface IProps {
+  open: boolean;
   setOpen: (b: boolean) => void;
 }
-function AuthModal({ setOpen }: IProps) {
+function AuthModal({ setOpen, open }: IProps) {
   const [form, setForm] = useState({
     email: "john@mail.com",
     password: "",
@@ -16,7 +17,6 @@ function AuthModal({ setOpen }: IProps) {
   const { email, password } = form;
 
   const dispatch = useAppDispatch();
-  // const { token } = useAppSelector((state) => state.auth);
   const [loginUser, { isSuccess, data }] = useLoginUserMutation();
 
   const submit = (e: FormEvent) => {
@@ -38,7 +38,7 @@ function AuthModal({ setOpen }: IProps) {
   return createPortal(
     <div
       onMouseDown={() => setOpen(false)}
-      className="fixed z-50 inset-0 bg-black/70 flex items-center justify-center"
+      className={`fixed z-50 inset-0 bg-black/70 flex items-center justify-center transition-all ${open ? "visible opacity-100" : "invisible opacity-0"}`}
     >
       <div
         onMouseDown={(e) => e.stopPropagation()}

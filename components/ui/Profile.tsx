@@ -23,7 +23,7 @@ function Profile() {
       >
         {user ? user.name : "Войти"}
       </button>
-      {openModal && <AuthModal setOpen={setOpenModal} />}
+      <AuthModal open={openModal} setOpen={setOpenModal} />
     </>
   );
 }
