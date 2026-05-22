@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Button from "./Button";
 
 function Cart() {
   const [open, setOpen] = useState(false);
@@ -52,13 +53,18 @@ function Cart() {
         2
       </div>
 
-      <div className="absolute right-0  w-[622px]   border-t-4 border-(--prime) top-25 bg-white">
+      <div
+        className={`absolute right-0  w-[622px]   border-t-4 border-(--prime) top-25 bg-white transition-all ${open ? "visible opacity-100" : "invisible opacity-0"}`}
+      >
         <div className="p-6">
           <p className="uppercase text-[14px] mb-3 font-medium text-[#A5A5A5]">
             ИТОГ:
           </p>
           <div className="flex items-center justify-between">
             <strong className="text-[48px]">4398 руб.</strong>
+            <Button className="text-(--prime)! py-4.5 px-5">
+              ПЕРЕЙТИ В КОРЗИНУ
+            </Button>
           </div>
         </div>
       </div>
