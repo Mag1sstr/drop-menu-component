@@ -5,6 +5,7 @@ import DropdownMenu from "../ui/DropdownMenu";
 import Profile from "../ui/Profile";
 import { IDropMenu } from "@/app/types";
 import Search from "../ui/Search";
+import Cart from "../ui/Cart";
 
 const catelogData: IDropMenu[] = [
   {
@@ -89,6 +90,7 @@ function Header() {
 
           <Profile />
           <Search />
+          <Cart />
         </div>
       </div>
     </header>
