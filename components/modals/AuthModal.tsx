@@ -4,36 +4,43 @@ import { useLoginUserMutation } from "@/store/api";
 import { useAppDispatch } from "@/store/store";
 import { setToken } from "@/store/authSlice";
 import InputField from "../ui/InputField";
+import { SubmitHandler, useForm } from "react-hook-form";
 interface IProps {
   open: boolean;
   setOpen: (b: boolean) => void;
 }
-function AuthModal({ setOpen, open }: IProps) {
-  const [form, setForm] = useState({
-    email: "john@mail.com",
-    password: "",
-  });
 
-  const { email, password } = form;
+interface IReg {
+  name: string;
+  email: string;
+  password: string;
+  avatar: string;
+}
+interface ILogin {
+  email: string;
+  password: string;
+}
+function AuthModal({ setOpen, open }: IProps) {
+  const [isLogin, setIsLogin] = useState(true);
+  const { register: registerReg, handleSubmit: handleReg } = useForm<IReg>();
+  const { register: registerLogin, handleSubmit: handleLogin } =
+    useForm<ILogin>();
 
   const dispatch = useAppDispatch();
-  const [loginUser, { isSuccess, data }] = useLoginUserMutation();
+  const [loginUser, { isSuccess: isLoginSuccess, data }] =
+    useLoginUserMutation();
 
-  const submit = (e: FormEvent) => {
-    e.preventDefault();
-    if (!email || !password) return;
-    loginUser({
-      password,
-      email,
-    });
+  const submitReg: SubmitHandler<IReg> = (data) => {};
+  const submitLogin: SubmitHandler<ILogin> = (data) => {
+    loginUser(data);
   };
 
   useEffect(() => {
-    if (isSuccess && data.access_token) {
+    if (isLoginSuccess && data.access_token) {
       dispatch(setToken(data.access_token));
       setOpen(false);
     }
-  }, [isSuccess]);
+  }, [isLoginSuccess]);
 
   return createPortal(
     <div
@@ -68,28 +75,22 @@ function AuthModal({ setOpen, open }: IProps) {
             </svg>
           </button>
         </div>
-        <form onSubmit={submit} className="bg-white p-5 flex flex-col">
-          <div className="flex flex-col gap-4">
-            <InputField
-              value={form.email}
-              onChange={(value) =>
-                setForm((prev) => ({ ...prev, email: value as string }))
-              }
-              label="Почта"
-            />
-            <InputField
-              value={form.password}
-              onChange={(value) =>
-                setForm((prev) => ({ ...prev, password: value as string }))
-              }
-              label="Пароль "
-              type="password"
-            />
-          </div>
-          <button className="uppercase text-[12px] font-bold text-[#C53720] py-3 px-5 border-4 transition-all cursor-pointer border-[#C53720] leading-2 ml-auto mt-4 hover:bg-[#C53720] hover:text-white">
-            Login
-          </button>
-        </form>
+        {isLogin ? (
+          <form
+            onSubmit={handleLogin(submitLogin)}
+            className="bg-white p-5 flex flex-col"
+          >
+            <div className="flex flex-col gap-4">
+              <InputField label="Почта" />
+              <InputField label="Пароль " type="password" />
+            </div>
+            <button className="uppercase text-[12px] font-bold text-[#C53720] py-3 px-5 border-4 transition-all cursor-pointer border-[#C53720] leading-2 ml-auto mt-4 hover:bg-[#C53720] hover:text-white">
+              Login
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleReg(submitReg)}></form>
+        )}
       </div>
     </div>,
     document.body,
