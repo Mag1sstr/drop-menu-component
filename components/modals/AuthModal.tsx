@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 import { FormEvent, useEffect, useState } from "react";
-import { useLoginUserMutation } from "@/store/api";
+import { useCreateUserMutation, useLoginUserMutation } from "@/store/api";
 import { useAppDispatch } from "@/store/store";
 import { setToken } from "@/store/authSlice";
 import InputField from "../ui/InputField";
@@ -34,20 +34,26 @@ function AuthModal({ setOpen, open }: IProps) {
   } = useForm<ILogin>();
 
   const dispatch = useAppDispatch();
-  const [loginUser, { isSuccess: isLoginSuccess, data }] =
+  const [loginUser, { isSuccess: isLoginSuccess, data: loginData }] =
     useLoginUserMutation();
 
-  const submitReg: SubmitHandler<IReg> = (data) => {};
+  const [createUser, { data }] = useCreateUserMutation();
+
+  const submitReg: SubmitHandler<IReg> = (data) => {
+    createUser({ ...data, avatar: "https://picsum.photos/800" });
+  };
   const submitLogin: SubmitHandler<ILogin> = (data) => {
     loginUser(data);
   };
 
   useEffect(() => {
-    if (isLoginSuccess && data.access_token) {
-      dispatch(setToken(data.access_token));
+    if (isLoginSuccess && loginData.access_token) {
+      dispatch(setToken(loginData.access_token));
       setOpen(false);
     }
   }, [isLoginSuccess]);
+
+  console.log(data);
 
   return createPortal(
     <div
