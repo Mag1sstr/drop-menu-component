@@ -2,6 +2,7 @@ import { IUser } from "@/app/types";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { RootState } from "./store";
+import { IReg } from "@/components/modals/AuthModal";
 
 export const api = createApi({
   reducerPath: "api",
@@ -36,8 +37,19 @@ export const api = createApi({
         url: "/auth/profile",
       }),
     }),
+    createUser: builder.mutation<IReg, IReg>({
+      query: (body) => ({
+        url: "/users",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useGetProductsQuery, useLoginUserMutation, useGetUserQuery } =
-  api;
+export const {
+  useGetProductsQuery,
+  useLoginUserMutation,
+  useGetUserQuery,
+  useCreateUserMutation,
+} = api;

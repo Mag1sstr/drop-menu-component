@@ -10,7 +10,7 @@ interface IProps {
   setOpen: (b: boolean) => void;
 }
 
-interface IReg {
+export interface IReg {
   name: string;
   email: string;
   password: string;
@@ -22,9 +22,16 @@ interface ILogin {
 }
 function AuthModal({ setOpen, open }: IProps) {
   const [isLogin, setIsLogin] = useState(true);
-  const { register: registerReg, handleSubmit: handleReg } = useForm<IReg>();
-  const { register: registerLogin, handleSubmit: handleLogin } =
-    useForm<ILogin>();
+  const {
+    register: registerReg,
+    handleSubmit: handleReg,
+    formState: { errors: regErrors },
+  } = useForm<IReg>();
+  const {
+    register: registerLogin,
+    handleSubmit: handleLogin,
+    formState: { errors: loginErrors },
+  } = useForm<ILogin>();
 
   const dispatch = useAppDispatch();
   const [loginUser, { isSuccess: isLoginSuccess, data }] =
@@ -54,7 +61,9 @@ function AuthModal({ setOpen, open }: IProps) {
         <div className="bg-[#1D1D1D] pt-5 flex gap-8 pr-5">
           <div className="w-25 h-24 bg-[#C53720]"></div>
           <div className="text-white mt-2.5">
-            <p className="font-bold uppercase text-[24px]">обратный звонок</p>
+            <p className="font-bold uppercase text-[24px]">
+              {isLogin ? "логин" : "регистрация"}
+            </p>
             <p className="text-[12px] font-medium">
               Представьтесь, мы вам перезвоним.
             </p>
@@ -81,15 +90,76 @@ function AuthModal({ setOpen, open }: IProps) {
             className="bg-white p-5 flex flex-col"
           >
             <div className="flex flex-col gap-4">
-              <InputField label="Почта" />
-              <InputField label="Пароль " type="password" />
+              <InputField
+                register={registerLogin("email", {
+                  required: "Поле обязательное для заполнения",
+                })}
+                label="Почта"
+                type="email"
+                isError={loginErrors.email?.message}
+              />
+              <InputField
+                register={registerLogin("password", {
+                  required: "Поле обязательное для заполнения",
+                })}
+                label="Пароль "
+                type="password"
+                isError={loginErrors.password?.message}
+              />
             </div>
-            <button className="uppercase text-[12px] font-bold text-[#C53720] py-3 px-5 border-4 transition-all cursor-pointer border-[#C53720] leading-2 ml-auto mt-4 hover:bg-[#C53720] hover:text-white">
-              Login
-            </button>
+            <div className="flex items-center justify-between">
+              <p
+                className="text-(--prime) font-medium cursor-pointer"
+                onClick={() => setIsLogin(false)}
+              >
+                Нет аккаунта?
+              </p>
+              <button className="uppercase text-[12px] font-bold text-[#C53720] py-3 px-5 border-4 transition-all cursor-pointer border-[#C53720] leading-2 ml-auto mt-4 hover:bg-[#C53720] hover:text-white">
+                Login
+              </button>
+            </div>
           </form>
         ) : (
-          <form onSubmit={handleReg(submitReg)}></form>
+          <form
+            className="bg-white p-5 flex flex-col"
+            onSubmit={handleReg(submitReg)}
+          >
+            <InputField
+              register={registerReg("name", {
+                required: "Поле обязательное для заполнения",
+              })}
+              label="Ваше имя"
+              type="text"
+              isError={regErrors.name?.message}
+            />
+            <InputField
+              register={registerReg("email", {
+                required: "Поле обязательное для заполнения",
+              })}
+              label="Почта"
+              type="email"
+              isError={regErrors.email?.message}
+            />
+            <InputField
+              register={registerReg("password", {
+                required: "Поле обязательное для заполнения",
+              })}
+              label="Пароль"
+              type="password"
+              isError={regErrors.password?.message}
+            />
+            <div className="flex items-center justify-between">
+              <p
+                className="text-(--prime) font-medium cursor-pointer"
+                onClick={() => setIsLogin(true)}
+              >
+                Есть аккаунт?
+              </p>
+              <button className="uppercase text-[12px] font-bold text-[#C53720] py-3 px-5 border-4 transition-all cursor-pointer border-[#C53720] leading-2 ml-auto mt-4 hover:bg-[#C53720] hover:text-white">
+                Register
+              </button>
+            </div>
+          </form>
         )}
       </div>
     </div>,
