@@ -1,3 +1,5 @@
+import ProductCard from "@/components/ui/ProductCard";
+
 function CatalogPage() {
   return (
     <section>
@@ -29,6 +31,12 @@ function CatalogPage() {
             </svg>
           </li>
         </ul>
+      </div>
+      <div className="grid grid-cols-3 gap-6">
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
       </div>
     </section>
   );
