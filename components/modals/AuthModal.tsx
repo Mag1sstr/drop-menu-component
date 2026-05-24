@@ -53,8 +53,6 @@ function AuthModal({ setOpen, open }: IProps) {
     }
   }, [isLoginSuccess]);
 
-  console.log(data);
-
   return createPortal(
     <div
       onMouseDown={() => setOpen(false)}
