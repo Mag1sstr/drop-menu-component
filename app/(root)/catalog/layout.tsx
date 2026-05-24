@@ -18,7 +18,7 @@ function CatalogLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Breadcrumbs />
-      <section className="bg-white text-[#1D1D1D]">
+      <section className="bg-[#EDEDED] text-[#1D1D1D] pt-22">
         <div className="container">
           <h1 className="text-[36px] font-bold mb-9 uppercase">Каталог</h1>
           <div className="flex items-start gap-6">

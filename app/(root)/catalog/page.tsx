@@ -1,7 +1,7 @@
 function CatalogPage() {
   return (
     <section>
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-5">
         <ul className="flex [&>li]:flex [&>li]:items-center [&>li]:gap-1 text-[14px] font-medium uppercase">
           <li className="uppercase mr-5 ">Сортировать</li>
           <li className="text-[#1D1D1D]/50 mr-2">
