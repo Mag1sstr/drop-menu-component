@@ -11,3 +11,11 @@ export interface IUser {
   role: "customer" | "admin";
   avatar: string;
 }
+
+export interface IProduct {
+  title: string;
+  price: number;
+  images: string[];
+  slug: string;
+  id: number;
+}

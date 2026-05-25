@@ -17,7 +17,10 @@ function ProductCard({ title, description, price }: IProps) {
       </div>
       <div className="flex-1 flex flex-col">
         <div>
-          <h2 className="text-[20px] uppercase font-medium mb-5 transition-all group-hover:text-(--prime)">
+          <h2
+            title={title}
+            className="text-[20px] uppercase font-medium mb-5 transition-all group-hover:text-(--prime) overflow-hidden h-15 text-ellipsis line-clamp-2"
+          >
             {title ?? "MAGNUM 60Ah"}
           </h2>
           <p className="font-bold text-[28px] mb-3">{price ?? 2100} руб.</p>

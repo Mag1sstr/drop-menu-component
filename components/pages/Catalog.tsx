@@ -1,15 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
 import ProductCard from "../ui/ProductCard";
+import { IProduct } from "@/app/types";
 
 function Catalog() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<IProduct[]>([]);
 
   useEffect(() => {
     fetch("https://api.escuelajs.co/api/v1/products")
       .then((res) => res.json())
-      .then((data) => setData(data));
+      .then((data: IProduct[]) => setData(data));
   }, []);
+
+  console.log(data);
+
   return (
     <section>
       <div className="flex justify-between mb-5">
@@ -42,10 +46,9 @@ function Catalog() {
         </ul>
       </div>
       <div className="grid grid-cols-3 gap-6">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {data.map((card) => (
+          <ProductCard key={card.id} {...card} />
+        ))}
       </div>
     </section>
   );
