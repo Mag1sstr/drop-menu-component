@@ -1,9 +1,11 @@
 "use client";
 import { useState } from "react";
 import Button from "./Button";
+import { useCart } from "@/store/zustand/useCart";
 
 function Cart() {
   const [open, setOpen] = useState(false);
+  const { getCartLength } = useCart();
   return (
     <div className="relative flex items-center gap-2">
       <button
@@ -50,7 +52,7 @@ function Cart() {
         </svg>
       </button>
       <div className="w-8 h-8 rounded-full bg-[#C53720] flex items-center justify-center text-white font-bold">
-        2
+        {getCartLength()}
       </div>
 
       <div

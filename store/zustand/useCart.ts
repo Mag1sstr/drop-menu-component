@@ -11,6 +11,7 @@ interface ICartStore {
   increaseCartItem: (id: number) => void;
   decreaseCartItem: (id: number) => void;
   clearCart: () => void;
+  getCartLength: () => number;
 }
 
 export const useCart = create<ICartStore>()(
@@ -35,6 +36,8 @@ export const useCart = create<ICartStore>()(
         })),
       clearCart: () => set({ cart: [] }),
       getCartLength: () => get().cart.length,
+      getCartTotalPrice: () =>
+        get().cart.reduce((acc, el) => acc + el.price * el.count, 0),
     }),
     {
       name: "cart",
