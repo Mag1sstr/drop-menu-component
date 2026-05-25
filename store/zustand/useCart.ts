@@ -6,11 +6,16 @@ interface ICart extends IProduct {
 }
 interface ICartStore {
   cart: ICart[];
+  addCartItem: (item: ICart) => void;
+  deleteCartItem: (id: number) => void;
+  increaseCartItem: (id: number) => void;
+  decreaseCartItem: (id: number) => void;
+  clearCart: () => void;
 }
 
 export const useCart = create<ICartStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       cart: [],
       addCartItem: (item: ICart) =>
         set((state) => ({ cart: [...state.cart, item] })),
@@ -29,7 +34,13 @@ export const useCart = create<ICartStore>()(
           ),
         })),
       clearCart: () => set({ cart: [] }),
+      getCartLength: () => get().cart.length,
     }),
-    { name: "cart" },
+    {
+      name: "cart",
+      partialize: (state) => ({
+        cart: state.cart,
+      }),
+    },
   ),
 );

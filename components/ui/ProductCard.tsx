@@ -1,12 +1,14 @@
+import { useCart } from "@/store/zustand/useCart";
 import Button from "./Button";
+import { IProduct } from "@/app/types";
 
-interface IProps {
-  title?: string;
-  description?: string;
-  price?: number;
-}
+interface IProps extends IProduct {}
 
-function ProductCard({ title, description, price }: IProps) {
+function ProductCard(props: IProps) {
+  const { title, description, price, id } = props;
+  const { cart, addCartItem } = useCart();
+
+  const isInCart = cart.some((el) => el.id === id);
   return (
     <div className="relative px-5 py-6.75 border-4 border-[#3CC051] font-medium flex flex-col bg-white group">
       <div className="uppercase text-[10px] text-white w-22 text-center py-2 absolute bg-[#3CC051] right-0 top-0">
@@ -29,6 +31,16 @@ function ProductCard({ title, description, price }: IProps) {
           {description ??
             "Цена действительна при сдаче старого аккумулятора аналогичной емкости в лом"}
         </p>
+        <Button
+          disabled={isInCart}
+          className="text-(--prime)! w-full mt-auto leading-3 mb-5 cursor-pointer"
+          onClick={() => {
+            addCartItem({ ...props, count: 1 });
+          }}
+        >
+          {isInCart ? "в корзине" : "Добавить в корзину"}
+        </Button>
+
         <Button className="text-(--prime)! w-full mt-auto">ПОДРОБНЕЕ</Button>
       </div>
     </div>

@@ -18,4 +18,5 @@ export interface IProduct {
   images: string[];
   slug: string;
   id: number;
+  description: string;
 }
