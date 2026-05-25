@@ -12,6 +12,7 @@ interface ICartStore {
   decreaseCartItem: (id: number) => void;
   clearCart: () => void;
   getCartLength: () => number;
+  getCartTotalPrice: () => number;
 }
 
 export const useCart = create<ICartStore>()(

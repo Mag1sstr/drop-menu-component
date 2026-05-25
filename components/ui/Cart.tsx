@@ -5,7 +5,7 @@ import { useCart } from "@/store/zustand/useCart";
 
 function Cart() {
   const [open, setOpen] = useState(false);
-  const { getCartLength } = useCart();
+  const { getCartLength, getCartTotalPrice } = useCart();
   return (
     <div className="relative flex items-center gap-2">
       <button
@@ -63,7 +63,7 @@ function Cart() {
             ИТОГ:
           </p>
           <div className="flex items-center justify-between">
-            <strong className="text-[48px]">4398 руб.</strong>
+            <strong className="text-[48px]">{getCartTotalPrice()} руб.</strong>
             <Button className="text-(--prime)! py-4.5 px-5">
               ПЕРЕЙТИ В КОРЗИНУ
             </Button>
