@@ -1,18 +1,21 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
+import { useRef } from "react";
 
 function Breadcrumbs() {
   const location = usePathname().split("/").filter(Boolean);
   const router = useRouter();
+  const ref = useRef<HTMLDivElement>(null);
 
   const fullPath = ["Главная", ...location];
 
   const breadcrumbsNames: Record<string, string> = {
     catalog: "каталог",
   };
+
   return (
     fullPath.length - 1 > 0 && (
-      <div className="bg-white">
+      <div ref={ref} className="bg-white">
         <div className="container">
           <div className="py-4 flex gap-4">
             {fullPath.map((el, i) => (

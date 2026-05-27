@@ -12,10 +12,8 @@ function Catalog() {
       .then((data: IProduct[]) => setData(data));
   }, []);
 
-  console.log(data);
-
   return (
-    <section>
+    <section className="h-500">
       <div className="flex justify-between mb-5">
         <ul className="flex [&>li]:flex [&>li]:items-center [&>li]:gap-1 text-[14px] font-medium uppercase">
           <li className="uppercase mr-5 ">Сортировать</li>
