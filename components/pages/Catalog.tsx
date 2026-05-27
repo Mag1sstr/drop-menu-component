@@ -7,6 +7,7 @@ import { useFilters } from "@/store/zustand/useFilters";
 function Catalog() {
   const [data, setData] = useState<IProduct[]>([]);
   const { rangePrice, setMaxPrice } = useFilters();
+
   const filters =
     "?" +
     new URLSearchParams({
@@ -19,12 +20,12 @@ function Catalog() {
     fetch("https://api.escuelajs.co/api/v1/products" + filters)
       .then((res) => res.json())
       .then((data: IProduct[]) => setData(data));
-  }, []);
+  }, [rangePrice]);
 
   useEffect(() => {
     if (data && data.length > 0)
       setMaxPrice(Math.max(...data.map((el) => el.price)).toString());
-  }, [data]);
+  }, []);
 
   return (
     <section className="h-500">

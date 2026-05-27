@@ -9,7 +9,7 @@ interface IFilters {
 }
 export const useFilters = create<IFilters>((set) => ({
   rangePrice: {
-    price_min: "",
+    price_min: "1",
     price_max: "",
   },
   setMaxPrice: (price: string) =>
