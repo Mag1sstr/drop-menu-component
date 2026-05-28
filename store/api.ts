@@ -1,4 +1,4 @@
-import { IUser } from "@/app/types";
+import { IProduct, IUser } from "@/app/types";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { RootState } from "./store";
@@ -20,6 +20,11 @@ export const api = createApi({
     getProducts: builder.query({
       query: () => ({
         url: "/products",
+      }),
+    }),
+    getSingleProduct: builder.query<IProduct, string>({
+      query: (slug) => ({
+        url: `/products/slug/${slug}`,
       }),
     }),
     loginUser: builder.mutation<
@@ -52,4 +57,5 @@ export const {
   useLoginUserMutation,
   useGetUserQuery,
   useCreateUserMutation,
+  useGetSingleProductQuery,
 } = api;
