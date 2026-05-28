@@ -1,12 +1,14 @@
 import { useCart } from "@/store/zustand/useCart";
 import Button from "./Button";
 import { IProduct } from "@/app/types";
+import { useRouter } from "next/navigation";
 
 interface IProps extends IProduct {}
 
 function ProductCard(props: IProps) {
-  const { title, description, price, id } = props;
+  const { title, description, price, id, slug } = props;
   const { cart, addCartItem } = useCart();
+  const router = useRouter();
 
   const isInCart = cart.some((el) => el.id === id);
   return (
@@ -41,7 +43,12 @@ function ProductCard(props: IProps) {
           {isInCart ? "в корзине" : "Добавить в корзину"}
         </Button>
 
-        <Button className="text-(--prime)! w-full mt-auto">ПОДРОБНЕЕ</Button>
+        <Button
+          onClick={() => router.push(`/catalog/${slug}`)}
+          className="text-(--prime)! w-full mt-auto"
+        >
+          ПОДРОБНЕЕ
+        </Button>
       </div>
     </div>
   );
