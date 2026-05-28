@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProductCard from "../ui/ProductCard";
 import { IProduct } from "@/app/types";
 import { useFilters } from "@/store/zustand/useFilters";
@@ -8,13 +8,13 @@ function Catalog() {
   const [data, setData] = useState<IProduct[]>([]);
   const { rangePrice, setMaxPrice } = useFilters();
 
+  const initialized = useRef(false);
+
   const filters =
     "?" +
     new URLSearchParams({
       ...rangePrice,
     });
-
-  console.log(filters);
 
   useEffect(() => {
     fetch("https://api.escuelajs.co/api/v1/products" + filters)
@@ -23,9 +23,11 @@ function Catalog() {
   }, [rangePrice]);
 
   useEffect(() => {
-    if (data && data.length > 0)
+    if (!initialized.current && data.length > 0) {
       setMaxPrice(Math.max(...data.map((el) => el.price)).toString());
-  }, []);
+      initialized.current = true;
+    }
+  }, [data]);
 
   return (
     <section className="h-500">
