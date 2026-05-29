@@ -5,7 +5,13 @@ import FilterItem from "../ui/FilterItem";
 import { useGetCategoriesQuery } from "@/store/api";
 
 function Filters() {
-  const { setMaxPrice, setMinPrice, rangePrice } = useFilters();
+  const {
+    setMaxPrice,
+    setMinPrice,
+    rangePrice,
+    categorySlug,
+    setCategorySlug,
+  } = useFilters();
   const { data: categories } = useGetCategoriesQuery();
 
   return (
@@ -13,8 +19,9 @@ function Filters() {
       <FilterItem label="Категории">
         {categories?.map(({ name, slug }) => (
           <div
+            onClick={() => setCategorySlug(categorySlug === slug ? null : slug)}
             key={slug}
-            className="bg-[#1d1d1d]  p-2 pr-3 text-white/50 uppercase text-[12px] font-medium flex items-center justify-between transition-all hover:bg-[#2D2D2D]"
+            className={` p-2 pr-3 text-white/50 uppercase text-[12px] font-medium flex items-center justify-between transition-all hover:bg-[#2D2D2D] ${slug === categorySlug ? "bg-[#2D2D2D]" : "bg-[#1d1d1d]"}`}
           >
             {name}
           </div>
