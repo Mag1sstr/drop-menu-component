@@ -9,8 +9,6 @@ function SingleProductPage() {
   // const inStock = Math.round(Math.random());
   const inStock = true;
 
-  console.log(inStock);
-
   if (isLoading) return <div className="text-3xl">Загрузка...</div>;
 
   return (

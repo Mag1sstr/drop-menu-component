@@ -27,6 +27,11 @@ export const api = createApi({
         url: `/products/slug/${slug}`,
       }),
     }),
+    getCategories: builder.query<void, { name: string; slug: string }>({
+      query: () => ({
+        url: "/categories",
+      }),
+    }),
     loginUser: builder.mutation<
       { access_token: string },
       { email: string; password: string }
@@ -58,4 +63,5 @@ export const {
   useGetUserQuery,
   useCreateUserMutation,
   useGetSingleProductQuery,
+  useGetCategoriesQuery,
 } = api;
