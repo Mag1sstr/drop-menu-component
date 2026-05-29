@@ -27,7 +27,7 @@ export const api = createApi({
         url: `/products/slug/${slug}`,
       }),
     }),
-    getCategories: builder.query<void, { name: string; slug: string }>({
+    getCategories: builder.query<{ name: string; slug: string }[], void>({
       query: () => ({
         url: "/categories",
       }),
