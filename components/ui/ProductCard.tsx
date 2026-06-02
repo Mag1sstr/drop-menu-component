@@ -22,6 +22,7 @@ function ProductCard(props: IProps) {
       <div className="flex-1 flex flex-col">
         <div>
           <h2
+            onClick={() => router.push(`/catalog/${slug}`)}
             title={title}
             className="text-[20px] uppercase font-medium mb-5 transition-all group-hover:text-(--prime) overflow-hidden h-15 text-ellipsis line-clamp-2"
           >
