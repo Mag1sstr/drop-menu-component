@@ -3,9 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import ProductCard from "../ui/ProductCard";
 import { IProduct } from "@/app/types";
 import { useFilters } from "@/store/zustand/useFilters";
+import { useFetch } from "@/hooks/useFetch";
 
 function Catalog() {
-  const [data, setData] = useState<IProduct[]>([]);
+  // const [data, setData] = useState<IProduct[]>([]);
   const { rangePrice, setMaxPrice, categorySlug } = useFilters();
 
   const initialized = useRef(false);
@@ -17,14 +18,17 @@ function Catalog() {
       categorySlug: categorySlug || "",
     });
 
-  useEffect(() => {
-    fetch("https://api.escuelajs.co/api/v1/products" + filters)
-      .then((res) => res.json())
-      .then((data: IProduct[]) => setData(data));
-  }, [rangePrice, categorySlug]);
+  const { data, isLoading, isError } = useFetch<IProduct[]>(
+    "https://api.escuelajs.co/api/v1/products" + filters,
+  );
+  // useEffect(() => {
+  //   fetch("https://api.escuelajs.co/api/v1/products" + filters)
+  //     .then((res) => res.json())
+  //     .then((data: IProduct[]) => setData(data));
+  // }, [rangePrice, categorySlug]);
 
   useEffect(() => {
-    if (!initialized.current && data.length > 0) {
+    if (!initialized.current && data && data.length > 0) {
       setMaxPrice(Math.max(...data.map((el) => el.price)).toString());
       initialized.current = true;
     }
@@ -61,8 +65,11 @@ function Catalog() {
           </li>
         </ul>
       </div>
+      {isLoading && <p className="text-3xl text-center">ЗАГРУЗКА...</p>}
+      {isError && <p className="text-3xl text-center">{isError}</p>}
+
       <div className="grid grid-cols-3 gap-6">
-        {data.map((card) => (
+        {data?.map((card) => (
           <ProductCard key={card.id} {...card} />
         ))}
       </div>
