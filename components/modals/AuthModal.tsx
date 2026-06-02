@@ -5,6 +5,7 @@ import { useAppDispatch } from "@/store/store";
 import { setToken } from "@/store/authSlice";
 import InputField from "../ui/InputField";
 import { SubmitHandler, useForm } from "react-hook-form";
+import ModalWrapper from "./ModalWrapper";
 interface IProps {
   open: boolean;
   setOpen: (b: boolean) => void;
@@ -53,15 +54,9 @@ function AuthModal({ setOpen, open }: IProps) {
     }
   }, [isLoginSuccess]);
 
-  return createPortal(
-    <div
-      onMouseDown={() => setOpen(false)}
-      className={`fixed z-50 inset-0 bg-black/70 flex items-center justify-center transition-all ${open ? "visible opacity-100 mt-0" : "invisible opacity-0 mt-5"}`}
-    >
-      <div
-        onMouseDown={(e) => e.stopPropagation()}
-        className="w-[500px] border-t-4 border-(--prime)"
-      >
+  return (
+    <ModalWrapper open={open} setOpen={setOpen}>
+      <div className="w-[500px] border-t-4 border-(--prime)">
         <div className="bg-[#1D1D1D] pt-5 flex gap-8 pr-5">
           <div className="w-25 h-24 bg-[#C53720]"></div>
           <div className="text-white mt-2.5">
@@ -166,8 +161,7 @@ function AuthModal({ setOpen, open }: IProps) {
           </form>
         )}
       </div>
-    </div>,
-    document.body,
+    </ModalWrapper>
   );
 }
 
