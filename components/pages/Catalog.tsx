@@ -6,7 +6,6 @@ import { useFilters } from "@/store/zustand/useFilters";
 import { useFetch } from "@/hooks/useFetch";
 
 function Catalog() {
-  // const [data, setData] = useState<IProduct[]>([]);
   const { rangePrice, setMaxPrice, categorySlug } = useFilters();
 
   const initialized = useRef(false);
@@ -21,11 +20,6 @@ function Catalog() {
   const { data, isLoading, isError } = useFetch<IProduct[]>(
     "https://api.escuelajs.co/api/v1/products" + filters,
   );
-  // useEffect(() => {
-  //   fetch("https://api.escuelajs.co/api/v1/products" + filters)
-  //     .then((res) => res.json())
-  //     .then((data: IProduct[]) => setData(data));
-  // }, [rangePrice, categorySlug]);
 
   useEffect(() => {
     if (!initialized.current && data && data.length > 0) {

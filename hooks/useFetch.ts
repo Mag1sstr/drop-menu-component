@@ -30,6 +30,6 @@ export const useFetch = <T>(url: string, params?: IParams): IReturn<T> => {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [url]);
   return { data, isLoading, isError };
 };
