@@ -4,7 +4,6 @@ import { useState } from "react";
 interface IParams<T> {
   url: string;
   method: "POST" | "PUT" | "DELETE";
-  body?: BodyInit | T;
 }
 
 type IReturn<T, B> = [
@@ -15,16 +14,12 @@ type IReturn<T, B> = [
     isError: string;
   },
 ];
-const useMutation = <T, B>({
-  url,
-  method,
-  body,
-}: IParams<B>): IReturn<T, B> => {
+const useMutation = <T, B>({ url, method }: IParams<B>): IReturn<T, B> => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState("");
 
-  const mutate = async () => {
+  const mutate = async (body: B) => {
     try {
       setIsLoading(true);
       const res = await fetch(url, {
