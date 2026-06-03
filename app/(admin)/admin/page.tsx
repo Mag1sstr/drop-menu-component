@@ -2,14 +2,14 @@
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
 import useMutation from "@/hooks/useMutation";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 function AdminPage() {
   const [form, setForm] = useState({
     name: "",
     image: "https://placeimg.com/640/480/any",
   });
-  const [createCategory] = useMutation<
+  const [createCategory, { data }] = useMutation<
     { name: string; image: string },
     { name: string; image: string }
   >({
@@ -17,9 +17,13 @@ function AdminPage() {
     method: "POST",
   });
 
-  const onSubmit = () => {
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
     createCategory(form);
   };
+
+  console.log(data);
+
   return (
     <section className="py-10">
       <div className="container">
