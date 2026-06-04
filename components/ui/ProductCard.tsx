@@ -34,22 +34,24 @@ function ProductCard(props: IProps) {
           {description ??
             "Цена действительна при сдаче старого аккумулятора аналогичной емкости в лом"}
         </p>
-        <Button
-          disabled={isInCart}
-          className="text-(--prime)! w-full mt-auto leading-3 mb-5 cursor-pointer"
-          onClick={() => {
-            addCartItem({ ...props, count: 1 });
-          }}
-        >
-          {isInCart ? "в корзине" : "Добавить в корзину"}
-        </Button>
+        <div className="mt-auto">
+          <Button
+            disabled={isInCart}
+            className="text-(--prime)! w-full mt-auto leading-3 mb-5 cursor-pointer"
+            onClick={() => {
+              addCartItem({ ...props, count: 1 });
+            }}
+          >
+            {isInCart ? "в корзине" : "Добавить в корзину"}
+          </Button>
 
-        <Button
-          onClick={() => router.push(`/catalog/${slug}`)}
-          className="text-(--prime)! w-full mt-auto"
-        >
-          ПОДРОБНЕЕ
-        </Button>
+          <Button
+            onClick={() => router.push(`/catalog/${slug}`)}
+            className="text-(--prime)! w-full "
+          >
+            ПОДРОБНЕЕ
+          </Button>
+        </div>
       </div>
     </div>
   );
