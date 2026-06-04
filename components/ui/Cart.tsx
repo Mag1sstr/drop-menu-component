@@ -96,6 +96,7 @@ function Cart() {
             <div className="flex-1">
               <h3 className="text-(--prime) font-medium text-[20px] mb-4">
                 {item.title}
+                {item.count}
               </h3>
               <div className="flex justify-between items-center">
                 <div className="py-3 px-4.5 bg-[#3CC051] text-white text-[10px] uppercase font-bold">
