@@ -20,7 +20,7 @@ function ProductCard(props: IProps) {
   const isInCart = cart.some((el) => el.id === id);
   const cartItemCount = cart.find((el) => el.id === props.id)?.count;
   return (
-    <div className="relative px-5 py-6.75 border-4 border-[#3CC051] font-medium flex flex-col bg-white group">
+    <div className="relative px-5 py-6.75 border-4 border-[#3CC051] font-medium flex flex-col bg-(--bg-card) group">
       <div className="uppercase text-[10px] text-white w-22 text-center py-2 absolute bg-[#3CC051] right-0 top-0">
         В НАЛИЧИИ
       </div>

@@ -15,7 +15,7 @@ function Breadcrumbs() {
 
   return (
     fullPath.length - 1 > 0 && (
-      <div ref={ref} className="bg-white">
+      <div ref={ref} className="bg-(--bg-breadcrumbs)">
         <div className="container">
           <div className="py-4 flex gap-4">
             {fullPath.map((el, i) => (
@@ -30,7 +30,7 @@ function Breadcrumbs() {
 
                   router.push(path);
                 }}
-                className={`flex items-center gap-4  font-medium text-[12px] uppercase leading-none ${el === fullPath.at(-1) ? "text-[#1D1D1D]" : "text-[#C53720] cursor-pointer"}`}
+                className={`flex items-center gap-4  font-medium text-[12px] uppercase leading-none ${el === fullPath.at(-1) ? "text-(--text)" : "text-[#C53720] cursor-pointer"}`}
               >
                 {breadcrumbsNames[el] || el}
                 {el !== fullPath.at(-1) && (

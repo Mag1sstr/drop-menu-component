@@ -16,6 +16,10 @@
 }
 :root {
   --prime: #d42e12;
+  --bg-card: #fff;
+  --bg: #ededed;
+  --text: #1d1d1d;
+  --bg-breadcrumbs: #fff;
 }
 .container {
   max-width: 1158px;
@@ -23,7 +27,7 @@
   margin: 0 auto;
 }
 body {
-  background: #222;
+  background: var(--bg);
   font-family: "Geometria";
 }
 
@@ -33,4 +37,11 @@ body {
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+[data-theme="dark"] {
+  --bg-card: #333;
+  --bg: #222;
+  --text: #fff;
+  --bg-breadcrumbs: #000;
 }
