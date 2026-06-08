@@ -45,3 +45,16 @@ body {
   --text: #fff;
   --bg-breadcrumbs: #000;
 }
+
+.scrollPartners {
+  animation: partnersAnim 40s infinite linear;
+}
+@keyframes partnersAnim {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
