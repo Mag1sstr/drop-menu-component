@@ -4,6 +4,7 @@ import ProductCard from "../ui/ProductCard";
 import { IProduct } from "@/app/types";
 import { useFilters } from "@/store/zustand/useFilters";
 import { useFetch } from "@/hooks/useFetch";
+import { usePagination } from "@/hooks/usePagination";
 
 function Catalog() {
   const { rangePrice, setMaxPrice, categorySlug } = useFilters();
@@ -20,6 +21,9 @@ function Catalog() {
   const { data, isLoading, isError } = useFetch<IProduct[]>(
     "https://api.escuelajs.co/api/v1/products" + filters,
   );
+
+  const { currentPage, setCurrentPage, startIndex, endIndex, totalPages } =
+    usePagination({ data, pageSize: 9 });
 
   useEffect(() => {
     if (!initialized.current && data && data.length > 0) {
@@ -63,7 +67,7 @@ function Catalog() {
       {isError && <p className="text-3xl text-center">{isError}</p>}
 
       <div className="grid grid-cols-3 gap-6">
-        {data?.map((card) => (
+        {data?.slice(startIndex, endIndex).map((card) => (
           <ProductCard key={card.id} {...card} />
         ))}
       </div>
