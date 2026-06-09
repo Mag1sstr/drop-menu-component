@@ -71,6 +71,18 @@ function Catalog() {
           <ProductCard key={card.id} {...card} />
         ))}
       </div>
+
+      <div className="flex">
+        {totalPages.map((page) => (
+          <div
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={`border-4 ${page === currentPage ? "bg-(--prime) text-white border-(--prime)" : "text-[#A5A5A5] border-[#A5A5A5]"} transition-all text-[14px]  w-13 h-13 cursor-pointer font-bold flex items-center justify-center border-collapse`}
+          >
+            {page}
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
