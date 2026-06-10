@@ -46,6 +46,7 @@ function Slider() {
       <div className="absolute z-10 bottom-14.5 left-1/2 -translate-x-1/2 flex gap-3">
         {[...Array(banners.length)].map((_, i) => (
           <div
+            key={i}
             onClick={() => setCurrentBanner(i)}
             className={`w-28 h-1 transition-all ${currentBanner === i ? "bg-(--prime)" : "bg-white"} cursor-pointer`}
           ></div>

@@ -22,8 +22,8 @@ function DropItem({ title, path, children }: IDropMenu) {
 
       {children && (
         <div className="left-full opacity-0 group-hover:opacity-100 absolute -top-3 w-[228px] py-3 bg-black/70">
-          {children.map((item) => (
-            <DropItem key={item.title} {...item} />
+          {children.map((item, i) => (
+            <DropItem key={i} {...item} />
           ))}
         </div>
       )}

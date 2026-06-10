@@ -20,6 +20,7 @@ function Breadcrumbs() {
           <div className="py-4 flex gap-4">
             {fullPath.map((el, i) => (
               <div
+                key={el}
                 onClick={() => {
                   const path =
                     "/" +

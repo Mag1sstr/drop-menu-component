@@ -32,7 +32,7 @@ function Cart() {
           <path
             d="M33.3594 11L29.9844 23H14V11H33.3594Z"
             stroke={open ? "#C53720" : "white"}
-            stroke-width="4"
+            strokeWidth="4"
           />
           <path
             d="M14 4L14 24.5"

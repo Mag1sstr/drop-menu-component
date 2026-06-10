@@ -11,8 +11,8 @@ function DropdownMenu({ data, className }: IProps) {
     <div
       className={`w-[228px] py-3 bg-black/70 absolute left-0 top-full ${className}`}
     >
-      {data.map((item) => (
-        <DropItem key={item.title} {...item} />
+      {data.map((item, i) => (
+        <DropItem key={i} {...item} />
       ))}
     </div>
   );

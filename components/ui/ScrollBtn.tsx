@@ -49,7 +49,7 @@ function ScrollBtn() {
             stroke="#C53720"
             strokeWidth="4"
           />
-          <path d="M12 32L26 20L40 32" stroke="#C53720" stroke-width="4" />
+          <path d="M12 32L26 20L40 32" stroke="#C53720" strokeWidth="4" />
         </svg>
       </button>
       <button
@@ -73,7 +73,7 @@ function ScrollBtn() {
             stroke="#C53720"
             strokeWidth="4"
           />
-          <path d="M12 32L26 20L40 32" stroke="#C53720" stroke-width="4" />
+          <path d="M12 32L26 20L40 32" stroke="#C53720" strokeWidth="4" />
         </svg>
       </button>
     </div>

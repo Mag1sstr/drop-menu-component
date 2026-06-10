@@ -25,6 +25,36 @@ function Catalog() {
   const { currentPage, setCurrentPage, startIndex, endIndex, totalPages } =
     usePagination({ data, pageSize: 9 });
 
+  const pages: any[] = (() => {
+    if (totalPages.length <= 5) {
+      return [...Array(totalPages.length)].map((_, i) => i + 1);
+    }
+    if (totalPages.length > 5 && currentPage < 3) {
+      return [1, 2, 3, "...", totalPages.length];
+    }
+    if (currentPage >= 3 && currentPage <= totalPages.length - 3) {
+      return [
+        1,
+        "...",
+        currentPage - 1,
+        currentPage,
+        currentPage + 1,
+        "...",
+        totalPages.length,
+      ];
+    }
+    if (currentPage >= totalPages.length - 2) {
+      return [
+        1,
+        "...",
+        totalPages.length - 2,
+        totalPages.length - 1,
+        totalPages.length,
+      ];
+    }
+    return [];
+  })();
+
   useEffect(() => {
     if (!initialized.current && data && data.length > 0) {
       setMaxPrice(Math.max(...data.map((el) => el.price)).toString());
@@ -73,14 +103,15 @@ function Catalog() {
       </div>
 
       <div className="flex">
-        {totalPages.map((page) => (
-          <div
+        {pages.map((page) => (
+          <button
             key={page}
+            disabled={page === "..."}
             onClick={() => setCurrentPage(page)}
-            className={`border-4 ${page === currentPage ? "bg-(--prime) text-white border-(--prime)" : "text-[#A5A5A5] border-[#A5A5A5]"} transition-all text-[14px]  w-13 h-13 cursor-pointer font-bold flex items-center justify-center border-collapse`}
+            className={`border-4 ${page === currentPage ? "bg-(--prime) text-white border-(--prime)" : "text-[#A5A5A5] border-[#A5A5A5]"} ${page === "..." ? "cursor-default" : "cursor-pointer"} transition-all text-[14px]  w-13 h-13 font-bold flex items-center justify-center border-collapse`}
           >
             {page}
-          </div>
+          </button>
         ))}
       </div>
     </section>
