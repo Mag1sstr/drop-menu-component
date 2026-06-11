@@ -6,11 +6,11 @@ interface IReturn {
   endIndex: number;
   totalPages: number;
 }
-export const usePagination = ({
+export const usePagination = <T>({
   data = [],
   pageSize = 9,
 }: {
-  data: any[] | null;
+  data: T[] | null;
   pageSize: number;
 }): IReturn => {
   const [currentPage, setCurrentPage] = useState(1);

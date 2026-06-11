@@ -5,9 +5,7 @@ import { setUser } from "@/store/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { createContext, useContext, useEffect, useState } from "react";
 
-interface IAuthContext {}
-
-export const AuthContext = createContext({} as IAuthContext);
+export const AuthContext = createContext({});
 
 export default function AuthContextProvider({
   children,

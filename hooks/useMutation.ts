@@ -1,7 +1,6 @@
-import { url } from "inspector";
 import { useState } from "react";
 
-interface IParams<T> {
+interface IParams {
   url: string;
   method: "POST" | "PUT" | "DELETE";
 }
@@ -14,7 +13,7 @@ type IReturn<T, B> = [
     isError: string;
   },
 ];
-const useMutation = <T, B>({ url, method }: IParams<B>): IReturn<T, B> => {
+const useMutation = <T, B>({ url, method }: IParams): IReturn<T, B> => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState("");

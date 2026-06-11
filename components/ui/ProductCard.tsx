@@ -4,9 +4,7 @@ import { IProduct } from "@/app/types";
 import { useRouter } from "next/navigation";
 import CounterBtn from "./CounterBtn";
 
-interface IProps extends IProduct {}
-
-function ProductCard(props: IProps) {
+function ProductCard(props: IProduct) {
   const { title, description, price, id, slug } = props;
   const {
     cart,

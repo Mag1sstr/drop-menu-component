@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "./Button";
 import { useCart } from "@/store/zustand/useCart";
 import { toast } from "react-toastify";
@@ -8,9 +8,6 @@ function Cart() {
   const [open, setOpen] = useState(false);
   const { cart, getCartLength, getCartTotalPrice, deleteCartItem } = useCart();
 
-  useEffect(() => {
-    if (cart.length < 1) setOpen(false);
-  }, [cart.length]);
   return (
     <div className="relative flex items-center gap-2">
       <button
@@ -73,7 +70,14 @@ function Cart() {
             className="relative p-6 flex gap-6 border-b-2 border-[#A5A5A5]"
           >
             <button
-              onClick={() => deleteCartItem(item.id)}
+              onClick={() => {
+                if (cart.length > 1) {
+                  deleteCartItem(item.id);
+                } else {
+                  deleteCartItem(item.id);
+                  setOpen(false);
+                }
+              }}
               className="cursor-pointer absolute top-4 right-6"
             >
               <svg
