@@ -1,7 +1,7 @@
 import { useState } from "react";
 interface IReturn {
   currentPage: number;
-  setCurrentPage: (n: number) => void;
+  setCurrentPage: (n: number | ((prev: number) => number)) => void;
   startIndex: number;
   endIndex: number;
   totalPages: number;
