@@ -4,7 +4,7 @@ interface IReturn {
   setCurrentPage: (n: number) => void;
   startIndex: number;
   endIndex: number;
-  totalPages: number[];
+  totalPages: number;
 }
 export const usePagination = ({
   data = [],
@@ -15,9 +15,7 @@ export const usePagination = ({
 }): IReturn => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = !!data
-    ? [...Array(Math.ceil(data.length / pageSize))].map((_, i) => i + 1)
-    : [];
+  const totalPages = !!data ? Math.ceil(data.length / pageSize) : 1;
 
   const startIndex = currentPage * pageSize - pageSize;
   const endIndex = startIndex + pageSize;

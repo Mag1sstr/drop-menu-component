@@ -10,6 +10,7 @@ function Catalog() {
   const { rangePrice, setMaxPrice, categorySlug } = useFilters();
 
   const initialized = useRef(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   const filters =
     "?" +
@@ -25,34 +26,35 @@ function Catalog() {
   const { currentPage, setCurrentPage, startIndex, endIndex, totalPages } =
     usePagination({ data, pageSize: 9 });
 
-  const pages: any[] = (() => {
-    if (totalPages.length <= 5) {
-      return [...Array(totalPages.length)].map((_, i) => i + 1);
+  const pages = (() => {
+    if (totalPages <= 5) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
-    if (totalPages.length > 5 && currentPage < 3) {
-      return [1, 2, 3, "...", totalPages.length];
+
+    if (currentPage <= 3) {
+      return [1, 2, 3, 4, "...", totalPages];
     }
-    if (currentPage >= 3 && currentPage <= totalPages.length - 3) {
+
+    if (currentPage >= totalPages - 2) {
       return [
         1,
         "...",
-        currentPage - 1,
-        currentPage,
-        currentPage + 1,
-        "...",
-        totalPages.length,
+        totalPages - 3,
+        totalPages - 2,
+        totalPages - 1,
+        totalPages,
       ];
     }
-    if (currentPage >= totalPages.length - 2) {
-      return [
-        1,
-        "...",
-        totalPages.length - 2,
-        totalPages.length - 1,
-        totalPages.length,
-      ];
-    }
-    return [];
+
+    return [
+      1,
+      "...",
+      currentPage - 1,
+      currentPage,
+      currentPage + 1,
+      "...",
+      totalPages,
+    ];
   })();
 
   useEffect(() => {
@@ -63,7 +65,7 @@ function Catalog() {
   }, [data]);
 
   return (
-    <section className="h-500">
+    <section ref={sectionRef} className="h-500">
       <div className="flex justify-between mb-5">
         <ul className="flex [&>li]:flex [&>li]:items-center [&>li]:gap-1 text-[14px] font-medium uppercase">
           <li className="uppercase mr-5 ">Сортировать</li>
@@ -94,20 +96,26 @@ function Catalog() {
         </ul>
       </div>
       {isLoading && <p className="text-3xl text-center">ЗАГРУЗКА...</p>}
-      {isError && <p className="text-3xl text-center">{isError}</p>}
+      {isError && <p className="+text-3xl text-center">{isError}</p>}
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-6 mb-10">
         {data?.slice(startIndex, endIndex).map((card) => (
           <ProductCard key={card.id} {...card} />
         ))}
       </div>
 
-      <div className="flex">
+      <div className="flex mb-10">
         {pages.map((page) => (
           <button
             key={page}
             disabled={page === "..."}
-            onClick={() => setCurrentPage(page)}
+            onClick={() => {
+              setCurrentPage(page as number);
+              sectionRef.current?.scrollIntoView({
+                block: "start",
+                behavior: "smooth",
+              });
+            }}
             className={`border-4 ${page === currentPage ? "bg-(--prime) text-white border-(--prime)" : "text-[#A5A5A5] border-[#A5A5A5]"} ${page === "..." ? "cursor-default" : "cursor-pointer"} transition-all text-[14px]  w-13 h-13 font-bold flex items-center justify-center border-collapse`}
           >
             {page}
