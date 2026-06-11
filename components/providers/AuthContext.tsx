@@ -1,9 +1,7 @@
-import { IUser } from "@/app/types";
-import { getLocalStorageValue } from "@/helpers/getLocalStorageValue";
 import { useGetUserQuery } from "@/store/api";
 import { setUser } from "@/store/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect } from "react";
 
 export const AuthContext = createContext({});
 

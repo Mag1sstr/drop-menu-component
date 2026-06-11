@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { useAuth } from "../providers/AuthContext";
 import AuthModal from "../modals/AuthModal";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { logout } from "@/store/authSlice";
@@ -9,6 +8,7 @@ function Profile() {
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const [openModal, setOpenModal] = useState(false);
+
   return (
     <>
       <button

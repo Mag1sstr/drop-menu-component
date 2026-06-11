@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import ProductCard from "../ui/ProductCard";
 import { IProduct } from "@/app/types";
 import { useFilters } from "@/store/zustand/useFilters";

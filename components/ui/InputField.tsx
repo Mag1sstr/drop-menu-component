@@ -1,5 +1,5 @@
 import { useId } from "react";
-import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
+import { UseFormRegisterReturn } from "react-hook-form";
 interface IProps {
   label?: string;
   placeholder?: string;

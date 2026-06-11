@@ -1,5 +1,4 @@
-import { createPortal } from "react-dom";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCreateUserMutation, useLoginUserMutation } from "@/store/api";
 import { useAppDispatch } from "@/store/store";
 import { setToken } from "@/store/authSlice";
@@ -32,13 +31,15 @@ function AuthModal({ setOpen, open }: IProps) {
     register: registerLogin,
     handleSubmit: handleLogin,
     formState: { errors: loginErrors },
+    getValues,
   } = useForm<ILogin>();
 
   const dispatch = useAppDispatch();
   const [loginUser, { isSuccess: isLoginSuccess, data: loginData }] =
     useLoginUserMutation();
 
-  const [createUser, { data }] = useCreateUserMutation();
+  const [createUser, { isSuccess: isRegSuccess, data }] =
+    useCreateUserMutation();
 
   const submitReg: SubmitHandler<IReg> = (data) => {
     createUser({ ...data, avatar: "https://picsum.photos/800" });
@@ -52,7 +53,16 @@ function AuthModal({ setOpen, open }: IProps) {
       dispatch(setToken(loginData.access_token));
       setOpen(false);
     }
-  }, [isLoginSuccess]);
+  }, [isLoginSuccess, loginData, dispatch, setOpen]);
+  useEffect(() => {
+    const { email, password } = getValues();
+    if (isRegSuccess) {
+      loginUser({
+        email,
+        password,
+      });
+    }
+  }, [isRegSuccess, getValues, loginUser]);
 
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
