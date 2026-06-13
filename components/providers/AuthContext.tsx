@@ -12,16 +12,16 @@ export default function AuthContextProvider({
 }) {
   const { token } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const { data, isSuccess } = useGetUserQuery(undefined, {
+  const { data } = useGetUserQuery(undefined, {
     skip: !token,
     refetchOnMountOrArgChange: true,
   });
 
   useEffect(() => {
-    if (isSuccess && data && token) {
+    if (data && token) {
       dispatch(setUser(data));
     }
-  }, [token, isSuccess]);
+  }, [token, data]);
 
   return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>;
 }

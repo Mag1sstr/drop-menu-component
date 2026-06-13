@@ -35,14 +35,29 @@ function AuthModal({ setOpen, open }: IProps) {
   } = useForm<ILogin>();
 
   const dispatch = useAppDispatch();
-  const [loginUser, { isSuccess: isLoginSuccess, data: loginData }] =
-    useLoginUserMutation();
+  const [
+    loginUser,
+    { isSuccess: isLoginSuccess, data: loginData, isLoading: isLoginLoading },
+  ] = useLoginUserMutation();
 
-  const [createUser, { isSuccess: isRegSuccess, data }] =
-    useCreateUserMutation();
+  const [createUser, { isLoading: isRegLoading }] = useCreateUserMutation();
 
-  const submitReg: SubmitHandler<IReg> = (data) => {
-    createUser({ ...data, avatar: "https://picsum.photos/800" });
+  const submitReg: SubmitHandler<IReg> = async (data) => {
+    try {
+      await createUser({
+        ...data,
+        avatar: "https://picsum.photos/800",
+      }).unwrap();
+      const loginRes = await loginUser({
+        email: data.email,
+        password: data.password,
+      }).unwrap();
+
+      dispatch(setToken(loginRes.access_token));
+      setOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const submitLogin: SubmitHandler<ILogin> = (data) => {
     loginUser(data);
@@ -54,15 +69,6 @@ function AuthModal({ setOpen, open }: IProps) {
       setOpen(false);
     }
   }, [isLoginSuccess, loginData, dispatch, setOpen]);
-  useEffect(() => {
-    const { email, password } = getValues();
-    if (isRegSuccess) {
-      loginUser({
-        email,
-        password,
-      });
-    }
-  }, [isRegSuccess, getValues, loginUser]);
 
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
@@ -123,7 +129,10 @@ function AuthModal({ setOpen, open }: IProps) {
               >
                 Нет аккаунта?
               </p>
-              <button className="uppercase text-[12px] font-bold text-[#C53720] py-3 px-5 border-4 transition-all cursor-pointer border-[#C53720] leading-2 ml-auto mt-4 hover:bg-[#C53720] hover:text-white">
+              <button
+                disabled={isLoginLoading}
+                className={`uppercase text-[12px] font-bold text-[#C53720] transition-all py-3 px-5 border-4 ${isLoginLoading && "opacity-40"} transition-all cursor-pointer border-[#C53720] leading-2 ml-auto mt-4 hover:bg-[#C53720] hover:text-white`}
+              >
                 Login
               </button>
             </div>
@@ -164,7 +173,10 @@ function AuthModal({ setOpen, open }: IProps) {
               >
                 Есть аккаунт?
               </p>
-              <button className="uppercase text-[12px] font-bold text-[#C53720] py-3 px-5 border-4 transition-all cursor-pointer border-[#C53720] leading-2 ml-auto mt-4 hover:bg-[#C53720] hover:text-white">
+              <button
+                disabled={isRegLoading}
+                className={`uppercase text-[12px] font-bold text-[#C53720] ${isRegLoading && "opacity-40"} py-3 px-5 border-4 transition-all cursor-pointer border-[#C53720] leading-2 ml-auto mt-4 hover:bg-[#C53720] hover:text-white`}
+              >
                 Register
               </button>
             </div>

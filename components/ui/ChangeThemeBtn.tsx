@@ -6,7 +6,7 @@ import { useContext } from "react";
 function ChangeThemeBtn() {
   const { toggleTheme } = useContext(ThemeContext);
   return (
-    <button className="bg-red-500" onClick={toggleTheme}>
+    <button className="bg-red-500 self-center" onClick={toggleTheme}>
       toggle
     </button>
   );
