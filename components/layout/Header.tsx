@@ -7,6 +7,7 @@ import { IDropMenu } from "@/app/types";
 import Search from "../ui/Search";
 import Cart from "../ui/Cart";
 import ChangeThemeBtn from "../ui/ChangeThemeBtn";
+import CurrentDate from "../ui/CurrentDate";
 
 const catelogData: IDropMenu[] = [
   {
@@ -88,7 +89,7 @@ function Header() {
               </li>
             </ul>
           </nav>
-
+          <CurrentDate />
           <Profile />
           <ChangeThemeBtn />
           <Search />
