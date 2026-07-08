@@ -20,7 +20,13 @@ function Catalog() {
     });
 
   const { data, isLoading, isError } = useFetch<IProduct[]>(
-    "https://api.escuelajs.co/api/v1/products" + filters,
+    "https://api.escuelajs.co/api/v1/products",
+    {
+      params: {
+        ...rangePrice,
+        categorySlug: categorySlug || "",
+      },
+    },
   );
 
   const { currentPage, setCurrentPage, startIndex, endIndex, totalPages } =

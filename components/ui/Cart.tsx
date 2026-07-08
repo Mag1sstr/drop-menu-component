@@ -1,15 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Button from "./Button";
 import { useCart } from "@/store/zustand/useCart";
 import { toast } from "react-toastify";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 function Cart() {
   const [open, setOpen] = useState(false);
   const { cart, getCartLength, getCartTotalPrice, deleteCartItem } = useCart();
+  const ref = useRef<HTMLDivElement>(null);
+
+  useClickOutside(ref, () => setOpen(false));
 
   return (
-    <div className="relative flex items-center gap-2">
+    <div ref={ref} className="relative flex items-center gap-2">
       <button
         className="cursor-pointer"
         onClick={() =>
@@ -62,7 +66,7 @@ function Cart() {
       </div>
 
       <div
-        className={`absolute right-0  w-[622px]   border-t-4 border-(--prime) top-25 bg-white transition-all ${open ? "visible opacity-100" : "invisible opacity-0"}`}
+        className={`absolute right-0  w-[622px]   border-t-4 border-(--prime) top-25 bg-white transition-all shadow-2xl ${open ? "visible opacity-100" : "invisible opacity-0"}`}
       >
         {cart.map((item) => (
           <div

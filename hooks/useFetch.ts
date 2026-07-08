@@ -3,6 +3,7 @@ interface IParams {
   method?: "GET" | "POST" | "PUT" | "DELETE";
   headers?: HeadersInit;
   body?: BodyInit;
+  params: {};
 }
 interface IReturn<T> {
   data: T | null;
@@ -14,11 +15,14 @@ export const useFetch = <T>(url: string, params?: IParams): IReturn<T> => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState("");
 
+  const filters =
+    params && params.params ? "?" + new URLSearchParams(params?.params) : "";
+
   useEffect(() => {
     (async () => {
       try {
         setIsLoading(true);
-        const res = await fetch(url, {
+        const res = await fetch(url + filters, {
           ...params,
           body: JSON.stringify(params?.body),
         });
@@ -30,6 +34,6 @@ export const useFetch = <T>(url: string, params?: IParams): IReturn<T> => {
         setIsLoading(false);
       }
     })();
-  }, [url]);
+  }, [url, filters]);
   return { data, isLoading, isError };
 };

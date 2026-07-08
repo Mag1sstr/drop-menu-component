@@ -1,4 +1,5 @@
 "use client";
+import { useClickOutside } from "@/hooks/useClickOutside";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -13,6 +14,8 @@ function Search() {
   const location = usePathname();
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const searchRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (open && inputRef.current) {
       inputRef.current.focus();
@@ -24,13 +27,15 @@ function Search() {
       .then((data) => setData(data));
   }, []);
 
-  console.log(location.split("/").at(-1));
+  useClickOutside(searchRef, () => setOpen(false));
+
+  console.log(location);
 
   return (
-    <>
+    <div ref={searchRef} className="self-center">
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="cursor-pointer mr-3"
+        className="cursor-pointer mr-3 self-center"
       >
         <svg
           width="40"
@@ -127,7 +132,7 @@ function Search() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
