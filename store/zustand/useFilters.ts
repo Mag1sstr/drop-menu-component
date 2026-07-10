@@ -8,6 +8,12 @@ interface IFilters {
   setMinPrice: (p: string) => void;
   categorySlug: string | null;
   setCategorySlug: (categorySlug: string | null) => void;
+  brandId: number;
+  modelId: number;
+  generationId: number;
+  setBrandId: (id: number) => void;
+  setModelId: (id: number) => void;
+  setGenerationId: (id: number) => void;
 }
 export const useFilters = create<IFilters>((set) => ({
   rangePrice: {
@@ -15,6 +21,13 @@ export const useFilters = create<IFilters>((set) => ({
     price_max: "",
   },
   categorySlug: null,
+  brandId: 0,
+  modelId: 0,
+  generationId: 0,
+  setBrandId: (brandId) => ({ brandId }),
+  setModelId: (modelId) => ({ modelId }),
+  setGenerationId: (generationId) => ({ generationId }),
+
   setCategorySlug: (categorySlug) =>
     set({
       categorySlug,

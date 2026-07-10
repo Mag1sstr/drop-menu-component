@@ -3,20 +3,23 @@ import { useFilters } from "@/store/zustand/useFilters";
 import { useEffect, useRef, useState } from "react";
 import FilterItem from "../ui/FilterItem";
 import { useGetCategoriesQuery } from "@/store/api";
+import Dropdown from "../ui/Dropdown";
+import { useGetBrandsQuery } from "@/store/frostApi";
 
 function Filters() {
-  const {
-    setMaxPrice,
-    setMinPrice,
-    rangePrice,
-    categorySlug,
-    setCategorySlug,
-  } = useFilters();
-  const { data: categories } = useGetCategoriesQuery();
+  // const {
+  //   setMaxPrice,
+  //   setMinPrice,
+  //   rangePrice,
+  //   categorySlug,
+  //   setCategorySlug,
+  // } = useFilters();
+  // const { data: categories } = useGetCategoriesQuery();
+  const { data: brands = [] } = useGetBrandsQuery();
 
   return (
     <aside className="w-66 py-3 bg-black">
-      <FilterItem label="Категории">
+      {/* <FilterItem label="Категории">
         {categories?.map(({ name, slug }) => (
           <div
             onClick={() => setCategorySlug(categorySlug === slug ? null : slug)}
@@ -26,8 +29,9 @@ function Filters() {
             {name}
           </div>
         ))}
-      </FilterItem>
-      <input
+      </FilterItem> */}
+      <Dropdown label="Марки" data={brands} />
+      {/* <input
         className="bg-white p-3 m-3"
         value={rangePrice.price_min}
         onChange={(e) => setMinPrice(e.target.value)}
@@ -40,7 +44,7 @@ function Filters() {
         onChange={(e) => setMaxPrice(e.target.value)}
         type="number"
         placeholder="max"
-      />
+      /> */}
     </aside>
   );
 }

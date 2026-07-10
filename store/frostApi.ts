@@ -1,4 +1,9 @@
-import { IProduct, IProductsParams, IProductsResponse } from "@/app/frostTypes";
+import {
+  IItems,
+  IProduct,
+  IProductsParams,
+  IProductsResponse,
+} from "@/app/frostTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const frostApi = createApi({
@@ -15,6 +20,11 @@ export const frostApi = createApi({
         },
       }),
     }),
+    getBrands: builder.query<IItems[], void>({
+      query: () => ({
+        url: "/brands",
+      }),
+    }),
   }),
 });
-export const { useGetProductsQuery } = frostApi;
+export const { useGetProductsQuery, useGetBrandsQuery } = frostApi;
