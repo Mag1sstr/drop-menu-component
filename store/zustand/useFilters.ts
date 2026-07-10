@@ -24,9 +24,9 @@ export const useFilters = create<IFilters>((set) => ({
   brandId: 0,
   modelId: 0,
   generationId: 0,
-  setBrandId: (brandId) => ({ brandId }),
-  setModelId: (modelId) => ({ modelId }),
-  setGenerationId: (generationId) => ({ generationId }),
+  setBrandId: (brandId) => set({ brandId }),
+  setModelId: (modelId) => set({ modelId }),
+  setGenerationId: (generationId) => set({ generationId }),
 
   setCategorySlug: (categorySlug) =>
     set({

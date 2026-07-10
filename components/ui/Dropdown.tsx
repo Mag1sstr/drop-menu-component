@@ -17,7 +17,7 @@ function Dropdown({ label, data, onChange }: IProps) {
     } else {
       el.style.height = "0px";
     }
-  }, [open, ref]);
+  }, [open, ref, data]);
   return (
     <div>
       <div
@@ -36,14 +36,12 @@ function Dropdown({ label, data, onChange }: IProps) {
           <path d="M8 4L12 10.5L8 16" stroke="white" stroke-width="4" />
         </svg>
       </div>
-      {data.length > 1 && (
+      {data.length > 0 && (
         <div ref={ref} className="overflow-hidden transition-all">
           {data.map(({ id, name }) => (
             <div
               key={id}
-              onClick={() => {
-                onChange && onChange(id);
-              }}
+              onClick={() => onChange && onChange(id)}
               className="p-2 bg-[#2D2D2D] text-white/50 text-[12px] font-medium flex items-center"
             >
               {name}

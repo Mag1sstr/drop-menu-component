@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import FilterItem from "../ui/FilterItem";
 import { useGetCategoriesQuery } from "@/store/api";
 import Dropdown from "../ui/Dropdown";
-import { useGetBrandsQuery } from "@/store/frostApi";
+import { useGetBrandsQuery, useGetModelsQuery } from "@/store/frostApi";
 
 function Filters() {
+  const { brandId, setBrandId } = useFilters();
   // const {
   //   setMaxPrice,
   //   setMinPrice,
@@ -16,6 +17,12 @@ function Filters() {
   // } = useFilters();
   // const { data: categories } = useGetCategoriesQuery();
   const { data: brands = [] } = useGetBrandsQuery();
+  const { data: models = [] } = useGetModelsQuery(brandId, {
+    skip: !brandId,
+    refetchOnMountOrArgChange: true,
+  });
+
+  console.log(brandId);
 
   return (
     <aside className="w-66 py-3 bg-black">
@@ -30,7 +37,15 @@ function Filters() {
           </div>
         ))}
       </FilterItem> */}
-      <Dropdown label="Марки" data={brands} />
+      <Dropdown
+        label="Марки"
+        data={brands}
+        onChange={(id) => {
+          setBrandId(id);
+        }}
+      />
+      <Dropdown label="Модели" data={models} />
+
       {/* <input
         className="bg-white p-3 m-3"
         value={rangePrice.price_min}
