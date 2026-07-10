@@ -1,11 +1,11 @@
 import { useCart } from "@/store/zustand/useCart";
 import Button from "./Button";
-import { IProduct } from "@/app/types";
+import { IProduct, IProductData } from "@/app/frostTypes";
 import { useRouter } from "next/navigation";
 import CounterBtn from "./CounterBtn";
 
-function ProductCard(props: IProduct) {
-  const { title, description, price, id, slug } = props;
+function ProductCard(props: IProductData) {
+  const { name, description, price, id, available, manufacturer } = props;
   const {
     cart,
     addCartItem,
@@ -18,7 +18,9 @@ function ProductCard(props: IProduct) {
   const isInCart = cart.some((el) => el.id === id);
   const cartItemCount = cart.find((el) => el.id === props.id)?.count;
   return (
-    <div className="relative px-5 py-6.75 border-4 border-[#3CC051] font-medium flex flex-col bg-(--bg-card) group">
+    <div
+      className={`relative px-5 py-6.75 border-4 border-[#3CC051] font-medium flex flex-col bg-(--bg-card) group`}
+    >
       <div className="uppercase text-[10px] text-white w-22 text-center py-2 absolute bg-[#3CC051] right-0 top-0">
         В НАЛИЧИИ
       </div>
@@ -28,13 +30,13 @@ function ProductCard(props: IProduct) {
       <div className="flex-1 flex flex-col">
         <div>
           <h2
-            onClick={() => router.push(`/catalog/${slug}`)}
-            title={title}
+            onClick={() => router.push(`/catalog/${id}`)}
+            title={name}
             className="text-[20px] uppercase font-medium mb-5 transition-all group-hover:text-(--prime) overflow-hidden h-15 text-ellipsis line-clamp-2"
           >
-            {title ?? "MAGNUM 60Ah"}
+            {name ?? "MAGNUM 60Ah"}
           </h2>
-          <p className="font-bold text-[28px] mb-3">{price ?? 2100} руб.</p>
+          <p className="font-bold text-[28px] mb-3">{price ?? 2100} тг.</p>
         </div>
         <p className="text-[#A5A5A5] text-[12px] mb-5">
           {description ??
@@ -48,11 +50,11 @@ function ProductCard(props: IProduct) {
               count={cartItemCount}
             />
             <button
-              onClick={() =>
-                isInCart
-                  ? deleteCartItem(props.id)
-                  : addCartItem({ ...props, count: 1 })
-              }
+              // onClick={() =>
+              //   isInCart
+              //     ? deleteCartItem(props.id)
+              //     : addCartItem({ ...props, count: 1 })
+              // }
               className={`relative w-10 h-10 border-4 border-(--prime) flex justify-center items-center cursor-pointer ${isInCart ? "bg-(--prime)" : "bg-white"}`}
             >
               <svg
@@ -135,7 +137,7 @@ function ProductCard(props: IProduct) {
           </div>
 
           <Button
-            onClick={() => router.push(`/catalog/${slug}`)}
+            onClick={() => router.push(`/catalog/${id}`)}
             className="text-(--prime)! w-full "
           >
             ПОДРОБНЕЕ
