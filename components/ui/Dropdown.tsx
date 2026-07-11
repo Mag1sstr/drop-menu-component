@@ -7,6 +7,7 @@ interface IProps {
   onChange?: (id: number) => void;
 }
 function Dropdown({ label, data, onChange }: IProps) {
+  const [selectItem, setSelectItem] = useState<IItems | null>(null);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -20,9 +21,10 @@ function Dropdown({ label, data, onChange }: IProps) {
   }, [open, ref, data]);
   return (
     <div>
-      <div
+      <button
+        disabled={!data.length}
         onClick={() => setOpen((prev) => !prev)}
-        className="relative p-2 bg-[#1D1D1D] text-white/50 text-[12px] font-medium flex items-center justify-between uppercase"
+        className="relative w-full text-start p-2 bg-[#1D1D1D] text-white/50 text-[12px] font-medium flex items-center justify-between uppercase disabled:cursor-not-allowed"
       >
         <p>{label}</p>
         <svg
@@ -35,14 +37,19 @@ function Dropdown({ label, data, onChange }: IProps) {
         >
           <path d="M8 4L12 10.5L8 16" stroke="white" stroke-width="4" />
         </svg>
-      </div>
+      </button>
       {data.length > 0 && (
         <div ref={ref} className="overflow-hidden transition-all">
           {data.map(({ id, name }) => (
             <div
               key={id}
-              onClick={() => onChange && onChange(id)}
-              className="p-2 bg-[#2D2D2D] text-white/50 text-[12px] font-medium flex items-center"
+              onClick={() => {
+                if (onChange) {
+                  onChange(id);
+                }
+                setSelectItem({ id, name });
+              }}
+              className={`p-2   text-[12px] font-medium flex items-center transition-all ${selectItem?.name === name ? "bg-(--prime) text-white" : "bg-[#2D2D2D] text-white/50"}`}
             >
               {name}
             </div>
