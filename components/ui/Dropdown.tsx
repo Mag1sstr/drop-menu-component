@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from "react";
 interface IProps {
   label: string;
   data: IItems[];
-  onChange?: (id: number) => void;
+  onChange?: (item: IItems) => void;
+  selectItem: IItems[];
 }
-function Dropdown({ label, data, onChange }: IProps) {
-  const [selectItem, setSelectItem] = useState<IItems | null>(null);
+function Dropdown({ label, data, onChange, selectItem }: IProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!ref.current) return;
     const el = ref.current;
@@ -40,20 +41,22 @@ function Dropdown({ label, data, onChange }: IProps) {
       </button>
       {data.length > 0 && (
         <div ref={ref} className="overflow-hidden transition-all">
-          {data.map(({ id, name }) => (
-            <div
-              key={id}
-              onClick={() => {
-                if (onChange) {
-                  onChange(id);
-                }
-                setSelectItem({ id, name });
-              }}
-              className={`p-2   text-[12px] font-medium flex items-center transition-all ${selectItem?.name === name ? "bg-(--prime) text-white" : "bg-[#2D2D2D] text-white/50"}`}
-            >
-              {name}
-            </div>
-          ))}
+          {data.map(({ id, name }) => {
+            const isActive = selectItem.some((el) => el.name === name);
+            return (
+              <div
+                key={id}
+                onClick={() => {
+                  if (onChange) {
+                    onChange({ id, name });
+                  }
+                }}
+                className={`p-2   text-[12px] font-medium flex items-center transition-all ${isActive ? "bg-(--prime) text-white" : "bg-[#2D2D2D] text-white/50"}`}
+              >
+                {name}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

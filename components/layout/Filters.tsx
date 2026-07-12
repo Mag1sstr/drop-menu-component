@@ -5,8 +5,11 @@ import FilterItem from "../ui/FilterItem";
 import { useGetCategoriesQuery } from "@/store/api";
 import Dropdown from "../ui/Dropdown";
 import { useGetBrandsQuery, useGetModelsQuery } from "@/store/frostApi";
+import { IItems } from "@/app/frostTypes";
 
 function Filters() {
+  const [selectItem, setSelectItem] = useState<IItems[]>([]);
+
   const { brandId, setBrandId } = useFilters();
   // const {
   //   setMaxPrice,
@@ -40,11 +43,20 @@ function Filters() {
       <Dropdown
         label="Марки"
         data={brands}
-        onChange={(id) => {
-          setBrandId(id);
+        onChange={(item) => {
+          setBrandId(item.id);
+          setSelectItem((prev) => [...prev, item]);
         }}
+        selectItem={selectItem}
       />
-      <Dropdown label="Модели" data={models} />
+      <Dropdown
+        label="Модели"
+        data={models}
+        onChange={(item) => {
+          setSelectItem((prev) => [...prev, item]);
+        }}
+        selectItem={selectItem}
+      />
 
       {/* <input
         className="bg-white p-3 m-3"
