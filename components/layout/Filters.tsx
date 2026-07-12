@@ -4,13 +4,18 @@ import { useEffect, useRef, useState } from "react";
 import FilterItem from "../ui/FilterItem";
 import { useGetCategoriesQuery } from "@/store/api";
 import Dropdown from "../ui/Dropdown";
-import { useGetBrandsQuery, useGetModelsQuery } from "@/store/frostApi";
+import {
+  useGetBrandsQuery,
+  useGetGenerationsQuery,
+  useGetModelsQuery,
+} from "@/store/frostApi";
 import { IItems } from "@/app/frostTypes";
 
 function Filters() {
   const [selectItem, setSelectItem] = useState<IItems[]>([]);
 
-  const { brandId, setBrandId } = useFilters();
+  const { brandId, modelId, setBrandId, setModelId, setGenerationId } =
+    useFilters();
   // const {
   //   setMaxPrice,
   //   setMinPrice,
@@ -21,8 +26,11 @@ function Filters() {
   // const { data: categories } = useGetCategoriesQuery();
   const { data: brands = [] } = useGetBrandsQuery();
   const { data: models = [] } = useGetModelsQuery(brandId, {
-    skip: !brandId,
+    skip: brandId === 0,
     refetchOnMountOrArgChange: true,
+  });
+  const { data: generations = [] } = useGetGenerationsQuery(modelId, {
+    skip: modelId === 0,
   });
 
   console.log(brandId);
@@ -41,17 +49,29 @@ function Filters() {
         ))}
       </FilterItem> */}
       <Dropdown
-        label="Марки"
+        label="Марка"
         data={brands}
         onChange={(item) => {
           setBrandId(item.id);
+          setModelId(0);
+          setGenerationId(0);
           setSelectItem((prev) => [...prev, item]);
         }}
         selectItem={selectItem}
       />
       <Dropdown
-        label="Модели"
+        label="Модель"
         data={models}
+        onChange={(item) => {
+          setModelId(item.id);
+          setGenerationId(0);
+          setSelectItem((prev) => [...prev, item]);
+        }}
+        selectItem={selectItem}
+      />
+      <Dropdown
+        label="Поколение"
+        data={generations}
         onChange={(item) => {
           setSelectItem((prev) => [...prev, item]);
         }}

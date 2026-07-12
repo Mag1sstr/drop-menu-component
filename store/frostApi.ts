@@ -30,7 +30,16 @@ export const frostApi = createApi({
         url: `/models?brandId=${id}`,
       }),
     }),
+    getGenerations: builder.query<IItems[], number>({
+      query: (id) => ({
+        url: `/generations?modelId=${id}`,
+      }),
+    }),
   }),
 });
-export const { useGetProductsQuery, useGetBrandsQuery, useGetModelsQuery } =
-  frostApi;
+export const {
+  useGetProductsQuery,
+  useGetBrandsQuery,
+  useGetModelsQuery,
+  useGetGenerationsQuery,
+} = frostApi;
