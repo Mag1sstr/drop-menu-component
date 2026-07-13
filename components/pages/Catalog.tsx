@@ -9,7 +9,14 @@ import Pagination from "../layout/Pagination";
 import { useGetProductsQuery } from "@/store/frostApi";
 
 function Catalog() {
-  const { rangePrice, setMaxPrice, categorySlug } = useFilters();
+  const {
+    rangePrice,
+    setMaxPrice,
+    categorySlug,
+    brandId,
+    modelId,
+    generationId,
+  } = useFilters();
 
   const initialized = useRef(false);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -44,6 +51,9 @@ function Catalog() {
   const { data, isLoading, isError } = useGetProductsQuery({
     page,
     size: 6,
+    brandId,
+    modelId,
+    generationId,
   });
 
   return (

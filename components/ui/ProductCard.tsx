@@ -19,10 +19,12 @@ function ProductCard(props: IProductData) {
   const cartItemCount = cart.find((el) => el.id === props.id)?.count;
   return (
     <div
-      className={`relative px-5 py-6.75 border-4 border-[#3CC051] font-medium flex flex-col bg-(--bg-card) group`}
+      className={`relative px-5 py-6.75 border-4  ${!!available ? "border-[#3CC051]" : "border-(--prime)"} font-medium flex flex-col bg-(--bg-card) group`}
     >
-      <div className="uppercase text-[10px] text-white w-22 text-center py-2 absolute bg-[#3CC051] right-0 top-0">
-        В НАЛИЧИИ
+      <div
+        className={`uppercase text-[10px] text-white w-22 text-center py-2 absolute ${!!available ? "bg-[#3CC051]" : "bg-(--prime)"}  right-0 top-0`}
+      >
+        {!!available ? "В НАЛИЧИИ" : "нет в наличии"}
       </div>
       <div className="mt-4.25 h-37 mb-4.5">
         <img className="w-full h-full object-contain" src="/pr.png" alt="" />
