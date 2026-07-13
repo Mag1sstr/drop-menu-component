@@ -5,9 +5,10 @@ interface IProps {
   label: string;
   data: IItems[];
   onChange?: (item: IItems) => void;
-  selectItem: IItems[];
 }
-function Dropdown({ label, data, onChange, selectItem }: IProps) {
+function Dropdown({ label, data, onChange }: IProps) {
+  const [selectItem, setSelectItem] = useState<IItems | null>(null);
+
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -42,7 +43,6 @@ function Dropdown({ label, data, onChange, selectItem }: IProps) {
       {data.length > 0 && (
         <div ref={ref} className="overflow-hidden transition-all">
           {data.map(({ id, name }) => {
-            const isActive = selectItem.some((el) => el.name === name);
             return (
               <div
                 key={id}
@@ -50,8 +50,11 @@ function Dropdown({ label, data, onChange, selectItem }: IProps) {
                   if (onChange) {
                     onChange({ id, name });
                   }
+                  setSelectItem((prev) =>
+                    prev?.id === id ? null : { id, name },
+                  );
                 }}
-                className={`p-2   text-[12px] font-medium flex items-center transition-all ${isActive ? "bg-(--prime) text-white" : "bg-[#2D2D2D] text-white/50"}`}
+                className={`p-2   text-[12px] font-medium flex items-center transition-all ${selectItem?.id === id ? "bg-(--prime) text-white" : "bg-[#2D2D2D] text-white/50"}`}
               >
                 {name}
               </div>

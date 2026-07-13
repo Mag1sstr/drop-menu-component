@@ -12,10 +12,16 @@ import {
 import { IItems } from "@/app/frostTypes";
 
 function Filters() {
-  const [selectItem, setSelectItem] = useState<IItems[]>([]);
+  // const [selectItem, setSelectItem] = useState<IItems[]>([]);
 
-  const { brandId, modelId, setBrandId, setModelId, setGenerationId } =
-    useFilters();
+  const {
+    brandId,
+    modelId,
+    generationId,
+    setBrandId,
+    setModelId,
+    setGenerationId,
+  } = useFilters();
   // const {
   //   setMaxPrice,
   //   setMinPrice,
@@ -52,30 +58,25 @@ function Filters() {
         label="Марка"
         data={brands}
         onChange={(item) => {
-          setBrandId(item.id);
+          setBrandId(brandId === item.id ? 0 : item.id);
           setModelId(0);
           setGenerationId(0);
-          setSelectItem((prev) => [...prev, item]);
         }}
-        selectItem={selectItem}
       />
       <Dropdown
         label="Модель"
         data={models}
         onChange={(item) => {
-          setModelId(item.id);
+          setModelId(modelId === item.id ? 0 : item.id);
           setGenerationId(0);
-          setSelectItem((prev) => [...prev, item]);
         }}
-        selectItem={selectItem}
       />
       <Dropdown
         label="Поколение"
         data={generations}
         onChange={(item) => {
-          setSelectItem((prev) => [...prev, item]);
+          setGenerationId(generationId === item.id ? 0 : item.id);
         }}
-        selectItem={selectItem}
       />
 
       {/* <input
