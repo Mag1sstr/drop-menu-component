@@ -5,10 +5,9 @@ interface IProps {
   label: string;
   data: IItems[];
   onChange?: (item: IItems) => void;
+  value: number;
 }
-function Dropdown({ label, data, onChange }: IProps) {
-  const [selectItem, setSelectItem] = useState<IItems | null>(null);
-
+function Dropdown({ label, data, onChange, value }: IProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -21,6 +20,13 @@ function Dropdown({ label, data, onChange }: IProps) {
       el.style.height = "0px";
     }
   }, [open, ref, data]);
+
+  useEffect(() => {
+    if (value !== 0) {
+      setOpen(true);
+    }
+  }, [value]);
+
   return (
     <div>
       <button
@@ -50,11 +56,8 @@ function Dropdown({ label, data, onChange }: IProps) {
                   if (onChange) {
                     onChange({ id, name });
                   }
-                  setSelectItem((prev) =>
-                    prev?.id === id ? null : { id, name },
-                  );
                 }}
-                className={`p-2   text-[12px] font-medium flex items-center transition-all ${selectItem?.id === id ? "bg-(--prime) text-white" : "bg-[#2D2D2D] text-white/50"}`}
+                className={`p-2   text-[12px] font-medium flex items-center transition-all ${value === id ? "bg-(--prime) text-white" : "bg-[#2D2D2D] text-white/50"}`}
               >
                 {name}
               </div>

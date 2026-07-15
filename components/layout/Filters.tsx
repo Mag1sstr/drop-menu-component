@@ -37,26 +37,17 @@ function Filters() {
   });
   const { data: generations = [] } = useGetGenerationsQuery(modelId, {
     skip: modelId === 0,
+    refetchOnMountOrArgChange: true,
   });
 
   console.log(brandId);
 
   return (
     <aside className="w-66 py-3 bg-black">
-      {/* <FilterItem label="Категории">
-        {categories?.map(({ name, slug }) => (
-          <div
-            onClick={() => setCategorySlug(categorySlug === slug ? null : slug)}
-            key={slug}
-            className={` p-2 pr-3 text-white/50 uppercase text-[12px] font-medium flex items-center justify-between transition-all hover:bg-[#2D2D2D] ${slug === categorySlug ? "bg-[#2D2D2D]" : "bg-[#1d1d1d]"}`}
-          >
-            {name}
-          </div>
-        ))}
-      </FilterItem> */}
       <Dropdown
         label="Марка"
         data={brands}
+        value={brandId}
         onChange={(item) => {
           setBrandId(brandId === item.id ? 0 : item.id);
           setModelId(0);
@@ -66,6 +57,7 @@ function Filters() {
       <Dropdown
         label="Модель"
         data={models}
+        value={modelId}
         onChange={(item) => {
           setModelId(modelId === item.id ? 0 : item.id);
           setGenerationId(0);
@@ -74,6 +66,7 @@ function Filters() {
       <Dropdown
         label="Поколение"
         data={generations}
+        value={generationId}
         onChange={(item) => {
           setGenerationId(generationId === item.id ? 0 : item.id);
         }}

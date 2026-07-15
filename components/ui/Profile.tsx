@@ -13,11 +13,7 @@ function Profile() {
     <>
       <button
         onClick={() => {
-          if (!user) {
-            setOpenModal(true);
-          } else {
-            dispatch(logout());
-          }
+          setOpenModal(true);
         }}
         className="uppercase border-4 border-(--prime) px-5 py-3 text-[12px] text-white self-center font-bold mr-5.75"
       >

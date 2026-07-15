@@ -1,18 +1,21 @@
-import { ReactNode } from "react";
 import { createPortal } from "react-dom";
-
 interface IProps {
-  children: ReactNode;
-  setOpen: (b: boolean) => void;
   open: boolean;
+  setOpen: (b: boolean) => void;
+  children: React.ReactNode;
 }
 function ModalWrapper({ open, setOpen, children }: IProps) {
   return createPortal(
     <div
       onMouseDown={() => setOpen(false)}
-      className={`fixed z-50 inset-0 bg-black/70 flex items-center justify-center transition-all ${open ? "visible opacity-100 mt-0" : "invisible opacity-0 mt-5"}`}
+      className={`fixed inset-0 bg-black/40 z-50 flex items-center justify-center transition-all duration-300  ${open ? "opacity-100 visible [&>div]:mt-0" : "opacity-0 invisible [&>div]:mt-4"} `}
     >
-      <div onMouseDown={(e) => e.stopPropagation()}>{children}</div>
+      <div
+        className={`transition-all duration-300`}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        {children}
+      </div>
     </div>,
     document.body,
   );
