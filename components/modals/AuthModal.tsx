@@ -1,17 +1,32 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import ModalWrapper from "./ModalWrapper";
+import { useGetTokenMutation } from "@/store/frostApi";
+import { useEffect } from "react";
+import { ILoginBody } from "@/app/frostTypes";
 interface IProps {
   open: boolean;
   setOpen: (b: boolean) => void;
 }
-interface ILoginForm {
+interface ILoginBod {
   email: string;
   password: string;
 }
 function AuthModal({ open, setOpen }: IProps) {
-  const { handleSubmit, register } = useForm<ILoginForm>();
-  console.log(open);
-  const login: SubmitHandler<ILoginForm> = (data) => {};
+  const { handleSubmit, register } = useForm<ILoginBody>();
+  const [getToken, { data, isSuccess, isError, isLoading }] =
+    useGetTokenMutation();
+  const login: SubmitHandler<ILoginBody> = (data) => {
+    getToken({ ...data, username: data.username });
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      localStorage.setItem("t", data.access_token);
+    }
+  }, [isSuccess]);
+
+  console.log(data);
+
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
       <form onSubmit={handleSubmit(login)} className="w-125" action="">
@@ -26,22 +41,27 @@ function AuthModal({ open, setOpen }: IProps) {
           <div className="flex flex-col gap-2">
             <label htmlFor="field">E-mail:</label>
             <input
-              {...register("email", { required: "Обязательное поле!" })}
+              {...register("username", { required: "Обязательное поле!" })}
               type="text"
               className="w-full border-4 border-[#1D1D1D] bg-white py-1 px-2 outline-none"
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="field">E-mail:</label>
+            <label htmlFor="field">Password:</label>
             <input
               {...register("password", {
                 required: "Обязательное поле!",
-                min: 5,
               })}
               type="text"
               className="w-full border-4 border-[#1D1D1D] bg-white py-1 px-2 outline-none"
             />
           </div>
+
+          <button
+            className={`p-3 bg-(--prime) text-[12px] text-white transition-all ${isLoading && "opacity-50"}`}
+          >
+            Login
+          </button>
         </div>
       </form>
     </ModalWrapper>

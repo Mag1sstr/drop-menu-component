@@ -1,5 +1,7 @@
 import {
   IItems,
+  ILoginBody,
+  ILoginResponse,
   IProduct,
   IProductsParams,
   IProductsResponse,
@@ -35,6 +37,13 @@ export const frostApi = createApi({
         url: `/generations?modelId=${id}`,
       }),
     }),
+    getToken: builder.mutation<ILoginResponse, ILoginBody>({
+      query: (body) => ({
+        method: "POST",
+        url: "/auth/token",
+        body,
+      }),
+    }),
   }),
 });
 export const {
@@ -42,4 +51,5 @@ export const {
   useGetBrandsQuery,
   useGetModelsQuery,
   useGetGenerationsQuery,
+  useGetTokenMutation,
 } = frostApi;

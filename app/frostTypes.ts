@@ -80,7 +80,7 @@ export interface IRegisterBody {
   password: string;
 }
 export interface ILoginBody {
-  email: string;
+  username: string;
   password: string;
 }
 export interface IOrderBody {
