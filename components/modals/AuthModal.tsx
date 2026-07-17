@@ -3,6 +3,7 @@ import ModalWrapper from "./ModalWrapper";
 import { useGetTokenMutation } from "@/store/frostApi";
 import { useEffect } from "react";
 import { ILoginBody } from "@/app/frostTypes";
+import { useAuth } from "@/contexts/AuthContext";
 interface IProps {
   open: boolean;
   setOpen: (b: boolean) => void;
@@ -12,6 +13,7 @@ interface ILoginBod {
   password: string;
 }
 function AuthModal({ open, setOpen }: IProps) {
+  const { setToken } = useAuth();
   const { handleSubmit, register } = useForm<ILoginBody>();
   const [getToken, { data, isSuccess, isError, isLoading }] =
     useGetTokenMutation();
@@ -22,6 +24,7 @@ function AuthModal({ open, setOpen }: IProps) {
   useEffect(() => {
     if (isSuccess) {
       localStorage.setItem("t", data.access_token);
+      setToken(data.access_token);
     }
   }, [isSuccess]);
 

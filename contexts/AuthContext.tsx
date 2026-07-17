@@ -11,6 +11,7 @@ export const AuthContext = createContext(
     user: IUser | null;
     setUser: (user: IUser | null) => void;
     logout: () => void;
+    isUserLoading: boolean;
   },
 );
 
@@ -19,7 +20,7 @@ function AuthContextProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(
     useGetToken<string>("t") || null,
   );
-  const [getUser] = useGetUserMutation();
+  const [getUser, { isLoading: isUserLoading }] = useGetUserMutation();
 
   const logout = () => {
     setToken(null);
@@ -36,7 +37,9 @@ function AuthContextProvider({ children }: { children: React.ReactNode }) {
   }, [token]);
 
   return (
-    <AuthContext.Provider value={{ token, setToken, user, setUser, logout }}>
+    <AuthContext.Provider
+      value={{ token, setToken, user, setUser, logout, isUserLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );

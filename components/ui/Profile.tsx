@@ -7,7 +7,7 @@ import { useGetUserMutation } from "@/store/frostApi";
 import { useAuth } from "@/contexts/AuthContext";
 
 function Profile() {
-  const { user, setToken, setUser } = useAuth();
+  const { user, setToken, setUser, isUserLoading } = useAuth();
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -24,9 +24,9 @@ function Profile() {
           onClick={() => {
             setOpenModal(true);
           }}
-          className="uppercase border-4 border-(--prime) px-5 py-3 text-[12px] text-white self-center font-bold mr-5.75"
+          className={`uppercase border-4 border-(--prime) px-5 py-3 text-[12px] text-white self-center font-bold mr-5.75 ${isUserLoading && "opacity-50"}`}
         >
-          Войти
+          {isUserLoading ? "Загрузка..." : "Войти"}
         </button>
       )}
       <AuthModal open={openModal} setOpen={setOpenModal} />
