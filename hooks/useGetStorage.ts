@@ -1,5 +1,5 @@
-export const useGetStorage = <T>(name: string) => {
+export const useGetToken = <T>(name: string) => {
   if (typeof window === "undefined") return;
   const res = localStorage.getItem(name);
-  return res ? (JSON.parse(res) as T) : null;
+  return res ? (res as T) : null;
 };

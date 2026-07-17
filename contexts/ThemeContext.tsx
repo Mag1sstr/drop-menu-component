@@ -15,7 +15,7 @@ export default function ThemeContextProvider({
   children: React.ReactNode;
 }) {
   const [theme, setTheme] = useState<TTheme>(
-    (localStorage.getItem("theme") as TTheme) || "dark",
+    (localStorage.getItem("theme") as TTheme) || "light",
   );
 
   const toggleTheme = () =>

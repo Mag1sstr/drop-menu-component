@@ -5,12 +5,24 @@ import {
   IProduct,
   IProductsParams,
   IProductsResponse,
+  IUser,
 } from "@/app/frostTypes";
+import { AuthContext } from "@/contexts/AuthContext";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { useContext } from "react";
 
 export const frostApi = createApi({
   reducerPath: "frostApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://frost.runtime.kz/api" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://frost.runtime.kz/api",
+    prepareHeaders(headers) {
+      const token = localStorage.getItem("t");
+      if (token) {
+        return headers.set("Authorization", "Bearer " + token);
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     getProducts: builder.query<IProductsResponse, IProductsParams | void>({
       query: (params) => ({
@@ -44,6 +56,9 @@ export const frostApi = createApi({
         body,
       }),
     }),
+    getUser: builder.mutation<IUser, void>({
+      query: () => ({ url: "/auth/user", method: "POST" }),
+    }),
   }),
 });
 export const {
@@ -52,4 +67,5 @@ export const {
   useGetModelsQuery,
   useGetGenerationsQuery,
   useGetTokenMutation,
+  useGetUserMutation,
 } = frostApi;
