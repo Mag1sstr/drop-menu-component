@@ -25,6 +25,7 @@ function AuthModal({ open, setOpen }: IProps) {
     if (isSuccess) {
       localStorage.setItem("t", data.access_token);
       setToken(data.access_token);
+      setOpen(false);
     }
   }, [isSuccess]);
 
