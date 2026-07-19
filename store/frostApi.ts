@@ -1,4 +1,5 @@
 import {
+  ICartResponse,
   IItems,
   ILoginBody,
   ILoginResponse,
@@ -59,6 +60,9 @@ export const frostApi = createApi({
     getUser: builder.mutation<IUser, void>({
       query: () => ({ url: "/auth/user", method: "POST" }),
     }),
+    getCart: builder.query<ICartResponse, void>({
+      query: () => ({ url: "/cart" }),
+    }),
   }),
 });
 export const {
@@ -68,4 +72,5 @@ export const {
   useGetGenerationsQuery,
   useGetTokenMutation,
   useGetUserMutation,
+  useGetCartQuery,
 } = frostApi;
