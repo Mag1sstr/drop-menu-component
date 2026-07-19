@@ -29,8 +29,6 @@ function AuthModal({ open, setOpen }: IProps) {
     }
   }, [isSuccess]);
 
-  console.log(data);
-
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
       <form onSubmit={handleSubmit(login)} className="w-125" action="">
