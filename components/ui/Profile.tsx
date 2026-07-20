@@ -2,10 +2,12 @@
 import { useState } from "react";
 import AuthModal from "../modals/AuthModal";
 import { useAuth } from "@/contexts/AuthContext";
+import RegModal from "../modals/RegModal";
 
 function Profile() {
   const { user, setToken, setUser, isUserLoading, logout } = useAuth();
   const [openModal, setOpenModal] = useState(false);
+  const [openReg, setOpenReg] = useState(false);
 
   return (
     <>
@@ -40,7 +42,12 @@ function Profile() {
           {isUserLoading ? "Загрузка..." : "Войти"}
         </button>
       )}
-      <AuthModal open={openModal} setOpen={setOpenModal} />
+      <AuthModal
+        open={openModal}
+        setOpen={setOpenModal}
+        setOpenReg={setOpenReg}
+      />
+      <RegModal open={openReg} setOpen={setOpenReg} />
     </>
   );
 }

@@ -5,8 +5,6 @@ import CounterBtn from "../ui/CounterBtn";
 function Cart() {
   const { data: cart } = useGetCartQuery();
 
-  console.log(cart);
-
   return (
     <section className="py-22">
       <div className="container">

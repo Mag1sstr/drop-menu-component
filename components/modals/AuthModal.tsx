@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 interface IProps {
   open: boolean;
   setOpen: (b: boolean) => void;
+  setOpenReg?: (b: boolean) => void;
 }
 interface ILoginBod {
   email: string;
@@ -58,12 +59,16 @@ function AuthModal({ open, setOpen }: IProps) {
               className="w-full border-4 border-[#1D1D1D] bg-white py-1 px-2 outline-none"
             />
           </div>
-
-          <button
-            className={`p-3 bg-(--prime) text-[12px] text-white transition-all ${isLoading && "opacity-50"}`}
-          >
-            Login
-          </button>
+          <div className="flex items-center justify-between">
+            <p className="text-(--prime) font-medium hover:underline cursor-pointer">
+              Нет аккаунта?
+            </p>
+            <button
+              className={`p-3 bg-(--prime) text-[12px] text-white transition-all ${isLoading && "opacity-50"}`}
+            >
+              Login
+            </button>
+          </div>
         </div>
       </form>
     </ModalWrapper>
