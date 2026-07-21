@@ -47,7 +47,11 @@ function Profile() {
         setOpen={setOpenModal}
         setOpenReg={setOpenReg}
       />
-      <RegModal open={openReg} setOpen={setOpenReg} />
+      <RegModal
+        open={openReg}
+        setOpen={setOpenReg}
+        setOpenLogin={setOpenModal}
+      />
     </>
   );
 }

@@ -4,12 +4,14 @@ import ModalWrapper from "./ModalWrapper";
 import { IRegError, IRegisterBody } from "@/app/frostTypes";
 import { useRef, useState } from "react";
 import { useGetTokenMutation, useRegisterUserMutation } from "@/store/frostApi";
+import { toast } from "react-toastify";
 interface IProps {
   open: boolean;
   setOpen: (b: boolean) => void;
+  setOpenLogin: (b: boolean) => void;
 }
 
-function RegModal({ open, setOpen }: IProps) {
+function RegModal({ open, setOpen, setOpenLogin }: IProps) {
   const passRef = useRef<HTMLInputElement>(null);
   const [errors, setErrors] = useState<string[]>([]);
   const { handleSubmit, register } = useForm<IRegisterBody>();
@@ -19,8 +21,10 @@ function RegModal({ open, setOpen }: IProps) {
   const submit: SubmitHandler<IRegisterBody> = (data) => {
     registerUser(data)
       .unwrap()
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        toast.success("Вы зарегистрировались! Войдите в свой аккаунт.");
+        setOpen(false);
+        setOpenLogin(true);
       })
       .catch((err) => {
         const error = err as IRegError;
