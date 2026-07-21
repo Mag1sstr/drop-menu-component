@@ -1,8 +1,8 @@
 "use client";
 import { SubmitHandler, useForm } from "react-hook-form";
 import ModalWrapper from "./ModalWrapper";
-import { IRegisterBody } from "@/app/frostTypes";
-import { useRef } from "react";
+import { IRegError, IRegisterBody } from "@/app/frostTypes";
+import { useRef, useState } from "react";
 import { useGetTokenMutation, useRegisterUserMutation } from "@/store/frostApi";
 interface IProps {
   open: boolean;
@@ -11,6 +11,7 @@ interface IProps {
 
 function RegModal({ open, setOpen }: IProps) {
   const passRef = useRef<HTMLInputElement>(null);
+  const [errors, setErrors] = useState<string[]>([]);
   const { handleSubmit, register } = useForm<IRegisterBody>();
   const [registerUser, { data, isLoading, isError }] =
     useRegisterUserMutation();
@@ -18,7 +19,13 @@ function RegModal({ open, setOpen }: IProps) {
   const submit: SubmitHandler<IRegisterBody> = (data) => {
     registerUser(data)
       .unwrap()
-      .then((res) => console.log(res));
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        const error = err as IRegError;
+        setErrors(Object.values(error.data.errors).flat());
+      });
   };
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
@@ -31,6 +38,10 @@ function RegModal({ open, setOpen }: IProps) {
           </div>
         </div>
         <div className="bg-white py-6 px-10">
+          {errors.length > 0 &&
+            errors.map((err) => (
+              <p className="text-[14px] text-(--prime)">{err}</p>
+            ))}
           <div className="flex flex-col gap-2">
             <label htmlFor="field">Имя:</label>
             <input
@@ -74,7 +85,7 @@ function RegModal({ open, setOpen }: IProps) {
             />
           </div>
           <button
-          // className={`p-3 bg-(--prime) text-[12px] text-white transition-all ${isLoading && "opacity-50"}`}
+            className={`p-3 bg-(--prime) text-[12px] text-white transition-all ${isLoading && "opacity-50"}`}
           >
             Reg
           </button>

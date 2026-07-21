@@ -133,3 +133,9 @@ export interface IProductsParams {
   modelId?: number;
   generationId?: number;
 }
+export interface IRegError {
+  status: number;
+  data: {
+    errors: Record<string, string[]>;
+  };
+}
