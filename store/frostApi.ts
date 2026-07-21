@@ -6,6 +6,7 @@ import {
   IProduct,
   IProductsParams,
   IProductsResponse,
+  IRegisterBody,
   IUser,
 } from "@/app/frostTypes";
 import { AuthContext } from "@/contexts/AuthContext";
@@ -63,6 +64,9 @@ export const frostApi = createApi({
     getCart: builder.query<ICartResponse, void>({
       query: () => ({ url: "/cart" }),
     }),
+    registerUser: builder.mutation<IUser, IRegisterBody>({
+      query: (body) => ({ url: "/registration", body, method: "POST" }),
+    }),
   }),
 });
 export const {
@@ -73,4 +77,5 @@ export const {
   useGetTokenMutation,
   useGetUserMutation,
   useGetCartQuery,
+  useRegisterUserMutation,
 } = frostApi;

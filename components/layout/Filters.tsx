@@ -40,8 +40,6 @@ function Filters() {
     refetchOnMountOrArgChange: true,
   });
 
-  console.log(brandId);
-
   return (
     <aside className="w-66 py-3 bg-black">
       <Dropdown

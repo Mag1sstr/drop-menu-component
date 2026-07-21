@@ -7,13 +7,13 @@ import { useAuth } from "@/contexts/AuthContext";
 interface IProps {
   open: boolean;
   setOpen: (b: boolean) => void;
-  setOpenReg?: (b: boolean) => void;
+  setOpenReg: (b: boolean) => void;
 }
 interface ILoginBod {
   email: string;
   password: string;
 }
-function AuthModal({ open, setOpen }: IProps) {
+function AuthModal({ open, setOpen, setOpenReg }: IProps) {
   const { setToken } = useAuth();
   const { handleSubmit, register } = useForm<ILoginBody>();
   const [getToken, { data, isSuccess, isError, isLoading }] =
@@ -60,7 +60,13 @@ function AuthModal({ open, setOpen }: IProps) {
             />
           </div>
           <div className="flex items-center justify-between">
-            <p className="text-(--prime) font-medium hover:underline cursor-pointer">
+            <p
+              onClick={() => {
+                setOpenReg(true);
+                setOpen(false);
+              }}
+              className="text-(--prime) font-medium hover:underline cursor-pointer"
+            >
               Нет аккаунта?
             </p>
             <button

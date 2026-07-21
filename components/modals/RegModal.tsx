@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import ModalWrapper from "./ModalWrapper";
 import { IRegisterBody } from "@/app/frostTypes";
 import { useRef } from "react";
+import { useGetTokenMutation, useRegisterUserMutation } from "@/store/frostApi";
 interface IProps {
   open: boolean;
   setOpen: (b: boolean) => void;
@@ -11,10 +12,17 @@ interface IProps {
 function RegModal({ open, setOpen }: IProps) {
   const passRef = useRef<HTMLInputElement>(null);
   const { handleSubmit, register } = useForm<IRegisterBody>();
-  const submit: SubmitHandler<IRegisterBody> = (data) => {};
+  const [registerUser, { data, isLoading, isError }] =
+    useRegisterUserMutation();
+  const [getToken] = useGetTokenMutation();
+  const submit: SubmitHandler<IRegisterBody> = (data) => {
+    registerUser(data)
+      .unwrap()
+      .then((res) => console.log(res));
+  };
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
-      <form className="w-125">
+      <form onSubmit={handleSubmit(submit)} className="w-125">
         <div className="border-t-4 border-(--prime) bg-[#1D1D1D] flex gap-8 pt-5 text-white">
           <div className="w-25 h-24 bg-(--prime) p-4 mask-[url('/box.svg')]"></div>
           <div className="flex flex-col gap-2">
