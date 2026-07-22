@@ -3,6 +3,9 @@ import Button from "./Button";
 import { IProduct, IProductData } from "@/app/frostTypes";
 import { useRouter } from "next/navigation";
 import CounterBtn from "./CounterBtn";
+import { useAddCartItemMutation } from "@/store/frostApi";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 function ProductCard(props: IProductData) {
   const { name, description, price, id, available, manufacturer } = props;
@@ -15,8 +18,21 @@ function ProductCard(props: IProductData) {
   } = useCart();
   const router = useRouter();
 
+  const [addToCart, { isError: addToCartError, isSuccess: isAddedSuccess }] =
+    useAddCartItemMutation();
+
   const isInCart = cart.some((el) => el.id === id);
   const cartItemCount = cart.find((el) => el.id === props.id)?.count;
+  useEffect(() => {
+    if (addToCartError) {
+      toast.error("Что-то полшло не так");
+    }
+  }, [addToCartError]);
+  useEffect(() => {
+    if (isAddedSuccess) {
+      toast.success("Добавлено в корзину!");
+    }
+  }, [isAddedSuccess]);
   return (
     <div
       className={`relative px-5 py-6.75 border-4  ${!!available ? "border-[#3CC051]" : "border-(--prime)"} font-medium flex flex-col bg-(--bg-card) group`}
@@ -52,6 +68,10 @@ function ProductCard(props: IProductData) {
               count={cartItemCount}
             />
             <button
+              onClick={() => {
+                if (!available) return toast.error("Нет в наличии!");
+                addToCart({ count: 1, productId: id });
+              }}
               // onClick={() =>
               //   isInCart
               //     ? deleteCartItem(props.id)

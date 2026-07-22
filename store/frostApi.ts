@@ -64,6 +64,9 @@ export const frostApi = createApi({
     getCart: builder.query<ICartResponse, void>({
       query: () => ({ url: "/cart" }),
     }),
+    addCartItem: builder.mutation<void, { productId: number; count: number }>({
+      query: (params) => ({ method: "GET", url: "/cart/add", params }),
+    }),
     registerUser: builder.mutation<IUser, IRegisterBody>({
       query: (body) => ({ url: "/registration", body, method: "POST" }),
     }),
@@ -78,4 +81,5 @@ export const {
   useGetUserMutation,
   useGetCartQuery,
   useRegisterUserMutation,
+  useAddCartItemMutation,
 } = frostApi;
