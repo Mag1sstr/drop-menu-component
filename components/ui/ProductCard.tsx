@@ -38,7 +38,7 @@ function ProductCard(props: IProductData) {
       className={`relative px-5 py-6.75 border-4  ${!!available ? "border-[#3CC051]" : "border-(--prime)"} font-medium flex flex-col bg-(--bg-card) group`}
     >
       <div
-        className={`uppercase text-[10px] text-white w-22 text-center py-2 absolute ${!!available ? "bg-[#3CC051]" : "bg-(--prime)"}  right-0 top-0`}
+        className={`uppercase text-[10px] text-white px-3 text-center py-1.75 absolute ${!!available ? "bg-[#3CC051]" : "bg-(--prime)"}  right-0 top-0`}
       >
         {!!available ? "В НАЛИЧИИ" : "нет в наличии"}
       </div>
@@ -61,11 +61,12 @@ function ProductCard(props: IProductData) {
             "Цена действительна при сдаче старого аккумулятора аналогичной емкости в лом"}
         </p>
         <div className="mt-auto">
-          <div className="flex justify-between">
+          <div className="flex justify-between gap-5 mb-5">
             <CounterBtn
               increase={() => increaseCartItem(props.id)}
               decrease={() => decreaseCartItem(id)}
               count={cartItemCount}
+              className="flex-1 h-10"
             />
             <button
               onClick={() => {
