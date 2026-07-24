@@ -1,25 +1,36 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import AuthModal from "../modals/AuthModal";
 import { useAuth } from "@/contexts/AuthContext";
 import RegModal from "../modals/RegModal";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 function Profile() {
-  const { user, setToken, setUser, isUserLoading, logout } = useAuth();
+  const { user, isUserLoading, logout } = useAuth();
+  const [drop, setDrop] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openReg, setOpenReg] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
 
+  useClickOutside(profileRef, () => {
+    setDrop(false);
+  });
   return (
     <>
       {user ? (
-        <div className="relative self-center max-w-30">
+        <div ref={profileRef} className="relative self-center max-w-30">
           <button
             className="uppercase border-4 border-(--prime) px-5 py-3 text-[12px] text-white self-center font-bold whitespace-nowrap w-full overflow-hidden text-ellipsis cursor-pointer transition-all hover:bg-white hover:text-black"
             title={user.firstName + " " + user.lastName}
+            onClick={() => {
+              setDrop((prev) => !prev);
+            }}
           >
             {`${user.firstName} ${user.lastName}`}
           </button>
-          <div className="absolute z-50  top-full mt-2.5 right-0 w-50 py-2.5 bg-zinc-700 text-white">
+          <div
+            className={`absolute z-50  top-full mt-2.5 right-0 w-50 py-2.5 bg-zinc-700 text-white transition-all ${drop ? "visible opacity-100" : "invisible opacity-0"}`}
+          >
             <div
               onClick={() => {
                 logout();
