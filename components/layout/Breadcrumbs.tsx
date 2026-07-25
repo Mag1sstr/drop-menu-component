@@ -11,6 +11,7 @@ function Breadcrumbs() {
 
   const breadcrumbsNames: Record<string, string> = {
     catalog: "каталог",
+    cart: "Корзина",
   };
 
   return (

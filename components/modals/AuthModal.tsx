@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import ModalWrapper from "./ModalWrapper";
 import { useGetTokenMutation } from "@/store/frostApi";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { ILoginBody } from "@/app/frostTypes";
 import { useAuth } from "@/contexts/AuthContext";
 interface IProps {
@@ -13,7 +13,7 @@ interface ILoginBod {
   email: string;
   password: string;
 }
-function AuthModal({ open, setOpen, setOpenReg }: IProps) {
+const AuthModal = memo(({ open, setOpen, setOpenReg }: IProps) => {
   const { setToken } = useAuth();
   const { handleSubmit, register } = useForm<ILoginBody>();
   const [getToken, { data, isSuccess, isError, isLoading }] =
@@ -29,6 +29,8 @@ function AuthModal({ open, setOpen, setOpenReg }: IProps) {
       setOpen(false);
     }
   }, [isSuccess]);
+
+  console.log("authmodal rerender");
 
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
@@ -79,6 +81,6 @@ function AuthModal({ open, setOpen, setOpenReg }: IProps) {
       </form>
     </ModalWrapper>
   );
-}
+});
 
 export default AuthModal;

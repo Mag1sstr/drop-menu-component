@@ -31,6 +31,7 @@ function RegModal({ open, setOpen, setOpenLogin }: IProps) {
         setErrors(Object.values(error.data.errors).flat());
       });
   };
+
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
       <form onSubmit={handleSubmit(submit)} className="w-125">
