@@ -29,8 +29,6 @@ function Search() {
 
   useClickOutside(searchRef, () => setOpen(false));
 
-  console.log(location);
-
   return (
     <div ref={searchRef} className="self-center">
       <button
