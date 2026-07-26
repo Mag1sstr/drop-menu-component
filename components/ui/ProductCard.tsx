@@ -3,26 +3,28 @@ import Button from "./Button";
 import { IProduct, IProductData } from "@/app/frostTypes";
 import { useRouter } from "next/navigation";
 import CounterBtn from "./CounterBtn";
-import { useAddCartItemMutation } from "@/store/frostApi";
-import { useEffect } from "react";
+import { useAddCartItemMutation, useGetCartQuery } from "@/store/frostApi";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 function ProductCard(props: IProductData) {
   const { name, description, price, id, available, manufacturer } = props;
-  const {
-    cart,
-    addCartItem,
-    deleteCartItem,
-    increaseCartItem,
-    decreaseCartItem,
-  } = useCart();
+  // const {
+  //   cart,
+  //   addCartItem,
+  //   deleteCartItem,
+  //   increaseCartItem,
+  //   decreaseCartItem,
+  // } = useCart();
   const router = useRouter();
+  const [count, setCount] = useState(1);
 
   const [addToCart, { isError: addToCartError, isSuccess: isAddedSuccess }] =
     useAddCartItemMutation();
-
-  const isInCart = cart.some((el) => el.id === id);
-  const cartItemCount = cart.find((el) => el.id === props.id)?.count;
+  const { data: cartData } = useGetCartQuery();
+  const isInCart = cartData?.items.some((el) => el.product.id === id);
+  // const isInCart = cart.some((el) => el.id === id);
+  // const cartItemCount = cart.find((el) => el.id === props.id)?.count;
   useEffect(() => {
     if (addToCartError) {
       toast.error("Что-то полшло не так");
@@ -63,9 +65,9 @@ function ProductCard(props: IProductData) {
         <div className="mt-auto">
           <div className="flex justify-between gap-5 mb-5">
             <CounterBtn
-              increase={() => increaseCartItem(props.id)}
-              decrease={() => decreaseCartItem(id)}
-              count={cartItemCount}
+              increase={() => setCount((prev) => prev + 1)}
+              decrease={() => setCount((prev) => (prev > 1 ? prev - 1 : prev))}
+              count={count}
               className="flex-1 h-10"
             />
             <button
