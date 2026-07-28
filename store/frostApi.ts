@@ -15,6 +15,7 @@ import { useContext } from "react";
 
 export const frostApi = createApi({
   reducerPath: "frostApi",
+  tagTypes: ["cart"],
   baseQuery: fetchBaseQuery({
     baseUrl: "https://frost.runtime.kz/api",
     prepareHeaders(headers) {
@@ -63,12 +64,18 @@ export const frostApi = createApi({
     }),
     getCart: builder.query<ICartResponse, void>({
       query: () => ({ url: "/cart" }),
+      providesTags: ["cart"],
     }),
     addCartItem: builder.mutation<void, { productId: number; count: number }>({
       query: (params) => ({ method: "GET", url: "/cart/add", params }),
+      invalidatesTags: ["cart"],
     }),
     registerUser: builder.mutation<IUser, IRegisterBody>({
       query: (body) => ({ url: "/registration", body, method: "POST" }),
+    }),
+    deleteCartItem: builder.mutation<void, number>({
+      query: (id) => ({ method: "GET", url: `/cart/delete?productId=${id}` }),
+      invalidatesTags: ["cart"],
     }),
   }),
 });
@@ -82,4 +89,5 @@ export const {
   useGetCartQuery,
   useRegisterUserMutation,
   useAddCartItemMutation,
+  useDeleteCartItemMutation,
 } = frostApi;

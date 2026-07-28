@@ -4,22 +4,28 @@ import Button from "./Button";
 import { useCart } from "@/store/zustand/useCart";
 import { toast } from "react-toastify";
 import { useClickOutside } from "@/hooks/useClickOutside";
+import { useDeleteCartItemMutation, useGetCartQuery } from "@/store/frostApi";
 
 function Cart() {
   const [open, setOpen] = useState(false);
-  const { cart, getCartLength, getCartTotalPrice, deleteCartItem } = useCart();
+  // const { cart, getCartLength, getCartTotalPrice, deleteCartItem } = useCart();
+  const [deleteCartItem] = useDeleteCartItemMutation();
+  const { data: cartData } = useGetCartQuery();
   const ref = useRef<HTMLDivElement>(null);
 
+  const handleDeleteCartItem = (id: number) => {
+    deleteCartItem(id);
+  };
   useClickOutside(ref, () => setOpen(false));
+
+  console.log(cartData);
 
   return (
     <div ref={ref} className="relative flex items-center gap-2">
       <button
         className="cursor-pointer"
         onClick={() =>
-          !getCartLength()
-            ? toast.error("В корзине пусто")
-            : setOpen((prev) => !prev)
+          !cartData ? toast.error("В корзине пусто") : setOpen((prev) => !prev)
         }
       >
         <svg
@@ -62,24 +68,26 @@ function Cart() {
         </svg>
       </button>
       <div className="w-8 h-8 rounded-full bg-[#C53720] flex items-center justify-center text-white font-bold">
-        {getCartLength()}
+        {cartData?.items.length || ""}
       </div>
 
       <div
         className={`absolute right-0  w-[622px]   border-t-4 border-(--prime) top-25 bg-white transition-all shadow-2xl ${open ? "visible opacity-100" : "invisible opacity-0"}`}
       >
-        {cart.map((item) => (
+        {cartData?.items.map(({ product: item }) => (
           <div
             key={item.id}
             className="relative p-6 flex gap-6 border-b-2 border-[#A5A5A5]"
           >
             <button
               onClick={() => {
-                if (cart.length > 1) {
-                  deleteCartItem(item.id);
+                if (cartData.items.length > 1) {
+                  handleDeleteCartItem(item.id);
                 } else {
-                  deleteCartItem(item.id);
-                  setOpen(false);
+                  (async () => {
+                    await deleteCartItem(item.id).unwrap();
+                    setOpen(false);
+                  })();
                 }
               }}
               className="cursor-pointer absolute top-4 right-6"
@@ -96,15 +104,10 @@ function Cart() {
                 <path d="M16 4L4 16" stroke="#A5A5A5" strokeWidth="4" />
               </svg>
             </button>
-            <img
-              className="w-25 h-21.5 object-contain"
-              src={item.images[0]}
-              alt=""
-            />
+            <img className="w-25 h-21.5 object-contain" src="/pr.png" alt="" />
             <div className="flex-1">
-              <h3 className="text-(--prime) font-medium text-[20px] mb-4">
-                {item.title}
-                {item.count}
+              <h3 className="text-(--prime) font-medium text-[20px] mb-4 max-w-[calc(100%-40px)]">
+                {item.name}
               </h3>
               <div className="flex justify-between items-center">
                 <div className="py-3 px-4.5 bg-[#3CC051] text-white text-[10px] uppercase font-bold">
@@ -120,7 +123,10 @@ function Cart() {
             ИТОГ:
           </p>
           <div className="flex items-center justify-between">
-            <strong className="text-[48px]">{getCartTotalPrice()} руб.</strong>
+            <strong className="text-[48px]">
+              {cartData?.items.reduce((acc, el) => acc + el.product.price, 0)}{" "}
+              тг.
+            </strong>
             <Button className="text-(--prime)! py-4.5 px-5">
               ПЕРЕЙТИ В КОРЗИНУ
             </Button>
