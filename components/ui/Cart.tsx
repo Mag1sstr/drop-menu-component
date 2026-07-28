@@ -67,14 +67,16 @@ function Cart() {
           />
         </svg>
       </button>
-      <div className="w-8 h-8 rounded-full bg-[#C53720] flex items-center justify-center text-white font-bold">
-        {cartData?.items.length || ""}
-      </div>
+      {!!cartData?.items.length && (
+        <div className="w-8 h-8 rounded-full bg-[#C53720] flex items-center justify-center text-white font-bold">
+          {cartData.items.length}
+        </div>
+      )}
 
       <div
         className={`absolute right-0  w-[622px]   border-t-4 border-(--prime) top-25 bg-white transition-all shadow-2xl ${open ? "visible opacity-100" : "invisible opacity-0"}`}
       >
-        {cartData?.items.map(({ product: item }) => (
+        {cartData?.items.map(({ product: item, count }) => (
           <div
             key={item.id}
             className="relative p-6 flex gap-6 border-b-2 border-[#A5A5A5]"
@@ -108,6 +110,8 @@ function Cart() {
             <div className="flex-1">
               <h3 className="text-(--prime) font-medium text-[20px] mb-4 max-w-[calc(100%-40px)]">
                 {item.name}
+
+                {count}
               </h3>
               <div className="flex justify-between items-center">
                 <div className="py-3 px-4.5 bg-[#3CC051] text-white text-[10px] uppercase font-bold">
@@ -124,7 +128,10 @@ function Cart() {
           </p>
           <div className="flex items-center justify-between">
             <strong className="text-[48px]">
-              {cartData?.items.reduce((acc, el) => acc + el.product.price, 0)}{" "}
+              {cartData?.items.reduce(
+                (acc, el) => acc + el.product.price * el.count,
+                0,
+              )}{" "}
               тг.
             </strong>
             <Button className="text-(--prime)! py-4.5 px-5">
