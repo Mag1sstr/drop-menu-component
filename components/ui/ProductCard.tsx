@@ -73,7 +73,7 @@ function ProductCard(props: IProductData) {
             <button
               onClick={() => {
                 if (!available) return toast.error("Нет в наличии!");
-                addToCart({ count: 1, productId: id });
+                addToCart({ count, productId: id });
               }}
               // onClick={() =>
               //   isInCart

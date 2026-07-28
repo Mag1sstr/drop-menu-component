@@ -5,6 +5,7 @@ import { useCart } from "@/store/zustand/useCart";
 import { toast } from "react-toastify";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { useDeleteCartItemMutation, useGetCartQuery } from "@/store/frostApi";
+import { useRouter } from "next/navigation";
 
 function Cart() {
   const [open, setOpen] = useState(false);
@@ -12,6 +13,7 @@ function Cart() {
   const [deleteCartItem] = useDeleteCartItemMutation();
   const { data: cartData } = useGetCartQuery();
   const ref = useRef<HTMLDivElement>(null);
+  const rouder = useRouter();
 
   const handleDeleteCartItem = (id: number) => {
     deleteCartItem(id);
@@ -134,7 +136,10 @@ function Cart() {
               )}{" "}
               тг.
             </strong>
-            <Button className="text-(--prime)! py-4.5 px-5">
+            <Button
+              onClick={() => rouder.push("/cart")}
+              className="text-(--prime)! py-4.5 px-5"
+            >
               ПЕРЕЙТИ В КОРЗИНУ
             </Button>
           </div>
