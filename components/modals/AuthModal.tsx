@@ -30,8 +30,6 @@ const AuthModal = memo(({ open, setOpen, setOpenReg }: IProps) => {
     }
   }, [isSuccess]);
 
-  console.log("authmodal rerender");
-
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
       <form onSubmit={handleSubmit(login)} className="w-125" action="">

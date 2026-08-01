@@ -5,6 +5,7 @@ import { IRegError, IRegisterBody } from "@/app/frostTypes";
 import { useRef, useState } from "react";
 import { useGetTokenMutation, useRegisterUserMutation } from "@/store/frostApi";
 import { toast } from "react-toastify";
+import { useAuth } from "@/contexts/AuthContext";
 interface IProps {
   open: boolean;
   setOpen: (b: boolean) => void;
@@ -12,24 +13,42 @@ interface IProps {
 }
 
 function RegModal({ open, setOpen, setOpenLogin }: IProps) {
+  const { setToken } = useAuth();
   const passRef = useRef<HTMLInputElement>(null);
   const [errors, setErrors] = useState<string[]>([]);
-  const { handleSubmit, register } = useForm<IRegisterBody>();
-  const [registerUser, { data, isLoading, isError }] =
-    useRegisterUserMutation();
+  const [isLoading, setIsLoading] = useState(false);
+  const { handleSubmit, register, getValues } = useForm<IRegisterBody>();
+  const [registerUser] = useRegisterUserMutation();
   const [getToken] = useGetTokenMutation();
-  const submit: SubmitHandler<IRegisterBody> = (data) => {
-    registerUser(data)
-      .unwrap()
-      .then(() => {
-        toast.success("Вы зарегистрировались! Войдите в свой аккаунт.");
-        setOpen(false);
-        setOpenLogin(true);
-      })
-      .catch((err) => {
-        const error = err as IRegError;
-        setErrors(Object.values(error.data.errors).flat());
-      });
+  const submit: SubmitHandler<IRegisterBody> = async (data) => {
+    try {
+      setIsLoading(true);
+      await registerUser(data).unwrap();
+      const res = await getToken({
+        username: getValues().email,
+        password: getValues().password,
+      }).unwrap();
+      setToken(res.access_token);
+
+      localStorage.setItem("t", res.access_token);
+
+      setOpen(false);
+      toast.success("Вы вошли в аккаунт!");
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
+    // registerUser(data)
+    //   .unwrap()
+    //   .then(() => {
+    //     toast.success("Вы зарегистрировались! Войдите в свой аккаунт.");
+    //     setOpen(false);
+    //     setOpenLogin(true);
+    //   })
+    //   .catch((err) => {
+    //     const error = err as IRegError;
+    //     setErrors(Object.values(error.data.errors).flat());
+    //   });
   };
 
   return (
