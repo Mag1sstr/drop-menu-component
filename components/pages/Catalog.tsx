@@ -1,12 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import ProductCard from "../ui/ProductCard";
-import { IProduct } from "@/app/types";
-import { useFilters } from "@/store/zustand/useFilters";
-import { useFetch } from "@/hooks/useFetch";
-import { usePagination } from "@/hooks/usePagination";
+
 import Pagination from "../layout/Pagination";
 import { useGetProductsQuery } from "@/store/frostApi";
+import { useFiltersRedux } from "@/store/slices/filterSlice";
+import { useFilters } from "@/store/zustand/useFilters";
 
 function Catalog() {
   const {
@@ -20,6 +19,8 @@ function Catalog() {
 
   const initialized = useRef(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  const { sortTypes } = useFiltersRedux();
 
   // const filters =
   //   "?" +
@@ -48,13 +49,18 @@ function Catalog() {
   //   }
   // }, [data]);
   const [page, setPage] = useState(1);
-  const { data, isLoading, isError } = useGetProductsQuery({
-    page,
-    size: 6,
+  const {
+    data = { items: [], totalPages: 1 },
+    isLoading,
+    isError,
+  } = useGetProductsQuery({
+    size: 17,
     brandId,
     modelId,
     generationId,
   });
+
+  const products = !!sortTypes.length ? [...data.items] : data.items;
 
   return (
     <section ref={sectionRef} className="h-500">

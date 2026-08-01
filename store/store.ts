@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { api } from "./api";
 import authSlice from "./authSlice";
 import { frostApi } from "./frostApi";
+import filterSlice from "./slices/filterSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
+    filters: filterSlice,
     [api.reducerPath]: api.reducer,
     [frostApi.reducerPath]: frostApi.reducer,
   },
