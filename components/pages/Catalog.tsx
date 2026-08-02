@@ -4,8 +4,9 @@ import ProductCard from "../ui/ProductCard";
 
 import Pagination from "../layout/Pagination";
 import { useGetProductsQuery } from "@/store/frostApi";
-import { useFiltersRedux } from "@/store/slices/filterSlice";
+import { FrostSortTypes, useFiltersRedux } from "@/store/slices/filterSlice";
 import { useFilters } from "@/store/zustand/useFilters";
+import { IProductData } from "@/app/frostTypes";
 
 function Catalog() {
   const {
@@ -60,7 +61,29 @@ function Catalog() {
     generationId,
   });
 
-  const products = !!sortTypes.length ? [...data.items] : data.items;
+  const sortHandlers: Record<
+    FrostSortTypes,
+    (a: IProductData, b: IProductData) => number
+  > = {
+    askP: (a, b) => a.price - b.price,
+    descP: (a, b) => b.price - a.price,
+    ascL: (a, b) => a.name.length - b.name.length,
+    descL: (a, b) => b.name.length - a.name.length,
+  };
+
+  const products = !!sortTypes.length
+    ? [...data.items].sort((a, b) => {
+        for (const sort of sortTypes) {
+          const result = sortHandlers[sort](a, b);
+
+          if (result !== 0) {
+            return result;
+          }
+        }
+
+        return 0;
+      })
+    : data.items;
 
   return (
     <section ref={sectionRef} className="h-500">
@@ -97,7 +120,7 @@ function Catalog() {
       {isError && <p className="+text-3xl text-center">{isError}</p>}
 
       <div className="grid grid-cols-3 gap-6 mb-10">
-        {data?.items?.map((card) => (
+        {products.map((card) => (
           <ProductCard key={card.id} {...card} />
         ))}
       </div>
