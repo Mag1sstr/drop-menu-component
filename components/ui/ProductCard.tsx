@@ -19,8 +19,14 @@ function ProductCard(props: IProductData) {
   const router = useRouter();
   const [count, setCount] = useState(1);
 
-  const [addToCart, { isError: addToCartError, isSuccess: isAddedSuccess }] =
-    useAddCartItemMutation();
+  const [
+    addToCart,
+    {
+      isError: addToCartError,
+      isSuccess: isAddedSuccess,
+      isLoading: isAddLoading,
+    },
+  ] = useAddCartItemMutation();
   const { data: cartData } = useGetCartQuery();
   const isInCart = cartData?.items.some((el) => el.product.id === id);
   // const isInCart = cart.some((el) => el.id === id);
@@ -63,60 +69,15 @@ function ProductCard(props: IProductData) {
             "Цена действительна при сдаче старого аккумулятора аналогичной емкости в лом"}
         </p>
         <div className="mt-auto">
-          <div className="flex justify-between gap-5 mb-5">
-            <CounterBtn
-              increase={() => setCount((prev) => prev + 1)}
-              decrease={() => setCount((prev) => (prev > 1 ? prev - 1 : prev))}
-              count={count}
-              className="flex-1 h-10"
-            />
-            <button
-              onClick={() => {
-                if (!available) return toast.error("Нет в наличии!");
-                addToCart({ count, productId: id });
-              }}
-              // onClick={() =>
-              //   isInCart
-              //     ? deleteCartItem(props.id)
-              //     : addCartItem({ ...props, count: 1 })
-              // }
-              className={`relative w-10 h-10 border-4 border-(--prime) flex justify-center items-center cursor-pointer ${isInCart ? "bg-(--prime)" : "bg-white"}`}
-            >
-              <svg
-                width="21"
-                height="20"
-                viewBox="0 0 21 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className={`absolute left-1/2 top-1/2 -translate-1/2 transition-all ${isInCart ? "opacity-0" : "opacity-100"}`}
-              >
-                <path d="M20 1L17.1035 11H4" stroke="#C53720" strokeWidth="2" />
-                <path d="M5 0L5 11.6667" stroke="#C53720" strokeWidth="2" />
-                <path d="M5 1L0 1" stroke="#C53720" strokeWidth="2" />
-                <circle
-                  cx="14.4002"
-                  cy="16.8"
-                  r="2.2"
-                  stroke="#C53720"
-                  strokeWidth="2"
-                />
-                <circle
-                  cx="7.2"
-                  cy="16.8"
-                  r="2.2"
-                  stroke="#C53720"
-                  strokeWidth="2"
-                />
-                <path d="M9 3L15 3" stroke="#C53720" strokeWidth="2" />
-                <path d="M12 6V-1.78814e-07" stroke="#C53720" strokeWidth="2" />
-              </svg>
+          {isInCart ? (
+            <div className="flex items-center justify-between p-2.5 text-[14px] text-white bg-(--prime) mb-5">
+              <p className="text-center w-full">В КОРЗИНЕ</p>
               <svg
                 width="21"
                 height="21"
                 viewBox="0 0 21 21"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className={`absolute left-1/2 top-1/2 -translate-1/2 transition-all ${isInCart ? "opacity-100" : "opacity-0"}`}
               >
                 <path
                   d="M20 1.68604L17.1035 11.686H4"
@@ -149,8 +110,111 @@ function ProductCard(props: IProductData) {
                   strokeWidth="2"
                 />
               </svg>
-            </button>
-            {/* <Button
+            </div>
+          ) : (
+            <div className="flex justify-between gap-5 mb-5">
+              <CounterBtn
+                increase={() => setCount((prev) => prev + 1)}
+                decrease={() =>
+                  setCount((prev) => (prev > 1 ? prev - 1 : prev))
+                }
+                count={count}
+                className="flex-1 h-10"
+              />
+              <button
+                disabled={isAddLoading}
+                onClick={() => {
+                  if (!available) return toast.error("Нет в наличии!");
+                  addToCart({ count, productId: id });
+                }}
+                // onClick={() =>
+                //   isInCart
+                //     ? deleteCartItem(props.id)
+                //     : addCartItem({ ...props, count: 1 })
+                // }
+                className={`relative w-10 h-10 border-4 border-(--prime) transition-all flex justify-center items-center cursor-pointer disabled:opacity-50`}
+              >
+                <svg
+                  width="21"
+                  height="20"
+                  viewBox="0 0 21 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`absolute left-1/2 top-1/2 -translate-1/2 transition-all ${isInCart ? "opacity-0" : "opacity-100"}`}
+                >
+                  <path
+                    d="M20 1L17.1035 11H4"
+                    stroke="#C53720"
+                    strokeWidth="2"
+                  />
+                  <path d="M5 0L5 11.6667" stroke="#C53720" strokeWidth="2" />
+                  <path d="M5 1L0 1" stroke="#C53720" strokeWidth="2" />
+                  <circle
+                    cx="14.4002"
+                    cy="16.8"
+                    r="2.2"
+                    stroke="#C53720"
+                    strokeWidth="2"
+                  />
+                  <circle
+                    cx="7.2"
+                    cy="16.8"
+                    r="2.2"
+                    stroke="#C53720"
+                    strokeWidth="2"
+                  />
+                  <path d="M9 3L15 3" stroke="#C53720" strokeWidth="2" />
+                  <path
+                    d="M12 6V-1.78814e-07"
+                    stroke="#C53720"
+                    strokeWidth="2"
+                  />
+                </svg>
+                <svg
+                  width="21"
+                  height="21"
+                  viewBox="0 0 21 21"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`absolute left-1/2 top-1/2 -translate-1/2 transition-all ${isInCart ? "opacity-100" : "opacity-0"}`}
+                >
+                  <path
+                    d="M20 1.68604L17.1035 11.686H4"
+                    stroke="white"
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M5 0.686035L5 12.3527"
+                    stroke="white"
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M5 1.68604L0 1.68604"
+                    stroke="white"
+                    strokeWidth="2"
+                  />
+                  <circle
+                    cx="14.4002"
+                    cy="17.486"
+                    r="2.2"
+                    stroke="white"
+                    strokeWidth="2"
+                  />
+                  <circle
+                    cx="7.2"
+                    cy="17.486"
+                    r="2.2"
+                    stroke="white"
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M9 2.68604L11.2286 4.68604L15 0.686035"
+                    stroke="white"
+                    strokeWidth="2"
+                  />
+                </svg>
+              </button>
+              {/* <Button
               disabled={isInCart}
               className="text-(--prime)! w-full mt-auto leading-3 mb-5 cursor-pointer"
               onClick={() => {
@@ -159,7 +223,8 @@ function ProductCard(props: IProductData) {
             >
               {isInCart ? "в корзине" : "Добавить в корзину"}
             </Button> */}
-          </div>
+            </div>
+          )}
 
           <Button
             onClick={() => router.push(`/catalog/${id}`)}
