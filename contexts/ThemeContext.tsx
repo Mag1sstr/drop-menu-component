@@ -28,8 +28,6 @@ export default function ThemeContextProvider({
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
-  console.log(document.documentElement.getAttribute("theme"));
-
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}

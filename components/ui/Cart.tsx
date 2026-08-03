@@ -20,8 +20,6 @@ function Cart() {
   };
   useClickOutside(ref, () => setOpen(false));
 
-  console.log(cartData);
-
   return (
     <div ref={ref} className="relative flex items-center gap-2">
       <button

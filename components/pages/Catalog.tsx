@@ -4,11 +4,18 @@ import ProductCard from "../ui/ProductCard";
 
 import Pagination from "../layout/Pagination";
 import { useGetProductsQuery } from "@/store/frostApi";
-import { FrostSortTypes, useFiltersRedux } from "@/store/slices/filterSlice";
+import {
+  addSortType,
+  deleteSortType,
+  FrostSortTypes,
+  useFiltersRedux,
+} from "@/store/slices/filterSlice";
 import { useFilters } from "@/store/zustand/useFilters";
 import { IProductData } from "@/app/frostTypes";
+import { useAppDispatch } from "@/store/store";
 
 function Catalog() {
+  const dispatch = useAppDispatch();
   const {
     rangePrice,
     setMaxPrice,
@@ -85,12 +92,30 @@ function Catalog() {
       })
     : data.items;
 
+  console.log(sortTypes);
+
   return (
     <section ref={sectionRef} className="h-500">
       <div className="flex justify-between mb-5">
         <ul className="flex [&>li]:flex [&>li]:items-center [&>li]:gap-1 text-[14px] font-medium uppercase">
           <li className="uppercase mr-5 ">Сортировать</li>
-          <li className="text-[#1D1D1D]/50 mr-2">
+          <li
+            onClick={() => {
+              if (sortTypes.includes("askP")) {
+                dispatch(deleteSortType("askP"));
+                dispatch(addSortType("descP"));
+                return;
+              }
+
+              if (sortTypes.includes("descP")) {
+                dispatch(deleteSortType("descP"));
+                return;
+              }
+
+              dispatch(addSortType("askP"));
+            }}
+            className={`transition-all ${sortTypes.includes("askP") || sortTypes.includes("descP") ? "text-[#C53720]" : "text-[#1D1D1D]/50"}  mr-2`}
+          >
             Цене{" "}
             <svg
               width="20"
@@ -98,20 +123,38 @@ function Catalog() {
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              className={`transition-all ${sortTypes.includes("askP") || sortTypes.includes("descP") ? "[&>path]:stroke-[#C53720]" : "[&>path]:stroke-[#1D1D1D]/50"} ${sortTypes.includes("askP") && "rotate-180"}  ${sortTypes.includes("descP") && "rotate-360"}`}
             >
-              <path d="M4 8L10 12L16 8" stroke="#C53720" strokeWidth="4" />
+              <path d="M4 8L10 12L16 8" strokeWidth="4" />
             </svg>
           </li>
-          <li className="text-[#1D1D1D]/50">
-            ПО НАЛИЧИЮ{" "}
+          <li
+            className={`transition-all ${sortTypes.includes("ascL") || sortTypes.includes("descL") ? "text-[#C53720]" : "text-[#1D1D1D]/50"}  mr-2`}
+            onClick={() => {
+              if (sortTypes.includes("ascL")) {
+                dispatch(deleteSortType("ascL"));
+                dispatch(addSortType("descL"));
+                return;
+              }
+
+              if (sortTypes.includes("descL")) {
+                dispatch(deleteSortType("descL"));
+                return;
+              }
+
+              dispatch(addSortType("ascL"));
+            }}
+          >
+            ПО ДЛИНЕ{" "}
             <svg
               width="20"
               height="20"
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              className={`[&>path]:transition-all transition-all ${sortTypes.includes("ascL") || sortTypes.includes("descL") ? "[&>path]:stroke-[#C53720]" : "[&>path]:stroke-[#1D1D1D]/50"} ${sortTypes.includes("ascL") && "rotate-180"}  ${sortTypes.includes("descL") && "rotate-360"}`}
             >
-              <path d="M4 8L10 12L16 8" stroke="#C53720" strokeWidth="4" />
+              <path d="M4 8L10 12L16 8" strokeWidth="4" />
             </svg>
           </li>
         </ul>
