@@ -4,6 +4,7 @@ import AuthModal from "../modals/AuthModal";
 import { useAuth } from "@/contexts/AuthContext";
 import RegModal from "../modals/RegModal";
 import { useClickOutside } from "@/hooks/useClickOutside";
+import { useToast } from "@/contexts/ToastContext";
 
 function Profile() {
   const { user, isUserLoading, logout } = useAuth();
@@ -11,6 +12,8 @@ function Profile() {
   const [openModal, setOpenModal] = useState(false);
   const [openReg, setOpenReg] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
+
+  const { toast } = useToast();
 
   useClickOutside(profileRef, () => {
     setDrop(false);
@@ -24,6 +27,7 @@ function Profile() {
             title={user.firstName + " " + user.lastName}
             onClick={() => {
               setDrop((prev) => !prev);
+              toast.success("67");
             }}
           >
             {`${user.firstName} ${user.lastName}`}
