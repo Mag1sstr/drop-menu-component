@@ -7,8 +7,12 @@ import { useAddCartItemMutation, useGetCartQuery } from "@/store/frostApi";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-function ProductCard(props: IProductData) {
-  const { name, description, price, id, available, manufacturer } = props;
+interface IProps extends IProductData {
+  type: "row" | "column";
+}
+
+function ProductCard(props: IProps) {
+  const { name, description, price, id, available, manufacturer, type } = props;
   // const {
   //   cart,
   //   addCartItem,

@@ -15,6 +15,7 @@ import { IProductData } from "@/app/frostTypes";
 import { useAppDispatch } from "@/store/store";
 
 function Catalog() {
+  const [listType, setListType] = useState<"row" | "column">("row");
   const dispatch = useAppDispatch();
   const {
     rangePrice,
