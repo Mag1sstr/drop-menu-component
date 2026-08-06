@@ -21,9 +21,12 @@ function ToastItem({ text, type, id }: IToasts) {
       initial={{ opacity: 0, translateX: "100%" }}
       animate={{ opacity: 1, translateX: 0 }}
       exit={{ opacity: 0, translateX: "100%" }}
-      className={`shadow-2xl p-4 ${styles[type] || ""}`}
+      className={`shadow-2xl rounded-sm overflow-hidden`}
     >
-      {text}
+      <div className={`p-4 ${styles[type] || ""} `}>{text}</div>
+      <div className="h-1 bg-gray-300 ">
+        <div className="progressFill"></div>
+      </div>
     </motion.div>
   );
 }
