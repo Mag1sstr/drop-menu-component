@@ -33,7 +33,7 @@ function Profile() {
             {`${user.firstName} ${user.lastName}`}
           </button>
           <div
-            className={`absolute z-50  top-full mt-2.5 right-0 w-50 py-2.5 bg-zinc-700 text-white transition-all ${drop ? "visible opacity-100" : "invisible opacity-0"}`}
+            className={`absolute z-50  top-full mt-2.5 right-0 w-50 py-2.5 bg-zinc-900/90 text-white transition-all ${drop ? "visible opacity-100" : "invisible opacity-0"}`}
           >
             <div
               onClick={() => {

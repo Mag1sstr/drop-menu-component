@@ -46,7 +46,7 @@ export default function ToastContextProvider({
 
   return (
     <ToastContext.Provider value={{ toast, setToasts }}>
-      {toasts.length > 0 && <ToastOverlay toasts={toasts} />}
+      <ToastOverlay toasts={toasts} />
       {children}
     </ToastContext.Provider>
   );
