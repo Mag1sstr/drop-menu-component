@@ -1,5 +1,6 @@
 import { IToasts, ToastTypes, useToast } from "@/contexts/ToastContext";
 import { useEffect } from "react";
+import { motion } from "motion/react";
 
 function ToastItem({ text, type, id }: IToasts) {
   const { setToasts } = useToast();
@@ -15,7 +16,16 @@ function ToastItem({ text, type, id }: IToasts) {
     );
     return () => clearTimeout(timer);
   }, []);
-  return <div className={`shadow-2xl p-4 ${styles[type] || ""}`}>{text}</div>;
+  return (
+    <motion.div
+      initial={{ opacity: 0, translateX: "100%" }}
+      animate={{ opacity: 1, translateX: 0 }}
+      exit={{ opacity: 0, translateX: "100%" }}
+      className={`shadow-2xl p-4 ${styles[type] || ""}`}
+    >
+      {text}
+    </motion.div>
+  );
 }
 
 export default ToastItem;
