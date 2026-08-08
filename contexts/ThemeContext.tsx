@@ -9,14 +9,18 @@ interface IThemeContext {
 
 export const ThemeContext = createContext({} as IThemeContext);
 
+const useGetThemeStorage = () => {
+  if (typeof window === "undefined") return;
+  const value = localStorage.getItem("theme");
+  return value || null;
+};
+
 export default function ThemeContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [theme, setTheme] = useState<TTheme>(
-    (localStorage.getItem("theme") as TTheme) || "light",
-  );
+  const [theme, setTheme] = useState<TTheme>(useGetThemeStorage() || "light");
 
   const toggleTheme = () =>
     setTheme((prev) => {

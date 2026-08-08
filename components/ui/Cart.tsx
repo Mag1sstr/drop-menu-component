@@ -135,7 +135,10 @@ function Cart() {
               тг.
             </strong>
             <Button
-              onClick={() => rouder.push("/cart")}
+              onClick={() => {
+                setOpen(false);
+                rouder.push("/cart");
+              }}
               className="text-(--prime)! py-4.5 px-5"
             >
               ПЕРЕЙТИ В КОРЗИНУ
