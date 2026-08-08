@@ -77,6 +77,14 @@ export const frostApi = createApi({
       query: (id) => ({ method: "GET", url: `/cart/delete?productId=${id}` }),
       invalidatesTags: ["cart"],
     }),
+    increaseCartItem: builder.mutation<void, number>({
+      query: (id) => ({ url: `/cart/increase?productId=${id}`, method: "GET" }),
+      invalidatesTags: ["cart"],
+    }),
+    decreaseCartItem: builder.mutation<void, number>({
+      query: (id) => ({ url: `/cart/decrease?productId=${id}`, method: "GET" }),
+      invalidatesTags: ["cart"],
+    }),
   }),
 });
 export const {
@@ -90,4 +98,6 @@ export const {
   useRegisterUserMutation,
   useAddCartItemMutation,
   useDeleteCartItemMutation,
+  useIncreaseCartItemMutation,
+  useDecreaseCartItemMutation,
 } = frostApi;

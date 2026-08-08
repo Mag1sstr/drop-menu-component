@@ -2,13 +2,42 @@
 import { ICart } from "@/app/frostTypes";
 import { useState } from "react";
 import CounterBtn from "./CounterBtn";
+import {
+  useDecreaseCartItemMutation,
+  useDeleteCartItemMutation,
+  useIncreaseCartItemMutation,
+} from "@/store/frostApi";
 
 interface IProps extends ICart {}
 function CartItem({ product, count }: IProps) {
   const [quantity, setQuantity] = useState(count);
+  const [increase] = useIncreaseCartItemMutation();
+  const [decrease, { data }] = useDecreaseCartItemMutation();
+  const [deleteItem] = useDeleteCartItemMutation();
 
-  const handleIncrease = async () => {};
-  const handleDecrease = async () => {};
+  const errQ = () =>
+    new Promise((res, rej) => {
+      setTimeout(() => rej(), 2000);
+    });
+  const handleIncrease = async () => {
+    try {
+      setQuantity((prev) => prev + 1);
+      await increase(product.id).unwrap();
+    } catch {
+      setQuantity((prev) => prev - 1);
+    }
+  };
+  const handleDecrease = async () => {
+    if (count <= 1) return deleteItem(product.id);
+    try {
+      setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+      await decrease(product.id).unwrap();
+    } catch {
+      setQuantity((prev) => prev + 1);
+    }
+  };
+
+  console.log(data);
 
   return (
     <li
@@ -32,14 +61,18 @@ function CartItem({ product, count }: IProps) {
       <div className="flex flex-col gap-2 mr-13">
         {/* <p className="text-[32px] font-bold">2199 руб.</p> */}
         <p className="text-xl text-[#A5A5A5]  font-bold">
-          {product.price} тг. x {count} шт.
+          {product.price} тг. x {quantity} шт.
         </p>
       </div>
 
-      <CounterBtn count={quantity} />
+      <CounterBtn
+        increase={handleIncrease}
+        decrease={handleDecrease}
+        count={quantity}
+      />
 
       <p className="text-[32px] font-bold ml-auto">
-        {product.price * count} тг.
+        {product.price * quantity} тг.
       </p>
     </li>
   );
