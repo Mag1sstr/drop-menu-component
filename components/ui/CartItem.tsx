@@ -69,6 +69,7 @@ function CartItem({ product, count }: IProps) {
         increase={handleIncrease}
         decrease={handleDecrease}
         count={quantity}
+        className="w-[164px]!"
       />
 
       <p className="text-[32px] font-bold ml-auto">

@@ -10,7 +10,7 @@ function CounterBtn({ decrease, increase, count = 1, className }: IProps) {
       <div className="flex border-2 border-[#A5A5A5] text-[14px] text-[#A5A5A5]">
         <button
           onClick={decrease}
-          className="w-10 h-10 grid place-content-center border-2 border-[#A5A5A5] cursor-pointer"
+          className="w-10 h-10 grid place-content-center border-2 border-[#A5A5A5] cursor-pointer hover:bg-[#a5a5a5] hover:text-white"
         >
           -
         </button>
@@ -19,7 +19,7 @@ function CounterBtn({ decrease, increase, count = 1, className }: IProps) {
         </p>
         <button
           onClick={increase}
-          className="w-10 h-10 grid place-content-center border-2 border-[#A5A5A5] cursor-pointer"
+          className="w-10 h-10 grid place-content-center transition-all border-2 border-[#A5A5A5] cursor-pointer hover:bg-[#a5a5a5] hover:text-white active:bg-[#a5a5a5]/50"
         >
           +
         </button>
