@@ -1,8 +1,10 @@
 import {
   ICartResponse,
+  ICreateReviewBody,
   IItems,
   ILoginBody,
   ILoginResponse,
+  IOrderBody,
   IProduct,
   IProductsParams,
   IProductsResponse,
@@ -85,6 +87,13 @@ export const frostApi = createApi({
       query: (id) => ({ url: `/cart/decrease?productId=${id}`, method: "GET" }),
       invalidatesTags: ["cart"],
     }),
+    createOrder: builder.mutation<number, IOrderBody>({
+      query: (body) => ({
+        method: "POST",
+        url: "/order",
+        body,
+      }),
+    }),
   }),
 });
 export const {
@@ -100,4 +109,5 @@ export const {
   useDeleteCartItemMutation,
   useIncreaseCartItemMutation,
   useDecreaseCartItemMutation,
+  useCreateOrderMutation,
 } = frostApi;

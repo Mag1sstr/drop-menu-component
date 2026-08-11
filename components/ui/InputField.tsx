@@ -29,7 +29,7 @@ function InputField({
           {...register}
           value={value}
           onChange={(e) => onChange && onChange(e.target.value)}
-          className={`w-full border-4  py-1 px-3 outline-none transition-all ${!!isError ? "border-[#FF2400]" : "border-[#1D1D1D]"}`}
+          className={`w-full border-4 bg-white  py-1 px-3 outline-none transition-all ${!!isError ? "border-[#FF2400]" : "border-[#1D1D1D]"}`}
           type={type}
           id={id}
           placeholder={placeholder}
