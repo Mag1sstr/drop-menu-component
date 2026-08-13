@@ -6,17 +6,21 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputField from "../ui/InputField";
+import ContactsStage from "../layout/ContactsStage";
+
+export type TOrderForm = IOrderBody & IContactsValues;
 
 function OrderPage() {
-  const [stages, setStages] = useState(0);
+  const [stage, setStage] = useState(0);
   const { data: cartData } = useGetCartQuery();
   const { user } = useAuth();
   const [createOrder] = useCreateOrderMutation();
   const router = useRouter();
 
-  const { register, handleSubmit, formState } = useForm<
-    IOrderBody & IContactsValues
-  >();
+  const { register, handleSubmit, formState } = useForm<TOrderForm>();
+  const stagesComponent = [
+    <ContactsStage register={register} onSubmit={() => setStage(1)} />,
+  ];
 
   const submit: SubmitHandler<IOrderBody> = (data) => {
     createOrder(data);
@@ -28,27 +32,7 @@ function OrderPage() {
         <h1 className="text-[36px] font-bold mb-12 ">ОФОРМЛЕНИЕ ЗАКАЗА</h1>
 
         <div className="flex gap-29.5 items-start">
-          <div className="flex-1">
-            <div>
-              <h2 className="mb-7 text-[20px] font-medium">
-                Контактные данные
-              </h2>
-              <div className="flex flex-col gap-4 mb-10">
-                <InputField label="Фамилия" register={register("surname")} />
-                <InputField label="Имя" register={register("name")} />
-                <InputField
-                  label="Отчество"
-                  register={register("patronymic")}
-                />
-                <InputField label="Телефон" register={register("tel")} />
-                <InputField label="E-mail" register={register("email")} />
-              </div>
-
-              <button className="ml-auto uppercase text-(--prime) border-4 border-(--prime) hover:bg-(--prime) hover:text-white text-[12px] font-bold py-3 px-5">
-                Подтвердить
-              </button>
-            </div>
-          </div>
+          <div className="flex-1">{stagesComponent[stage]}</div>
           <div className="w-114 border-4 border-[#A5A5A5]">
             <div className="bg-(--text) text-white flex items-center justify-between p-6">
               <p className="text-[20px]">Ваш заказ</p>
