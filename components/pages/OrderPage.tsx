@@ -34,7 +34,7 @@ function OrderPage() {
       area: data.area,
       city: data.city,
       house: data.house,
-      phone: data.phone,
+      phone: data.tel,
       street: data.street,
     });
   };
