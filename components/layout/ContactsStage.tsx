@@ -5,11 +5,14 @@ export interface IPropsStage {
   register: UseFormRegister<TOrderForm>;
   onSubmit?: () => void;
   errors?: FieldErrors<TOrderForm>;
+  setStage: (fn: (prev: number) => number) => void;
 }
 function ContactsStage({ register, onSubmit, errors }: IPropsStage) {
   return (
     <div>
-      <h2 className="mb-7 text-[20px] font-medium">Контактные данные</h2>
+      <h2 className="mb-7 text-[20px] font-medium">
+        Контактные данные <span className="text-end">Назад</span>
+      </h2>
       <div className="flex flex-col gap-4 mb-10">
         <InputField label="Фамилия" register={register("surname")} />
         <InputField label="Имя" register={register("name")} />

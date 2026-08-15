@@ -90,7 +90,7 @@ export const frostApi = createApi({
     createOrder: builder.mutation<number, IOrderBody>({
       query: (body) => ({
         method: "POST",
-        url: "/order",
+        url: "/orders",
         body,
       }),
     }),
