@@ -1,11 +1,12 @@
-import { UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import InputField from "../ui/InputField";
 import { TOrderForm } from "../pages/OrderPage";
 export interface IPropsStage {
   register: UseFormRegister<TOrderForm>;
   onSubmit?: () => void;
+  errors?: FieldErrors<TOrderForm>;
 }
-function ContactsStage({ register, onSubmit }: IPropsStage) {
+function ContactsStage({ register, onSubmit, errors }: IPropsStage) {
   return (
     <div>
       <h2 className="mb-7 text-[20px] font-medium">Контактные данные</h2>

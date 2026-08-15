@@ -7,6 +7,8 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputField from "../ui/InputField";
 import ContactsStage from "../layout/ContactsStage";
+import DeliveryStage from "../layout/DeliveryStage";
+import CompleteStage from "../layout/CompleteStage";
 
 export type TOrderForm = IOrderBody & IContactsValues;
 
@@ -17,9 +19,19 @@ function OrderPage() {
   const [createOrder] = useCreateOrderMutation();
   const router = useRouter();
 
-  const { register, handleSubmit, formState } = useForm<TOrderForm>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors: formErrors },
+  } = useForm<TOrderForm>();
   const stagesComponent = [
-    <ContactsStage register={register} onSubmit={() => setStage(1)} />,
+    <ContactsStage
+      register={register}
+      errors={formErrors}
+      onSubmit={() => setStage(1)}
+    />,
+    <DeliveryStage register={register} errors={formErrors} />,
+    <CompleteStage />,
   ];
 
   const submit: SubmitHandler<IOrderBody> = (data) => {
