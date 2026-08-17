@@ -15,9 +15,12 @@ function DeliveryStage({
 }: IProps) {
   return (
     <div>
-      <h2 className="mb-7 text-[20px] font-medium">
-        Контактные данные{" "}
-        <span className="ml-auto" onClick={() => setStage((prev) => prev - 1)}>
+      <h2 className="mb-7 text-[20px] font-medium flex justify-between">
+        Доставка{" "}
+        <span
+          className="ml-auto block"
+          onClick={() => setStage((prev) => prev - 1)}
+        >
           Назад
         </span>
       </h2>
