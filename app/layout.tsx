@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Providers from "@/components/providers/Provider";
 import Slider from "@/components/layout/Slider";
 import { ToastContainer } from "react-toastify";
+import NextTopLoader from "nextjs-toploader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <NextTopLoader />
         <ToastContainer />
         <Providers>{children}</Providers>
       </body>
