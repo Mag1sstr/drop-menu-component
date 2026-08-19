@@ -1,19 +1,21 @@
-"use client";
-import { useGetSingleProductQuery } from "@/store/api";
-import { useParams } from "next/navigation";
+import { IProduct } from "@/app/frostTypes";
 
-function SingleProductPage() {
-  const { slug } = useParams();
-  const { data, isLoading } = useGetSingleProductQuery(slug as string);
-
+async function SingleProductPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const slug = (await params).slug;
+  const res = await fetch("https://frost.runtime.kz/api/products/" + slug, {
+    cache: "no-store",
+  });
+  const data: IProduct = await res.json();
   // const inStock = Math.round(Math.random());
   const inStock = true;
 
-  if (isLoading) return <div className="text-3xl">Загрузка...</div>;
-
   return (
     <>
-      {!!inStock ? (
+      {!!data.available ? (
         <div className="p-10 border-4 border-[#A5A5A5] bg-white font-medium flex flex-col gap-12.5 justify-between">
           <div className="flex gap-14.5">
             <img className="w-[358px] object-contain" src="/pr.png" alt="" />
@@ -21,6 +23,7 @@ function SingleProductPage() {
               <p className="text-[12px] font-bold mb-6 text-[#3CC051] uppercase">
                 в наличии
               </p>
+              <p>{data.price}</p>
             </div>
           </div>
           <div className="flex justify-between">

@@ -1,3 +1,4 @@
+import { IDropMenu } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 

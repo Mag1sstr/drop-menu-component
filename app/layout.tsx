@@ -33,7 +33,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <NextTopLoader />
+        <NextTopLoader zIndex={1600} color="#2299DD" />
         <ToastContainer />
         <Providers>{children}</Providers>
       </body>
