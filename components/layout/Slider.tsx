@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const banners = [
@@ -11,7 +12,7 @@ const banners = [
 ];
 function Slider() {
   const [currentBanner, setCurrentBanner] = useState(0);
-
+  const router = useRouter();
   useEffect(() => {
     const timer = setTimeout(() => {
       setCurrentBanner((prev) => (prev < banners.length - 1 ? prev + 1 : 0));
@@ -36,7 +37,10 @@ function Slider() {
               <h1 className=" text-white text-[48px] font-bold max-w-[586px] leading-none mb-13">
                 {text}
               </h1>
-              <button className="px-5 py-4.5 border-4 border-(--prime) text-white text-[14px] font-bold uppercase cursor-pointer hover:bg-white hover:text-black">
+              <button
+                onClick={() => router.push("/catalog")}
+                className="px-5 py-4.5 border-4 border-(--prime) text-white text-[14px] font-bold uppercase cursor-pointer hover:bg-white hover:text-black"
+              >
                 ПЕРЕЙТИ В КАТАЛОГ
               </button>
             </div>
