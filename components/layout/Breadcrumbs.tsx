@@ -1,6 +1,6 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 function Breadcrumbs() {
   const location = usePathname().split("/").filter(Boolean);
@@ -13,6 +13,13 @@ function Breadcrumbs() {
     catalog: "каталог",
     cart: "Корзина",
   };
+
+  useEffect(() => {
+    if (location.length <= 0) {
+      scrollTo({ top: 0, behavior: "smooth" });
+    }
+    ref.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+  }, [location]);
 
   return (
     fullPath.length - 1 > 0 && (
