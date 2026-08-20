@@ -27,8 +27,6 @@ function InputField({
       <div className="flex-1 relative">
         <input
           {...register}
-          value={value}
-          onChange={(e) => onChange && onChange(e.target.value)}
           className={`w-full border-4 bg-white  py-1 px-3 outline-none transition-all ${!!isError ? "border-[#FF2400]" : "border-[#1D1D1D]"}`}
           type={type}
           id={id}

@@ -26,11 +26,47 @@ function ContactsStage({ register, onSubmit, errors, setStage }: IPropsStage) {
         </span>
       </h2>
       <div className="flex flex-col gap-4 mb-10">
-        <InputField label="Фамилия" register={register("surname")} />
-        <InputField label="Имя" register={register("name")} />
-        <InputField label="Отчество" register={register("patronymic")} />
-        <InputField label="Телефон" register={register("tel")} />
-        <InputField label="E-mail" register={register("email")} />
+        <InputField
+          label="Фамилия"
+          isError={errors?.surname?.message}
+          register={register("surname", {
+            required: "Обязательное поле",
+          })}
+        />
+        <InputField
+          label="Имя"
+          isError={errors?.name?.message}
+          register={register("name", {
+            required: "Обязательное поле",
+          })}
+        />
+        <InputField
+          label="Отчество"
+          isError={errors?.patronymic?.message}
+          register={register("patronymic", {
+            required: "Обязательное поле",
+          })}
+        />
+        <InputField
+          label="Телефон"
+          isError={errors?.tel?.message}
+          register={register("tel", {
+            required: "Обязательное поле",
+            pattern: {
+              value:
+                /^(\+?(7|375|992|993|994|996|998|373|374))\s?\(?\d{3}\)?\s?\d{3}[-]?\d{2}[-]?\d{2}$/,
+              message: "Неверный формат",
+            },
+          })}
+        />
+        <InputField
+          label="E-mail"
+          type="email"
+          isError={errors?.email?.message}
+          register={register("email", {
+            required: "Обязательное поле",
+          })}
+        />
       </div>
 
       <button

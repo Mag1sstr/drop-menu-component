@@ -26,7 +26,17 @@ function OrderPage() {
     formState: { errors: formErrors },
     reset,
     getValues,
-  } = useForm<TOrderForm>();
+    watch,
+    trigger,
+  } = useForm<TOrderForm>({ mode: "onChange" });
+
+  const name = watch("name");
+  const surname = watch("surname");
+  const email = watch("email");
+  const tel = watch("tel");
+  const patronymic = watch("patronymic");
+  // const contactsSuccess =
+  //   !!name && !!surname && !!email && !!tel && !!patronymic;
 
   const submit: SubmitHandler<TOrderForm> = (data) => {
     createOrder({
@@ -42,7 +52,18 @@ function OrderPage() {
     <ContactsStage
       register={register}
       errors={formErrors}
-      onSubmit={() => setStage(1)}
+      onSubmit={async () => {
+        const contactsSuccess = await trigger([
+          "name",
+          "surname",
+          "patronymic",
+          "email",
+          "tel",
+        ]);
+        if (contactsSuccess) {
+          setStage(1);
+        }
+      }}
       setStage={setStage}
     />,
     <DeliveryStage
