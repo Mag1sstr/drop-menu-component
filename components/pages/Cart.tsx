@@ -1,12 +1,15 @@
 "use client";
-import { useGetCartQuery } from "@/store/frostApi";
+import { useDeleteCartItemMutation, useGetCartQuery } from "@/store/frostApi";
 import CounterBtn from "../ui/CounterBtn";
 import CartItem from "../ui/CartItem";
 import Button from "../ui/Button";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 function Cart() {
+  const [isAllDeleting, setIsAllDeleting] = useState(false);
   const { data: cartData } = useGetCartQuery();
+  const [deleteItem] = useDeleteCartItemMutation();
   const router = useRouter();
 
   return (
@@ -68,16 +71,48 @@ function Cart() {
                 <CartItem key={item.product.id} {...item} />
               ))}
             </ul>
-            <div className="border-4 border-[#A5A5A5] px-8 py-9.5 bg-white flex items-center justify-end">
-              <div className="flex items-center gap-11.75">
-                <p>Итого {cartData?.items.length} товаров</p>
-                <p>
+            <div className="border-4 border-[#A5A5A5] px-8 py-9.5 bg-white flex items-center justify-between">
+              <Button
+                onClick={async () => {
+                  try {
+                    setIsAllDeleting(true);
+                    await Promise.all(
+                      cartData.items.map((item) =>
+                        deleteItem(item.product.id).unwrap(),
+                      ),
+                    );
+                  } catch (error) {
+                    console.log(error);
+                  } finally {
+                    setIsAllDeleting(false);
+                  }
+                }}
+                disabled={isAllDeleting}
+                className="text-(--prime)! disabled:opacity-50"
+              >
+                ОЧИСТИТЬ СПИСОК
+              </Button>
+              <div className="flex items-center justify-between gap-11.75">
+                <p className="text-[20px] font-bold text-[#a5a5a5]">
+                  Итого {cartData?.items.length} товара
+                </p>
+                <p className="text-[32px] font-bold">
                   {cartData?.items.reduce(
                     (acc, el) => acc + el.product.price * el.count,
                     0,
                   )}{" "}
                   тг.
                 </p>
+              </div>
+            </div>
+            <div className="border-4 border-[#A5A5A5] px-8 py-9.5 -mt-1 bg-white flex">
+              <Button className="text-(--prime)!">ПРОДОЛЖИТЬ ПОКУПКИ</Button>
+
+              <div className="flex ml-auto gap-7">
+                <Button className=" text-black! border-black!">
+                  РАСПЕЧАТАТЬ ЗАКАЗ
+                </Button>
+                <Button className="text-(--prime)!">ОФОРМИТЬ ЗАКАЗ</Button>
               </div>
             </div>
           </>

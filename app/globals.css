@@ -21,6 +21,7 @@
   --text: #1d1d1d;
   --bg-breadcrumbs: #fff;
   --green: #3cc051;
+  --gray: #a5a5a5;
 }
 .container {
   max-width: 1158px;

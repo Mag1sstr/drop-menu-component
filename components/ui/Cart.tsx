@@ -25,7 +25,9 @@ function Cart() {
       <button
         className="cursor-pointer"
         onClick={() =>
-          !cartData ? toast.error("В корзине пусто") : setOpen((prev) => !prev)
+          !cartData?.items.length
+            ? rouder.push("/cart")
+            : setOpen((prev) => !prev)
         }
       >
         <svg

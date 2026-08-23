@@ -25,11 +25,40 @@ function DeliveryStage({
         </span>
       </h2>
       <div className="flex flex-col gap-4 mb-10">
-        <InputField label="Область" register={register("area")} />
-        <InputField label="Город или поселок" register={register("city")} />
-        <InputField label="Улица" register={register("street")} />
-        <InputField label="Дом" register={register("house")} />
-        <InputField label="Квартира" register={register("apartment")} />
+        <InputField
+          label="Область"
+          register={register("area", {
+            required: "Обязательное поле",
+          })}
+        />
+        <InputField
+          label="Город или поселок"
+          isError={errors?.city?.message}
+          register={register("city", {
+            required: "Обязательное поле",
+          })}
+        />
+        <InputField
+          label="Улица"
+          isError={errors?.street?.message}
+          register={register("street", {
+            required: "Обязательное поле",
+          })}
+        />
+        <InputField
+          label="Дом"
+          isError={errors?.house?.message}
+          register={register("house", {
+            required: "Обязательное поле",
+          })}
+        />
+        <InputField
+          label="Квартира"
+          isError={errors?.apartment?.message}
+          register={register("apartment", {
+            required: "Обязательное поле",
+          })}
+        />
       </div>
 
       <button

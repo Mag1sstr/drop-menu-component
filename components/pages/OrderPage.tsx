@@ -9,6 +9,7 @@ import InputField from "../ui/InputField";
 import ContactsStage from "../layout/ContactsStage";
 import DeliveryStage from "../layout/DeliveryStage";
 import CompleteStage from "../layout/CompleteStage";
+import { toast } from "react-toastify";
 
 export type TOrderForm = IOrderBody & IContactsValues;
 
@@ -16,7 +17,7 @@ function OrderPage() {
   const [stage, setStage] = useState(0);
   const { data: cartData } = useGetCartQuery();
   const { user } = useAuth();
-  const [createOrder, { data, isLoading, isSuccess }] =
+  const [createOrder, { data, isLoading, isSuccess, isError }] =
     useCreateOrderMutation();
   const router = useRouter();
 
@@ -25,18 +26,9 @@ function OrderPage() {
     handleSubmit,
     formState: { errors: formErrors },
     reset,
-    getValues,
     watch,
     trigger,
   } = useForm<TOrderForm>({ mode: "onChange" });
-
-  const name = watch("name");
-  const surname = watch("surname");
-  const email = watch("email");
-  const tel = watch("tel");
-  const patronymic = watch("patronymic");
-  // const contactsSuccess =
-  //   !!name && !!surname && !!email && !!tel && !!patronymic;
 
   const submit: SubmitHandler<TOrderForm> = (data) => {
     createOrder({
@@ -85,6 +77,12 @@ function OrderPage() {
       });
     }
   }, [user]);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("");
+    }
+  }, [isError]);
 
   useEffect(() => {
     if (isSuccess) {
