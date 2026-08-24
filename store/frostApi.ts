@@ -9,6 +9,7 @@ import {
   IProductsParams,
   IProductsResponse,
   IRegisterBody,
+  IReviews,
   IUser,
 } from "@/app/frostTypes";
 import { AuthContext } from "@/contexts/AuthContext";
@@ -94,6 +95,9 @@ export const frostApi = createApi({
         body,
       }),
     }),
+    getReviews: builder.query<IReviews[], number>({
+      query: (id) => `/reviews?productId=${id}`,
+    }),
   }),
 });
 export const {
@@ -110,4 +114,5 @@ export const {
   useIncreaseCartItemMutation,
   useDecreaseCartItemMutation,
   useCreateOrderMutation,
+  useGetReviewsQuery,
 } = frostApi;

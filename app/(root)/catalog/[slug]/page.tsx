@@ -1,4 +1,5 @@
 import { IProduct } from "@/app/frostTypes";
+import Reviews from "@/components/layout/Reviews";
 
 async function SingleProductPage({
   params,
@@ -89,6 +90,8 @@ async function SingleProductPage({
               </button>
             </div>
           </div>
+
+          <Reviews productId={data.id} />
         </div>
       ) : (
         <div className="bg-[url(/ns.png)] bg-cover bg-no-repeat h-[292px] pl-10 pb-10 flex flex-col justify-end">

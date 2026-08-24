@@ -36,7 +36,7 @@ export interface IProduct {
     name: string;
   };
 }
-export interface ICommets {
+export interface IReviews {
   id: number;
   review: string;
   user: {
