@@ -12,13 +12,11 @@ import {
   IReviews,
   IUser,
 } from "@/app/frostTypes";
-import { AuthContext } from "@/contexts/AuthContext";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { useContext } from "react";
 
 export const frostApi = createApi({
   reducerPath: "frostApi",
-  tagTypes: ["cart"],
+  tagTypes: ["cart", "review"],
   baseQuery: fetchBaseQuery({
     baseUrl: "https://frost.runtime.kz/api",
     prepareHeaders(headers) {
@@ -39,6 +37,9 @@ export const frostApi = createApi({
           size: params?.size || 0,
         },
       }),
+    }),
+    getSingleProduct: builder.query<IProduct, number>({
+      query: (id) => `/products/${id}`,
     }),
     getBrands: builder.query<IItems[], void>({
       query: () => ({
@@ -97,6 +98,19 @@ export const frostApi = createApi({
     }),
     getReviews: builder.query<IReviews[], number>({
       query: (id) => `/reviews?productId=${id}`,
+      providesTags: ["review"],
+    }),
+    createReview: builder.mutation<void, ICreateReviewBody>({
+      query: (body) => ({
+        url: "/reviews",
+        body,
+        method: "POST",
+      }),
+      invalidatesTags: ["review"],
+    }),
+    checkReview: builder.query<boolean, number>({
+      query: (id) => `/reviews/exists?productId=${id}`,
+      providesTags: ["review"],
     }),
   }),
 });
@@ -115,4 +129,7 @@ export const {
   useDecreaseCartItemMutation,
   useCreateOrderMutation,
   useGetReviewsQuery,
+  useCreateReviewMutation,
+  useCheckReviewQuery,
+  useGetSingleProductQuery,
 } = frostApi;

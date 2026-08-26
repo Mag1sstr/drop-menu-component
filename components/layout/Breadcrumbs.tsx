@@ -1,4 +1,5 @@
 "use client";
+import { useGetSingleProductQuery } from "@/store/frostApi";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
@@ -6,6 +7,15 @@ function Breadcrumbs() {
   const location = usePathname().split("/").filter(Boolean);
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
+
+  const productId =
+    location[0] === "catalog" && location[1] !== undefined ? location[1] : null;
+
+  const { data: product } = useGetSingleProductQuery(+productId!, {
+    skip: !productId,
+  });
+
+  console.log("productId " + productId);
 
   const fullPath = ["Главная", ...location];
 
@@ -41,7 +51,8 @@ function Breadcrumbs() {
                 }}
                 className={`flex items-center gap-4  font-medium text-[12px] uppercase leading-none ${el === fullPath.at(-1) ? "text-(--text)" : "text-[#C53720] cursor-pointer"}`}
               >
-                {breadcrumbsNames[el] || el}
+                {breadcrumbsNames[el] ||
+                  (el === productId && product ? product.name : el)}
                 {el !== fullPath.at(-1) && (
                   <svg
                     width="20"
