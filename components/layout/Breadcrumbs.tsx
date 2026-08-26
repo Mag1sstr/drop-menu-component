@@ -15,8 +15,6 @@ function Breadcrumbs() {
     skip: !productId,
   });
 
-  console.log("productId " + productId);
-
   const fullPath = ["Главная", ...location];
 
   const breadcrumbsNames: Record<string, string> = {
