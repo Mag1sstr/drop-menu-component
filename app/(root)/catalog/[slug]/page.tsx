@@ -11,8 +11,6 @@ async function SingleProductPage({
     cache: "no-store",
   });
   const data: IProduct = await res.json();
-  // const inStock = Math.round(Math.random());
-  const inStock = true;
 
   return (
     <>
