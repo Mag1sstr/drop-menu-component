@@ -56,6 +56,7 @@ function Filters() {
         label="Модель"
         data={models}
         value={modelId}
+        isOpen={brandId > 0}
         onChange={(item) => {
           setModelId(modelId === item.id ? 0 : item.id);
           setGenerationId(0);
@@ -65,6 +66,7 @@ function Filters() {
         label="Поколение"
         data={generations}
         value={generationId}
+        isOpen={modelId > 0}
         onChange={(item) => {
           setGenerationId(generationId === item.id ? 0 : item.id);
         }}

@@ -28,6 +28,12 @@ function Dropdown({ label, data, onChange, value, isOpen }: IProps) {
     }
   }, [value]);
 
+  useEffect(() => {
+    if (isOpen) {
+      setOpen(true);
+    }
+  }, [isOpen]);
+
   return (
     <div>
       <button
