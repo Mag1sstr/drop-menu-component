@@ -44,6 +44,7 @@ function Filters() {
     <aside className="w-66 py-3 bg-black">
       <Dropdown
         label="Марка"
+        title="Все марки"
         data={brands}
         value={brandId}
         onChange={(item) => {
@@ -54,6 +55,7 @@ function Filters() {
       />
       <Dropdown
         label="Модель"
+        title="Все модели"
         data={models}
         value={modelId}
         isOpen={brandId > 0}
@@ -64,6 +66,7 @@ function Filters() {
       />
       <Dropdown
         label="Поколение"
+        title="Все поколения"
         data={generations}
         value={generationId}
         isOpen={modelId > 0}

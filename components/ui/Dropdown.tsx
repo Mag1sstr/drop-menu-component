@@ -7,8 +7,9 @@ interface IProps {
   onChange?: (item: IItems) => void;
   value: number;
   isOpen?: boolean;
+  title: string;
 }
-function Dropdown({ label, data, onChange, value, isOpen }: IProps) {
+function Dropdown({ label, data, onChange, value, isOpen, title }: IProps) {
   const [open, setOpen] = useState(isOpen || false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -55,21 +56,23 @@ function Dropdown({ label, data, onChange, value, isOpen }: IProps) {
       </button>
       {data.length > 0 && (
         <div ref={ref} className="overflow-hidden transition-all">
-          {data.map(({ id, name }) => {
-            return (
-              <div
-                key={id}
-                onClick={() => {
-                  if (onChange) {
-                    onChange({ id, name });
-                  }
-                }}
-                className={`p-2   text-[12px] font-medium flex items-center transition-all ${value === id ? "bg-(--prime) text-white" : "bg-[#2D2D2D] text-white/50"}`}
-              >
-                {name}
-              </div>
-            );
-          })}
+          {(value > 0 ? [{ name: title, id: 0 }, ...data] : data).map(
+            ({ id, name }) => {
+              return (
+                <div
+                  key={id}
+                  onClick={() => {
+                    if (onChange) {
+                      onChange({ id, name });
+                    }
+                  }}
+                  className={`p-2   text-[12px] font-medium flex items-center transition-all ${value === id ? "bg-(--prime) text-white" : "bg-[#2D2D2D] text-white/50"}`}
+                >
+                  {name}
+                </div>
+              );
+            },
+          )}
         </div>
       )}
     </div>
