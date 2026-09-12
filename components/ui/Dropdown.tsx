@@ -6,9 +6,10 @@ interface IProps {
   data: IItems[];
   onChange?: (item: IItems) => void;
   value: number;
+  isOpen?: boolean;
 }
-function Dropdown({ label, data, onChange, value }: IProps) {
-  const [open, setOpen] = useState(false);
+function Dropdown({ label, data, onChange, value, isOpen }: IProps) {
+  const [open, setOpen] = useState(isOpen || false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
