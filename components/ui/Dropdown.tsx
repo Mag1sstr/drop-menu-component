@@ -13,6 +13,8 @@ function Dropdown({ label, data, onChange, value, isOpen, title }: IProps) {
   const [open, setOpen] = useState(isOpen || false);
   const ref = useRef<HTMLDivElement>(null);
 
+  const items = value > 0 ? [...data, { name: title, id: 0 }] : data;
+
   useEffect(() => {
     if (!ref.current) return;
     const el = ref.current;
@@ -21,7 +23,7 @@ function Dropdown({ label, data, onChange, value, isOpen, title }: IProps) {
     } else {
       el.style.height = "0px";
     }
-  }, [open, ref, data]);
+  }, [open, ref, data, items]);
 
   useEffect(() => {
     if (value !== 0) {
@@ -56,23 +58,21 @@ function Dropdown({ label, data, onChange, value, isOpen, title }: IProps) {
       </button>
       {data.length > 0 && (
         <div ref={ref} className="overflow-hidden transition-all">
-          {(value > 0 ? [{ name: title, id: 0 }, ...data] : data).map(
-            ({ id, name }) => {
-              return (
-                <div
-                  key={id}
-                  onClick={() => {
-                    if (onChange) {
-                      onChange({ id, name });
-                    }
-                  }}
-                  className={`p-2   text-[12px] font-medium flex items-center transition-all ${value === id ? "bg-(--prime) text-white" : "bg-[#2D2D2D] text-white/50"}`}
-                >
-                  {name}
-                </div>
-              );
-            },
-          )}
+          {items.map(({ id, name }) => {
+            return (
+              <div
+                key={id}
+                onClick={() => {
+                  if (onChange) {
+                    onChange({ id, name });
+                  }
+                }}
+                className={`p-2   text-[12px] font-medium flex items-center transition-all ${value === id ? "bg-(--prime) text-white" : "bg-[#2D2D2D] text-white/50"}`}
+              >
+                {name}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
