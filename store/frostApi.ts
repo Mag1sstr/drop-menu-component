@@ -5,6 +5,7 @@ import {
   ILoginBody,
   ILoginResponse,
   IOrderBody,
+  IOrdersData,
   IProduct,
   IProductsParams,
   IProductsResponse,
@@ -112,6 +113,9 @@ export const frostApi = createApi({
       query: (id) => `/reviews/exists?productId=${id}`,
       providesTags: ["review"],
     }),
+    getOrders: builder.query<IOrdersData[], void>({
+      query: () => `/orders`,
+    }),
   }),
 });
 export const {
@@ -132,4 +136,5 @@ export const {
   useCreateReviewMutation,
   useCheckReviewQuery,
   useGetSingleProductQuery,
+  useGetOrdersQuery,
 } = frostApi;

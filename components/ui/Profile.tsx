@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import RegModal from "../modals/RegModal";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { useToast } from "@/contexts/ToastContext";
+import { useRouter } from "next/navigation";
 
 function Profile() {
   const { user, isUserLoading, logout } = useAuth();
@@ -12,6 +13,7 @@ function Profile() {
   const [openModal, setOpenModal] = useState(false);
   const [openReg, setOpenReg] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const { toast } = useToast();
 
@@ -35,6 +37,16 @@ function Profile() {
           <div
             className={`absolute z-50  top-full mt-2.5 right-0 w-50 py-2.5 bg-zinc-900/90 text-white transition-all ${drop ? "visible opacity-100" : "invisible opacity-0"}`}
           >
+            <div
+              onClick={() => {
+                router.push("/profile");
+              }}
+              className="px-3 group cursor-pointer"
+            >
+              <div className="border-b border-white py-3 group-hover:border-(--prime) group-hover:text-(--prime)">
+                Профиль
+              </div>
+            </div>
             <div
               onClick={() => {
                 logout();
