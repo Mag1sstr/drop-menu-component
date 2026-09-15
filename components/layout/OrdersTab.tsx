@@ -13,7 +13,7 @@ function OrdersTab() {
           <div>Номер заказа</div>
           <div>Наименование товара</div>
           <div>Дата заказа</div>
-          <div>Стоимость</div>
+          <div className="text-end">Стоимость</div>
         </div>
       </div>
       <div className="px-7.75 text-[#383838]">
@@ -31,7 +31,7 @@ function OrdersTab() {
               ))}
             </div>
             <div>{new Date(item.created_at).toLocaleDateString()}</div>
-            <div>
+            <div className="text-end">
               {item.items.reduce(
                 (acc, el) => acc + el.count * el.product.price,
                 0,

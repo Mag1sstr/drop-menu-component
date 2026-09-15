@@ -13,6 +13,7 @@ import {
 import { useFilters } from "@/store/zustand/useFilters";
 import { IProductData } from "@/app/frostTypes";
 import { useAppDispatch } from "@/store/store";
+import { useIntersection } from "@/hooks/useIntersection";
 
 function Catalog() {
   const [listType, setListType] = useState<"row" | "column">("row");
@@ -58,6 +59,7 @@ function Catalog() {
   //   }
   // }, [data]);
   const [page, setPage] = useState(1);
+  const [ref, isIntersecting] = useIntersection({ threshold: 0.1 });
   const {
     data = { items: [], totalPages: 1 },
     isLoading,

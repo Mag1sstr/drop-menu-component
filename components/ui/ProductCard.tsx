@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 interface IProps extends IProductData {
-  type: "row" | "column";
+  type?: "row" | "column";
 }
 
 function ProductCard(props: IProps) {
