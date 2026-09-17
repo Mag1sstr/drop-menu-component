@@ -3,7 +3,7 @@ import Button from "../ui/Button";
 
 function Footer() {
   return (
-    <footer className="py-13.5 bg-black  bg-[url(/footer.png)] bg-no-repeat bg-center bg-cover">
+    <footer className="py-13.5 bg-black  bg-[url(/footer.png)] bg-no-repeat bg-center bg-cover mt-auto">
       <div className="container">
         <div className="flex justify-between text-white">
           <div className="mr-24">

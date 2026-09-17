@@ -59,7 +59,8 @@ function Catalog() {
   //   }
   // }, [data]);
   const [page, setPage] = useState(1);
-  const [ref, isIntersecting] = useIntersection({ threshold: 0.1 });
+  const [isLoadMore, setIsLoadMore] = useState(false);
+  const [ref, isIntersecting] = useIntersection({ threshold: 1 });
   const {
     data = { items: [], totalPages: 1 },
     isLoading,
@@ -95,10 +96,28 @@ function Catalog() {
       })
     : data.items;
 
-  console.log(sortTypes);
+  const [showItems, setShowItems] = useState(6);
+  const loadMore = () =>
+    new Promise((res) => {
+      setTimeout(() => {
+        if (showItems < products.length) {
+          setShowItems((prev) => prev + 6);
+        }
+        res("");
+      }, 2000);
+    });
+
+  useEffect(() => {
+    if (isIntersecting && showItems < products.length) {
+      setIsLoadMore(true);
+      loadMore().then(() => setIsLoadMore(false));
+    } else {
+      setIsLoadMore(false);
+    }
+  }, [isIntersecting]);
 
   return (
-    <section ref={sectionRef} className="h-500">
+    <section ref={sectionRef}>
       <div className="flex justify-between mb-5">
         <ul className="flex [&>li]:flex [&>li]:items-center [&>li]:gap-1 text-[14px] font-medium uppercase">
           <li className="uppercase mr-5 ">Сортировать</li>
@@ -166,10 +185,12 @@ function Catalog() {
       {isError && <p className="+text-3xl text-center">{isError}</p>}
 
       <div className="grid grid-cols-3 gap-6 mb-10">
-        {products.map((card) => (
+        {products.slice(0, showItems).map((card) => (
           <ProductCard key={card.id} {...card} />
         ))}
       </div>
+      {isLoadMore && <div className="text-center text-3xl">Загрузка...</div>}
+      <div ref={ref} className="bg-red-300 h-20"></div>
 
       <Pagination
         totalPages={data?.totalPages || 1}

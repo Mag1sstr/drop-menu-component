@@ -6,6 +6,8 @@ import CounterBtn from "./CounterBtn";
 import { useAddCartItemMutation, useGetCartQuery } from "@/store/frostApi";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useAppDispatch } from "@/store/store";
+import { setDragItem } from "@/store/slices/filterSlice";
 
 interface IProps extends IProductData {
   type?: "row" | "column";
@@ -21,6 +23,7 @@ function ProductCard(props: IProps) {
   //   decreaseCartItem,
   // } = useCart();
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const [count, setCount] = useState(1);
 
   const [
@@ -47,6 +50,8 @@ function ProductCard(props: IProps) {
   }, [isAddedSuccess]);
   return (
     <div
+      draggable
+      onDragStart={() => dispatch(setDragItem(props))}
       className={`relative px-5 py-6.75 border-4  ${!!available ? "border-[#3CC051]" : "border-(--prime)"} font-medium flex flex-col bg-(--bg-card) group`}
     >
       <div

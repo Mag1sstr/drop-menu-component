@@ -4,16 +4,26 @@ import Button from "./Button";
 import { useCart } from "@/store/zustand/useCart";
 import { toast } from "react-toastify";
 import { useClickOutside } from "@/hooks/useClickOutside";
-import { useDeleteCartItemMutation, useGetCartQuery } from "@/store/frostApi";
+import {
+  useAddCartItemMutation,
+  useDeleteCartItemMutation,
+  useGetCartQuery,
+} from "@/store/frostApi";
 import { useRouter } from "next/navigation";
+import { useFiltersRedux } from "@/store/slices/filterSlice";
 
 function Cart() {
   const [open, setOpen] = useState(false);
+  const [isDragEnter, setIsDragEnter] = useState(false);
   // const { cart, getCartLength, getCartTotalPrice, deleteCartItem } = useCart();
   const [deleteCartItem] = useDeleteCartItemMutation();
+  const [addCartItem] = useAddCartItemMutation();
   const { data: cartData } = useGetCartQuery();
   const ref = useRef<HTMLDivElement>(null);
   const rouder = useRouter();
+  const { dragItem } = useFiltersRedux();
+
+  console.log(dragItem);
 
   const handleDeleteCartItem = (id: number) => {
     deleteCartItem(id);
@@ -23,6 +33,20 @@ function Cart() {
   return (
     <div ref={ref} className="relative flex items-center gap-2">
       <button
+        onDragOver={(e) => {
+          e.preventDefault();
+          setIsDragEnter(true);
+        }}
+        onDragLeave={(e) => {
+          setIsDragEnter(false);
+        }}
+        onDrop={async (e) => {
+          e.preventDefault();
+          setIsDragEnter(false);
+          if (!dragItem) return;
+          await addCartItem({ productId: dragItem.id, count: 1 });
+          toast.success("Добавлено в корзину!");
+        }}
         className="cursor-pointer"
         onClick={() =>
           !cartData?.items.length
@@ -69,6 +93,11 @@ function Cart() {
           />
         </svg>
       </button>
+      <div
+        className={`absolute transition-all duration-300 ${isDragEnter ? "scale-100 top-20 opacity-100" : "scale-40 opacity-0 top-17"} left-1/2 -translate-x-1/2 w-max p-2 -z-1 flex items-center justify-center  bg-green-500 rounded-xl text-white `}
+      >
+        <span className="text-3xl">+</span> Добавить в корзину
+      </div>
       {!!cartData?.items.length && (
         <div className="w-8 h-8 rounded-full bg-[#C53720] flex items-center justify-center text-white font-bold">
           {cartData.items.length}

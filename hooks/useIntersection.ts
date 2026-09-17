@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 export const useIntersection = (options: IntersectionObserverInit) => {
   const [intersecting, setIntersecting] = useState<boolean>(false);
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = ref.current;
