@@ -1,9 +1,11 @@
 "use client";
 import { createContext, useState } from "react";
+
+export type typeModals = "reg" | "login";
 interface IModalsContext {
-  modals: Record<string, boolean>;
-  setModals: (b: Record<string, boolean>) => void;
-  toggle: (s: string) => void;
+  modals: Record<typeModals, boolean>;
+  setModals: (b: Record<typeModals, boolean>) => void;
+  toggle: (s: typeModals) => void;
 }
 
 export const ModalsContext = createContext({} as IModalsContext);
@@ -13,12 +15,12 @@ export default function ModalsContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [modals, setModals] = useState<Record<string, boolean>>({
+  const [modals, setModals] = useState<Record<typeModals, boolean>>({
     reg: false,
     login: false,
   });
 
-  const toggle = (toggleKey: string) => {
+  const toggle = (toggleKey: typeModals) => {
     if (!(toggleKey in modals)) return;
 
     setModals({ ...modals, [toggleKey]: !modals[toggleKey] });

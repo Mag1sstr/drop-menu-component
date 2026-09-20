@@ -1,9 +1,10 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import ModalWrapper from "./ModalWrapper";
 import { useGetTokenMutation } from "@/store/frostApi";
-import { memo, useEffect } from "react";
+import { memo, useContext, useEffect } from "react";
 import { ILoginBody } from "@/app/frostTypes";
 import { useAuth } from "@/contexts/AuthContext";
+import { ModalsContext } from "@/contexts/ModalsContext";
 interface IProps {
   open: boolean;
   setOpen: (b: boolean) => void;
@@ -13,7 +14,8 @@ interface ILoginBod {
   email: string;
   password: string;
 }
-const AuthModal = memo(({ open, setOpen, setOpenReg }: IProps) => {
+const AuthModal = memo(({ setOpenReg }: IProps) => {
+  const { modals, toggle } = useContext(ModalsContext);
   const { setToken } = useAuth();
   const { handleSubmit, register } = useForm<ILoginBody>();
   const [getToken, { data, isSuccess, isError, isLoading }] =
@@ -26,12 +28,12 @@ const AuthModal = memo(({ open, setOpen, setOpenReg }: IProps) => {
     if (isSuccess) {
       localStorage.setItem("t", data.access_token);
       setToken(data.access_token);
-      setOpen(false);
+      toggle("login");
     }
   }, [isSuccess]);
 
   return (
-    <ModalWrapper open={open} setOpen={setOpen}>
+    <ModalWrapper open={modals.login} setOpen={() => toggle("login")}>
       <form onSubmit={handleSubmit(login)} className="w-125" action="">
         <div className="border-t-4 border-(--prime) bg-[#1D1D1D] flex gap-8 pt-5 text-white">
           <div className="w-25 h-24 bg-(--prime) p-4 mask-[url('/box.svg')]"></div>
@@ -63,7 +65,7 @@ const AuthModal = memo(({ open, setOpen, setOpenReg }: IProps) => {
             <p
               onClick={() => {
                 setOpenReg(true);
-                setOpen(false);
+                toggle("login");
               }}
               className="text-(--prime) font-medium hover:underline cursor-pointer"
             >

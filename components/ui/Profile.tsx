@@ -1,16 +1,18 @@
 "use client";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import AuthModal from "../modals/AuthModal";
 import { useAuth } from "@/contexts/AuthContext";
 import RegModal from "../modals/RegModal";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { useToast } from "@/contexts/ToastContext";
 import { useRouter } from "next/navigation";
+import { ModalsContext } from "@/contexts/ModalsContext";
 
 function Profile() {
   const { user, isUserLoading, logout } = useAuth();
   const [drop, setDrop] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+  // const [openModal, setOpenModal] = useState(false);
+  const { toggle } = useContext(ModalsContext);
   const [openReg, setOpenReg] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -62,7 +64,7 @@ function Profile() {
       ) : (
         <button
           onClick={() => {
-            setOpenModal(true);
+            toggle("login");
           }}
           className={`uppercase border-4 border-(--prime) px-5 py-3 text-[12px] text-white self-center font-bold mr-5.75 ${isUserLoading && "opacity-50"}`}
         >
@@ -70,14 +72,14 @@ function Profile() {
         </button>
       )}
       <AuthModal
-        open={openModal}
-        setOpen={setOpenModal}
+        // open={openModal}
+        // setOpen={setOpenModal}
         setOpenReg={setOpenReg}
       />
       <RegModal
         open={openReg}
         setOpen={setOpenReg}
-        setOpenLogin={setOpenModal}
+        // setOpenLogin={setOpenModal}
       />
     </>
   );
