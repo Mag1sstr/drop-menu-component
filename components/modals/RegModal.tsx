@@ -2,17 +2,20 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import ModalWrapper from "./ModalWrapper";
 import { IRegError, IRegisterBody } from "@/app/frostTypes";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useGetTokenMutation, useRegisterUserMutation } from "@/store/frostApi";
 import { toast } from "react-toastify";
 import { useAuth } from "@/contexts/AuthContext";
-interface IProps {
-  open: boolean;
-  setOpen: (b: boolean) => void;
-  setOpenLogin: (b: boolean) => void;
-}
+import { useFiltersRedux } from "@/store/slices/filterSlice";
+import { ModalsContext } from "@/contexts/ModalsContext";
+// interface IProps {
+//   open: boolean;
+//   setOpen: (b: boolean) => void;
+//   setOpenLogin: (b: boolean) => void;
+// }
 
-function RegModal({ open, setOpen, setOpenLogin }: IProps) {
+function RegModal() {
+  const { modals, toggle } = useContext(ModalsContext);
   const { setToken } = useAuth();
   const passRef = useRef<HTMLInputElement>(null);
   const [errors, setErrors] = useState<string[]>([]);
@@ -32,7 +35,7 @@ function RegModal({ open, setOpen, setOpenLogin }: IProps) {
 
       localStorage.setItem("t", res.access_token);
 
-      setOpen(false);
+      toggle("reg");
       toast.success("Вы вошли в аккаунт!");
     } catch (error) {
     } finally {
@@ -52,7 +55,7 @@ function RegModal({ open, setOpen, setOpenLogin }: IProps) {
   };
 
   return (
-    <ModalWrapper open={open} setOpen={setOpen}>
+    <ModalWrapper open={modals.reg} setOpen={() => toggle("reg")}>
       <form onSubmit={handleSubmit(submit)} className="w-125">
         <div className="border-t-4 border-(--prime) bg-[#1D1D1D] flex gap-8 pt-5 text-white">
           <div className="w-25 h-24 bg-(--prime) p-4 mask-[url('/box.svg')]"></div>

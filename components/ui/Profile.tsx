@@ -72,11 +72,7 @@ function Profile() {
         </button>
       )}
       <AuthModal />
-      <RegModal
-        open={openReg}
-        setOpen={setOpenReg}
-        // setOpenLogin={setOpenModal}
-      />
+      <RegModal />
     </>
   );
 }

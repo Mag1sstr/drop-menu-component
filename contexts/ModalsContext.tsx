@@ -20,7 +20,8 @@ export default function ModalsContextProvider({
     login: false,
   });
 
-  const toggle = (toggleKey: typeModals) => {
+  const toggle = (toggleKey: typeModals, value?: boolean) => {
+    if (value) return setModals({ ...modals, [toggleKey]: value });
     if (!(toggleKey in modals)) return;
 
     setModals({ ...modals, [toggleKey]: !modals[toggleKey] });
