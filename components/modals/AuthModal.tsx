@@ -64,7 +64,7 @@ const AuthModal = memo(() => {
           <div className="flex items-center justify-between">
             <p
               onClick={() => {
-                toggle("reg");
+                toggle("reg", true);
                 toggle("login");
               }}
               className="text-(--prime) font-medium hover:underline cursor-pointer"

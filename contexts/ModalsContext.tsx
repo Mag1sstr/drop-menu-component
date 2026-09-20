@@ -5,7 +5,7 @@ export type typeModals = "reg" | "login";
 interface IModalsContext {
   modals: Record<typeModals, boolean>;
   setModals: (b: Record<typeModals, boolean>) => void;
-  toggle: (s: typeModals) => void;
+  toggle: (s: typeModals, v?: boolean) => void;
 }
 
 export const ModalsContext = createContext({} as IModalsContext);
@@ -21,10 +21,11 @@ export default function ModalsContextProvider({
   });
 
   const toggle = (toggleKey: typeModals, value?: boolean) => {
-    if (value) return setModals({ ...modals, [toggleKey]: value });
+    if (value !== undefined)
+      return setModals((prev) => ({ ...prev, [toggleKey]: value }));
     if (!(toggleKey in modals)) return;
 
-    setModals({ ...modals, [toggleKey]: !modals[toggleKey] });
+    setModals((prev) => ({ ...prev, [toggleKey]: !prev[toggleKey] }));
   };
 
   return (

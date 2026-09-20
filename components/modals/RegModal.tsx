@@ -53,6 +53,7 @@ function RegModal() {
     //     setErrors(Object.values(error.data.errors).flat());
     //   });
   };
+  console.log(modals);
 
   return (
     <ModalWrapper open={modals.reg} setOpen={() => toggle("reg")}>
