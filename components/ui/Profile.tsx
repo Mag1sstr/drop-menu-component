@@ -71,11 +71,7 @@ function Profile() {
           {isUserLoading ? "Загрузка..." : "Войти"}
         </button>
       )}
-      <AuthModal
-        // open={openModal}
-        // setOpen={setOpenModal}
-        setOpenReg={setOpenReg}
-      />
+      <AuthModal />
       <RegModal
         open={openReg}
         setOpen={setOpenReg}

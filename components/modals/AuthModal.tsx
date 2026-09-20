@@ -5,16 +5,16 @@ import { memo, useContext, useEffect } from "react";
 import { ILoginBody } from "@/app/frostTypes";
 import { useAuth } from "@/contexts/AuthContext";
 import { ModalsContext } from "@/contexts/ModalsContext";
-interface IProps {
-  open: boolean;
-  setOpen: (b: boolean) => void;
-  setOpenReg: (b: boolean) => void;
-}
+// interface IProps {
+//   open: boolean;
+//   setOpen: (b: boolean) => void;
+//   setOpenReg: (b: boolean) => void;
+// }
 interface ILoginBod {
   email: string;
   password: string;
 }
-const AuthModal = memo(({ setOpenReg }: IProps) => {
+const AuthModal = memo(() => {
   const { modals, toggle } = useContext(ModalsContext);
   const { setToken } = useAuth();
   const { handleSubmit, register } = useForm<ILoginBody>();
@@ -64,7 +64,7 @@ const AuthModal = memo(({ setOpenReg }: IProps) => {
           <div className="flex items-center justify-between">
             <p
               onClick={() => {
-                setOpenReg(true);
+                toggle("reg");
                 toggle("login");
               }}
               className="text-(--prime) font-medium hover:underline cursor-pointer"
