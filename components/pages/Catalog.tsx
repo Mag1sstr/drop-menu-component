@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import ProductCard from "../ui/ProductCard";
 
-import Pagination from "../layout/Pagination";
 import { useGetProductsQuery } from "@/store/frostApi";
 import {
   addSortType,
@@ -14,8 +13,10 @@ import { useFilters } from "@/store/zustand/useFilters";
 import { IProductData } from "@/app/frostTypes";
 import { useAppDispatch } from "@/store/store";
 import { useIntersection } from "@/hooks/useIntersection";
+import Pagination from "../layout/Pagination";
 
 function Catalog() {
+  const [currPage, setCurrPage] = useState(1);
   const [listType, setListType] = useState<"row" | "column">("row");
   const dispatch = useAppDispatch();
   const {
@@ -183,7 +184,11 @@ function Catalog() {
       </div>
       {isLoading && <p className="text-3xl text-center">ЗАГРУЗКА...</p>}
       {isError && <p className="+text-3xl text-center">{isError}</p>}
-
+      <Pagination
+        currentPage={currPage}
+        setCurrentPage={setCurrPage}
+        totalPages={30}
+      />
       <div className="grid grid-cols-3 gap-6 mb-10">
         {products.slice(0, showItems).map((card) => (
           <ProductCard key={card.id} {...card} />
@@ -191,12 +196,6 @@ function Catalog() {
       </div>
       {isLoadMore && <div className="text-center text-3xl">Загрузка...</div>}
       <div ref={ref} className="bg-red-300 h-20"></div>
-
-      <Pagination
-        totalPages={data?.totalPages || 1}
-        setCurrentPage={setPage}
-        currentPage={page}
-      />
     </section>
   );
 }
