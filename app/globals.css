@@ -30,7 +30,7 @@
 }
 body {
   background: var(--bg);
-  font-family: "Geometria";
+  font-family: "Geometria", sans-serif;
 }
 
 .no-srl {
