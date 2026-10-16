@@ -8,6 +8,7 @@ import Search from "../ui/Search";
 import Cart from "../ui/Cart";
 import ChangeThemeBtn from "../ui/ChangeThemeBtn";
 import CurrentDate from "../ui/CurrentDate";
+import LangSwitch from "../ui/LangSwitch";
 
 const catelogData: IDropMenu[] = [
   {
@@ -47,7 +48,8 @@ const catelogData: IDropMenu[] = [
 
 function Header() {
   return (
-    <header className="bg-black/75 fixed left-0 right-0 z-20">
+    <header className="bg-black/75 fixed left-0 right-0 z-20 relative">
+      <LangSwitch />
       <div className="container">
         <div className="flex">
           <Link href={"/"}>

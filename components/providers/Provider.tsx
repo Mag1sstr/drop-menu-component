@@ -7,20 +7,23 @@ import ThemeContextProvider from "@/contexts/ThemeContext";
 import AuthContextProvider from "@/contexts/AuthContext";
 import ToastContextProvider from "@/contexts/ToastContext";
 import ModalsContextProvider from "@/contexts/ModalsContext";
+import LangContextProvider from "@/contexts/LangContext";
 
 function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
-      <ModalsContextProvider>
-        <ToastContextProvider>
-          <AuthContextProvider>
-            <ThemeContextProvider>
-              <ScrollBtn />
-              {children}
-            </ThemeContextProvider>
-          </AuthContextProvider>
-        </ToastContextProvider>
-      </ModalsContextProvider>
+      <LangContextProvider>
+        <ModalsContextProvider>
+          <ToastContextProvider>
+            <AuthContextProvider>
+              <ThemeContextProvider>
+                <ScrollBtn />
+                {children}
+              </ThemeContextProvider>
+            </AuthContextProvider>
+          </ToastContextProvider>
+        </ModalsContextProvider>
+      </LangContextProvider>
     </Provider>
   );
 }
