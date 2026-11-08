@@ -5,6 +5,7 @@ import { memo, useContext, useEffect } from "react";
 import { ILoginBody } from "@/app/frostTypes";
 import { useAuth } from "@/contexts/AuthContext";
 import { ModalsContext } from "@/contexts/ModalsContext";
+import z from "zod";
 // interface IProps {
 //   open: boolean;
 //   setOpen: (b: boolean) => void;
@@ -15,6 +16,10 @@ interface ILoginBod {
   password: string;
 }
 const AuthModal = memo(() => {
+  const loginValid = z.object({
+    email: z.string().email("Неккоректная почта"),
+    password: z.string().min(4, "Длина пароля от 4"),
+  });
   const { modals, toggle } = useContext(ModalsContext);
   const { setToken } = useAuth();
   const { handleSubmit, register } = useForm<ILoginBody>();
