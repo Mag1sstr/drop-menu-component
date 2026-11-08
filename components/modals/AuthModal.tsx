@@ -6,6 +6,7 @@ import { ILoginBody } from "@/app/frostTypes";
 import { useAuth } from "@/contexts/AuthContext";
 import { ModalsContext } from "@/contexts/ModalsContext";
 import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 // interface IProps {
 //   open: boolean;
 //   setOpen: (b: boolean) => void;
@@ -17,12 +18,15 @@ interface ILoginBod {
 }
 const AuthModal = memo(() => {
   const loginValid = z.object({
-    email: z.string().email("Неккоректная почта"),
+    username: z.string().email("Неккоректная почта"),
     password: z.string().min(4, "Длина пароля от 4"),
   });
+  type LoginForm = z.infer<typeof loginValid>;
   const { modals, toggle } = useContext(ModalsContext);
   const { setToken } = useAuth();
-  const { handleSubmit, register } = useForm<ILoginBody>();
+  const { handleSubmit, register } = useForm<LoginForm>({
+    resolver: zodResolver(loginValid),
+  });
   const [getToken, { data, isSuccess, isError, isLoading }] =
     useGetTokenMutation();
   const login: SubmitHandler<ILoginBody> = (data) => {
