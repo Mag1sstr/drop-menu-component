@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useAuth } from "@/contexts/AuthContext";
 import { useFiltersRedux } from "@/store/slices/filterSlice";
 import { ModalsContext } from "@/contexts/ModalsContext";
+import z from "zod";
 // interface IProps {
 //   open: boolean;
 //   setOpen: (b: boolean) => void;
@@ -15,6 +16,12 @@ import { ModalsContext } from "@/contexts/ModalsContext";
 // }
 
 function RegModal() {
+  const regValid = z.object({
+    first_name: z.string().min(1, "Это поле обязательно для заполнения"),
+    last_name: z.string().min(1, "Это поле обязательно для заполнения"),
+    email: z.string().email("Неккоректная почта"),
+    password: z.string().min(1, "Пароль от 3 символов"),
+  });
   const { modals, toggle } = useContext(ModalsContext);
   const { setToken } = useAuth();
   const passRef = useRef<HTMLInputElement>(null);
