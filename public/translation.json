@@ -1,0 +1,12 @@
+{
+  "ru": {
+    "header": {
+      "sign": "Войти"
+    }
+  },
+  "en": {
+    "header": {
+      "sign": "Sing in"
+    }
+  }
+}
