@@ -26,6 +26,13 @@ function AdminPage() {
 
   return (
     <section className="py-10">
+      <div className="flex">
+        <aside>
+          <div>Продукты</div>
+          <div>Категории</div>
+          <div>Пользователи</div>
+        </aside>
+      </div>
       <div className="container">
         <form onSubmit={onSubmit} className="flex flex-col gap-5">
           <InputField
