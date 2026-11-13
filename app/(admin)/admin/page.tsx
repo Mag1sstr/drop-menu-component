@@ -28,9 +28,15 @@ function AdminPage() {
     <section className="min-h-full flex flex-col">
       <div className="flex flex-1">
         <aside className="p-5 shadow-2xl w-full max-w-60">
-          <div className="p-3 border-b">Продукты</div>
-          <div className="p-3 border-b">Категории</div>
-          <div className="p-3 border-b">Пользователи</div>
+          <div className="p-3 border-b hover:pl-4 transition-all hover:text-red-500 cursor-pointer hover:border-red-500">
+            Продукты
+          </div>
+          <div className="p-3 border-b hover:pl-4 transition-all hover:text-red-500 cursor-pointer hover:border-red-500">
+            Категории
+          </div>
+          <div className="p-3 border-b hover:pl-4 transition-all hover:text-red-500 cursor-pointer hover:border-red-500">
+            Пользователи
+          </div>
         </aside>
         <div className="flex-1 p-5"></div>
       </div>
