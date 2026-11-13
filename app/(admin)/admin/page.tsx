@@ -25,15 +25,16 @@ function AdminPage() {
   console.log(data);
 
   return (
-    <section className="py-10">
-      <div className="flex">
-        <aside>
-          <div>Продукты</div>
-          <div>Категории</div>
-          <div>Пользователи</div>
+    <section className="min-h-full flex flex-col">
+      <div className="flex flex-1">
+        <aside className="p-5 shadow-2xl w-full max-w-60">
+          <div className="p-3 border-b">Продукты</div>
+          <div className="p-3 border-b">Категории</div>
+          <div className="p-3 border-b">Пользователи</div>
         </aside>
+        <div className="flex-1 p-5"></div>
       </div>
-      <div className="container">
+      {/* <div className="container">
         <form onSubmit={onSubmit} className="flex flex-col gap-5">
           <InputField
             label="Название"
@@ -45,7 +46,7 @@ function AdminPage() {
 
           <Button className="text-black!">Создать категорию</Button>
         </form>
-      </div>
+      </div> */}
     </section>
   );
 }
