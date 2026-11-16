@@ -5,6 +5,7 @@ import useMutation from "@/hooks/useMutation";
 import { FormEvent, useState } from "react";
 
 function AdminPage() {
+  const [tab, setTab] = useState<"product" | "category" | "users">("product");
   const [form, setForm] = useState({
     name: "",
     image: "https://placeimg.com/640/480/any",
