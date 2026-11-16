@@ -1,4 +1,5 @@
 "use client";
+import ProductsTab from "@/components/admin/ProductsTab";
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
 import useMutation from "@/hooks/useMutation";
@@ -39,7 +40,7 @@ function AdminPage() {
             Пользователи
           </div>
         </aside>
-        <div className="flex-1 p-5"></div>
+        <div className="flex-1 p-5">{tab === "product" && <ProductsTab />}</div>
       </div>
       {/* <div className="container">
         <form onSubmit={onSubmit} className="flex flex-col gap-5">
