@@ -9,6 +9,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useFiltersRedux } from "@/store/slices/filterSlice";
 import { ModalsContext } from "@/contexts/ModalsContext";
 import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 // interface IProps {
 //   open: boolean;
 //   setOpen: (b: boolean) => void;
@@ -27,7 +28,9 @@ function RegModal() {
   const passRef = useRef<HTMLInputElement>(null);
   const [errors, setErrors] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { handleSubmit, register, getValues } = useForm<IRegisterBody>();
+  const { handleSubmit, register, getValues } = useForm<IRegisterBody>({
+    resolver: zodResolver(regValid),
+  });
   const [registerUser] = useRegisterUserMutation();
   const [getToken] = useGetTokenMutation();
   const submit: SubmitHandler<IRegisterBody> = async (data) => {
