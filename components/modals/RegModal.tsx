@@ -51,19 +51,7 @@ function RegModal() {
     } finally {
       setIsLoading(false);
     }
-    // registerUser(data)
-    //   .unwrap()
-    //   .then(() => {
-    //     toast.success("Вы зарегистрировались! Войдите в свой аккаунт.");
-    //     setOpen(false);
-    //     setOpenLogin(true);
-    //   })
-    //   .catch((err) => {
-    //     const error = err as IRegError;
-    //     setErrors(Object.values(error.data.errors).flat());
-    //   });
   };
-  console.log(modals);
 
   return (
     <ModalWrapper open={modals.reg} setOpen={() => toggle("reg")}>
